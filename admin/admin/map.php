@@ -36,7 +36,6 @@ if(isset($_POST['btnsave'])){
   $useremail=$_POST['txtemail'];
   $password=$_POST['txtpassword'];
   $userrole=$_POST['txtselect_option'];
-  $status=$_POST['txtselect_option1'];
 
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -117,14 +116,13 @@ if(isset($_POST['btnsave'])){
     }
     else {
 
-      $insert=$pdo->prepare("insert into tbl_user(username,useremail,password,role,status)values(:name,:email,:pass,:role,:status)");
+      $insert=$pdo->prepare("insert into tbl_user(username,useremail,password,role)values(:name,:email,:pass,:role)");
 
 
       $insert->bindParam(':name',$username);
       $insert->bindParam(':email',$useremail);
       $insert->bindParam(':pass',$hashed_password);
       $insert->bindParam(':role',$userrole);
-      $insert->bindParam(':status',$status);
 
       if ($insert->execute()) {
         echo'<script type ="text/javascript">
@@ -217,15 +215,6 @@ if(isset($_POST['btnsave'])){
                       </select>
                     </div>
 
-                    <div class="form-group">
-                      <label>Status</label>
-                      <select class="form-control" name="txtselect_option1">
-                        <option value="" disabled selected>Select status</option required>
-                        <option>Not approved</option>
-                        <option>approved</option>
-                      </select>
-                    </div>
-
 
 
 
@@ -261,7 +250,6 @@ if(isset($_POST['btnsave'])){
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>ROLE</th>
-                <th>STATUS</th>
                 <th>EDIT</th>
               </tr>
 
@@ -282,13 +270,12 @@ if(isset($_POST['btnsave'])){
                 <td>'.$row->username.'</td>
                 <td>'.$row->useremail.'</td>
                 <td>'.$row->role.'</td>
-                <td>'.$row->status.'</td>
 
 
 
 
                 <td>
-                <a href = "editreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                <a href = "editregistration.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                 </td>
                 </tr>';
               }

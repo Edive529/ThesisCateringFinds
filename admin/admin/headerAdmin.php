@@ -224,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="package.php" class="nav-link">
+            <a href="map.php" class="nav-link">
               <i class="nav-icon far fa-address-card"></i>
               <p>
                 Map
