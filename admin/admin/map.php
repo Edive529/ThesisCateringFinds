@@ -32,15 +32,15 @@ if($delete->execute()){
 
 
 if(isset($_POST['btnsave'])){
-  $username=$_POST['txtname'];
-  $useremail=$_POST['txtemail'];
-  $password=$_POST['txtpassword'];
-  $userrole=$_POST['txtselect_option'];
+  $restaurant=$_POST['txtrestaurant'];
+  $latitude=$_POST['txtlatitude'];
+  $longitude=$_POST['txtlongitude'];
+
 
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
   // echo $username .'-'. $useremail .'-'. $password .'-'. $userrole;
-  if(!isset($username) || trim($username) == ''){
+  if(!isset($restaurant) || trim($restaurant) == ''){
 
     echo '<script type ="text/javascript">
     jQuery(function validation(){
@@ -57,7 +57,7 @@ if(isset($_POST['btnsave'])){
     });
 
     </script>';
-  }elseif (!isset($userrole) || trim($userrole) == ''){
+  }elseif (!isset($latitude) || trim($latitude) == ''){
     echo '<script type ="text/javascript">
     jQuery(function validation(){
 
@@ -73,7 +73,7 @@ if(isset($_POST['btnsave'])){
     });
 
     </script>';
-  }elseif (!isset($password) || trim($password) == '') {
+  }elseif (!isset($longitude) || trim($longitude) == '') {
     echo '<script type ="text/javascript">
     jQuery(function validation(){
 
@@ -94,7 +94,7 @@ if(isset($_POST['btnsave'])){
 
   else if(isset($_POST['txtemail'])){
 
-    $row=$select=$pdo->prepare("select useremail from tbl_user where useremail='$useremail'");
+    $row=$select=$pdo->prepare("select restaurant from tbl_user where restaurant='$restaurant'");
     $select->execute();
 
     if($select->rowCount() > 0){
@@ -103,7 +103,7 @@ if(isset($_POST['btnsave'])){
 
         swal({
         title: "Warning!",
-        text: "Email Already Exists!",
+        text: "restaurant Already Exists!",
         icon: "warning",
         button: "Ok",
       });
@@ -116,13 +116,13 @@ if(isset($_POST['btnsave'])){
     }
     else {
 
-      $insert=$pdo->prepare("insert into tbl_user(username,useremail,password,role)values(:name,:email,:pass,:role)");
+      $insert=$pdo->prepare("insert into tbl_user(restaurant,latitude,longitude)values(:restaurant,:latitude,:longitude)");
 
 
-      $insert->bindParam(':name',$username);
-      $insert->bindParam(':email',$useremail);
-      $insert->bindParam(':pass',$hashed_password);
-      $insert->bindParam(':role',$userrole);
+      $insert->bindParam(':restaurant',$restaurant);
+      $insert->bindParam(':latitude',$latitude);
+      $insert->bindParam(':longitude',$longitude);
+
 
       if ($insert->execute()) {
         echo'<script type ="text/javascript">
@@ -194,26 +194,21 @@ if(isset($_POST['btnsave'])){
                 <div class="modal-body">
 
                     <div class="form-group">
-                      <label>Name</label>
-                      <input type="text" class="form-control" name="txtname" placeholder="Enter name" required>
+                      <label>Restaurant</label>
+                      <input type="text" class="form-control" name="txtrestaurant" placeholder="Enter name" required>
                     </div>
                     <div class="form-group">
-                      <label >Email address</label>
-                      <input type="email" class="form-control" name="txtemail" placeholder="Enter email" required>
+                      <label >Latitude</label>
+                      <input type="email" class="form-control" name="txtlatitude" placeholder="Enter email" required>
                     </div>
                     <div class="form-group">
-                      <label >Password</label>
+                      <label >Longitude</label>
                       <input type="password" class="form-control" name="txtpassword" placeholder="Password" required>
                     </div>
 
-                    <div class="form-group">
-                      <label>Role</label>
-                      <select class="form-control" name="txtselect_option">
-                        <option value="" disabled selected>Select role</option required>
-                        <option>Seller</option>
-                        <option>Admin</option>
-                      </select>
-                    </div>
+
+
+
 
 
 
@@ -247,10 +242,11 @@ if(isset($_POST['btnsave'])){
             <thead>
               <tr>
                 <th>#</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>ROLE</th>
+                <th>Restaurant</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
                 <th>EDIT</th>
+                <th>DELETE</th>
               </tr>
 
             </thead>
@@ -267,15 +263,16 @@ if(isset($_POST['btnsave'])){
                 echo'
                 <tr>
                 <td>'.$row->userid.'</td>
-                <td>'.$row->username.'</td>
-                <td>'.$row->useremail.'</td>
-                <td>'.$row->role.'</td>
+                <td>'.$row->restaurant.'</td>
+                <td>'.$row->latitude.'</td>
+                <td>'.$row->longitude.'</td>
+
 
 
 
 
                 <td>
-                <a href = "editregistration.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                <a href = "editreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                 </td>
                 </tr>';
               }
