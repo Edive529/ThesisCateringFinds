@@ -4,31 +4,31 @@ session_start();
 
 include_once 'headerAdmin.php';
 
-error_reporting(0);
-
-$id = $_GET['id'];
-
-$delete=$pdo->prepare("delete from tbl_user where userid=".$id);
-
-if($delete->execute()){
-
-  echo'<script type ="text/javascript">
-  jQuery(function validation(){
-
-    swal({
-    title: "Good Job!",
-    text: "Account has been deleted!",
-    icon: "success",
-    button: "Ok",
-  });
 
 
-
-  });
-
-  </script>';
-
-}
+// $id = $_GET['id'];
+//
+// $delete=$pdo->prepare("delete from tbl_user where userid=".$id);
+//
+// if($delete->execute()){
+//
+//   echo'<script type ="text/javascript">
+//   jQuery(function validation(){
+//
+//     swal({
+//     title: "Good Job!",
+//     text: "Account has been deleted!",
+//     icon: "success",
+//     button: "Ok",
+//   });
+//
+//
+//
+//   });
+//
+//   </script>';
+//
+// }
 
 
 if(isset($_POST['btnsave'])){
@@ -333,6 +333,8 @@ if(isset($_POST['btnsave'])){
     </section>
     <!-- /.content -->
   </div>
+
+
   <!-- /.content-wrapper -->
 
 

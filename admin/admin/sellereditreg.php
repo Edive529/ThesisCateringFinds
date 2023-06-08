@@ -23,6 +23,8 @@ $name_db = $row['username'];
 $email_db = $row['useremail'];
 $role_db = $row['role'];
 $status_db = $row['status'];
+$latitude_db = $row['latitude'];
+$longitude_db = $row['longitude'];
 
 
 if(isset($_POST['btnupdate'])){
@@ -35,6 +37,8 @@ if(isset($_POST['btnupdate'])){
     $status_txt = $_POST['txtstatus'];
 
   }
+  $latitude_txt = $_POST['txtlatidude'];
+  $longitude_txt = $_POST['txtlongitude'];
 
 
 
@@ -47,6 +51,8 @@ if(isset($_POST['btnupdate'])){
           $update->bindParam(':role',$role_txt);
 
           $update->bindParam(':status',$status_txt);
+          $update->bindParam(':latitude',$latitude_txt);
+          $update->bindParam(':longitude',$longitude_txt);
 
 
           if($update->execute()){
@@ -141,7 +147,7 @@ $status_db = $row['status'];
 
      <div class="card card-outline card-primary">
          <div class="card-header with-border">
-         <h3 class="box-title"><a href="registration.php" class="btn btn-primary" role="button">Back to Registration</a></h3>
+         <h3 class="box-title"><a href="sellerregistration.php" class="btn btn-primary" role="button">Back to Seller Registration</a></h3>
 
 
 
@@ -191,11 +197,24 @@ $status_db = $row['status'];
           </select>
         </div>
 
+        <div class="form-group">
+           <label>Latitude</label>
+           <input type="text" class="form-control" name="txtname" value="<?php echo $latitude_db;?>" placeholder="Enter name..." required>
+         </div>
+
+         <div class="form-group">
+            <label>Longitude</label>
+            <input type="text" class="form-control" name="txtname" value="<?php echo $longitude_db;?>" placeholder="Enter name..." required>
+          </div>
+
+
+
 
 
 
 
         </div>
+
         </div>
 
     <div class="box-footer">

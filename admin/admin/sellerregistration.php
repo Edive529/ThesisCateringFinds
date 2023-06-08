@@ -4,31 +4,31 @@ session_start();
 
 include_once 'headerAdmin.php';
 
-error_reporting(0);
-
-$id = $_GET['id'];
-
-$delete=$pdo->prepare("delete from tbl_user where userid=".$id);
-
-if($delete->execute()){
-
-  echo'<script type ="text/javascript">
-  jQuery(function validation(){
-
-    swal({
-    title: "Good Job!",
-    text: "Account has been deleted!",
-    icon: "success",
-    button: "Ok",
-  });
 
 
-
-  });
-
-  </script>';
-
-}
+// $id = $_GET['id'];
+//
+// $delete=$pdo->prepare("delete from tbl_user where userid=".$id);
+//
+// if($delete->execute()){
+//
+//   echo'<script type ="text/javascript">
+//   jQuery(function validation(){
+//
+//     swal({
+//     title: "Good Job!",
+//     text: "Account has been deleted!",
+//     icon: "success",
+//     button: "Ok",
+//   });
+//
+//
+//
+//   });
+//
+//   </script>';
+//
+// }
 
 
 if(isset($_POST['btnsave'])){
@@ -238,7 +238,7 @@ if(isset($_POST['btnsave'])){
         <div class="col-md-12">
 
 
-          <table class = "table table-striped">
+          <table id="tablefoodmenu" class = "table table-striped">
             <thead>
               <tr>
                 <th>#</th>
@@ -272,6 +272,9 @@ if(isset($_POST['btnsave'])){
                 <td>'.$row->useremail.'</td>
                 <td>'.$row->status.'</td>
                 <td>'.$row->restaurant.'</td>
+                <td>
+                <img src = "../upload/'.$row->image.'" class = "img-rounded" width = "40px" height = "40px">
+                </td>
                 <td>'.$row->latitude.'</td>
                 <td>'.$row->longitude.'</td>
 
@@ -280,7 +283,13 @@ if(isset($_POST['btnsave'])){
 
 
                 <td>
-                <a href = "editreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                <a href = "viewmenu.php?id='.$row->userid.'"  class="btn btn-primary" role = "button" ><span class = "fas fa-eye" style = "color:#ffffff" data-toggle="tooltip" title="view"></span></a>
+                </td>
+                <td>
+                <a href = "sellereditreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                </td>
+                <td>
+                <button id='.$row->userid.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>
                 </td>
                 </tr>';
               }
@@ -326,7 +335,51 @@ if(isset($_POST['btnsave'])){
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script>
+  $(document).ready(function(){
+      $("#tablefoodmenu").on('click','.btndelete', function(event){
 
+      var tdh = $(this);
+      var id= $(this).attr("id");
+
+      swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+  })
+  .then((willDelete) => {
+  if (willDelete) {
+
+    $.ajax({
+      url: 'userdelete.php',
+      type:'post',
+      data:{
+        useridd:id
+      },
+      success: function(data){
+        tdh.parents('tr').hide();
+      }
+
+
+
+    });
+    swal("Your file has been deleted!", {
+      icon: "success",
+    });
+  } else {
+    swal("Your file is safe!");
+  }
+  });
+      // alert(id);
+
+
+    });
+  });
+
+
+</script>
 
 
   <!-- Main Footer -->

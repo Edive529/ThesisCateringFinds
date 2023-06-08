@@ -136,7 +136,7 @@ include_once 'headerAdmin.php';
                 </tbody>
 
 
-              </tbody>
+
 
             </table>
 
@@ -159,6 +159,8 @@ include_once 'headerAdmin.php';
       </section>
       <!-- /.content -->
     </div>
+
+
     <!-- /.content-wrapper -->
 
     <script>
