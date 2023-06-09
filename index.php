@@ -45,10 +45,10 @@
 
 
     <!--navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0" style="background-color: #ffa7a6; ">
+    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0 " style="background-color: #ffa7a6; ">
       <div class="container-fluid">
       <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-                <h1 class="m-0 text-primary">CateringFinds</h1>
+                <h2 class="m-0 text-primary">CateringFinds</h2>
             </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -74,15 +74,14 @@
             <a href="reglogin.php">
               <i class="fa fa-user"></i>
             </a>
-             
-          </div>
+            
         </div>
       </div>
     </nav>
 
-    <!--navbar end puta-->
+    <!--navbar end -->
     <!-- Carousel Start -->
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 ">
       <div class="owl-carousel header-carousel position-relative">
           <div class="owl-carousel-item position-relative"> 
               <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:  #ffa7a6;">
@@ -91,7 +90,7 @@
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find Catering Service Near You</h1>
                               <p class="fs-5 fw-medium text-white ">Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review. Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                              <a href="" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
+                              <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
                           </div>
                           <div class="col-4 col-lg-4">
                             <img class="img-fluid w-auto h-auto" src="img/car/car1.jpg"alt="">
@@ -107,7 +106,7 @@
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find The Perfect Catering For You</h1>
                               <p class="fs-5 fw-medium text-white  ">Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review. Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                              <a href="" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
+                              <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
                           </div>
                           <div class="col-4 col-lg-4">
                             <img class="img-fluid  w-auto h-auto" src="img/car/car2.png" alt="">
@@ -123,7 +122,7 @@
 
 
      
-  <!--Card2 lang sa kay way sure ni-->
+  <!--Card2 -->
 
 <!-- Category Start -->
 <div class="container-xxl py-5 " >
