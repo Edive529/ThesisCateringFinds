@@ -89,7 +89,7 @@
                       <div class="row justify-content-start ">
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find Catering Service Near You</h1>
-                              <p class="fs-5 fw-medium text-white ">Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review. Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
+                              <p class="fs-5 fw-medium text-white ">Ease and Convenience is what we offer you. Press the "Use Map" to start finding the nearest catering server.</p>
                               <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
                           </div>
                           <div class="col-4 col-lg-4">
@@ -105,7 +105,7 @@
                       <div class="row justify-content-start ">
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find The Perfect Catering For You</h1>
-                              <p class="fs-5 fw-medium text-white  ">Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review. Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
+                              <p class="fs-5 fw-medium text-white  ">Check Out the nearest catering server near you, and order exquisite food and satisfactory service.</p>
                               <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a> 
                           </div>
                           <div class="col-4 col-lg-4">
@@ -127,51 +127,29 @@
 <!-- Category Start -->
 <div class="container-xxl py-5 " >
   <div class="container">
-      <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Card2 Area</h1>
+      <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">We Guarantee</h1>
       <div class="row g-4">
           <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
               <a class="cat-item rounded p-4" href="">
-                  <i class="fa fa-3x fa-mail-bulk text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 1</h6>
-                  <p class="mb-0">123 Vacancy</p>
+                  <i class="fa fa-3x fa-check text-primary mb-4"></i>
+                  <h6 class="mb-3">Easy to Use</h6>
+                  <p class="mb-0">We made sure that the UI is people friendly so that any people of age can have ease of use</p>
               </a>
           </div>
           <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
               <a class="cat-item rounded p-4" href="">
                   <i class="fa fa-3x fa-headset text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 2</h6>
-                  <p class="mb-0">123  </p>
+                  <h6 class="mb-3">Outstanding Service</h6>
+                  <p class="mb-0">Delivers outstanding service that goes above and beyond customer expectations.</p>
               </a>
           </div>
           <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
               <a class="cat-item rounded p-4" href="">
-                  <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 3</h6>
-                  <p class="mb-0">123  </p>
+                  <i class="fa fa-3x fa-cog text-primary mb-4"></i>
+                  <h6 class="mb-3">Efficient Proces</h6>
+                  <p class="mb-0">Ensures optimal utilization of resources leading to streamlined operations and improved outcomes.</p>
               </a>
-          </div>
-          <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-              <a class="cat-item rounded p-4" href="">
-                  <i class="fa fa-3x fa-tasks text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 4</h6>
-                  <p class="mb-0">123 4</p>
-              </a>
-          </div>
-          <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-              <a class="cat-item rounded p-4" href="">
-                  <i class="fa fa-3x fa-chart-line text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 5</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-          <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-              <a class="cat-item rounded p-4" href="">
-                  <i class="fa fa-3x fa-hands-helping text-primary mb-4"></i>
-                  <h6 class="mb-3">CARD 6</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-           
+          </div>  
            
       </div>
   </div>
