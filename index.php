@@ -166,8 +166,8 @@
                     
                     <div class="col-md-4">
                         <div class="wow fadeInUp" data-wow-delay="0.5s">
-                        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">THIS IS THE MAP GOYS</h1>
-                            <p class="mb-4">WA KO KABALO UNSAY E BUTNAG DIRE GOYS</p>
+                        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">CATERER MAP</h1>
+                            <p class="mb-4">This is where you can find and pinpoint the nearest catering server in Iligan City, so what are you waiting for , open the map and book food for any occassion from any establishment that pops in the map.</p>
                             
                         </div>
                     </div>
