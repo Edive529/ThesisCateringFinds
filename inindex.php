@@ -72,11 +72,11 @@ session_start();
             </li>
           </ul>
 
-          <a href="orders.php">my orders</a>
+          <a href="orders.php" style = "padding:30px;">My Orders</a>
 
-          <a href="shopping_cart.php" class="cart-btn">cart</a>
+          <a href="shopping_cart.php" class="cart-btn" style = "padding:30px;">My Cart</a>
 
-          <a href="logout.php">Logout</a>
+          <a href="logout.php" style = "padding:30px;">Logout</a>
 
           <form class="d-flex" role="search">
             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
