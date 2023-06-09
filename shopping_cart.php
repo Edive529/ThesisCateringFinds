@@ -1,12 +1,9 @@
 <?php
 
 include 'connectdb.php';
+session_start();
 
-if(isset($_COOKIE['userid'])){
-   $userid = $_COOKIE['userid'];
-}else{
-   setcookie('userid', create_unique_id(), time() + 60*60*24*30);
-}
+$userid = $_SESSION['customerid'];
 
 if(isset($_POST['update_cart'])){
 
@@ -82,7 +79,7 @@ if(isset($_POST['empty_cart'])){
 
    <?php
       $grand_total = 0;
-      $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+      $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
       $select_cart->execute([$userid]);
       if($select_cart->rowCount() > 0){
          while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){

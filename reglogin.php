@@ -17,7 +17,7 @@ if(isset($_POST['btnsave'])){
 
 if(isset($_POST['txtemail'])){
 
-    $row=$select=$pdo->prepare("select useremail from tbl_user where useremail='$useremail'");
+    $row=$select=$pdo->prepare("select useremail from tbl_customer where useremail='$useremail' and role ='customer'");
     $select->execute();
 
     if($select->rowCount() > 0){
@@ -25,7 +25,7 @@ if(isset($_POST['txtemail'])){
     }
     else {
 
-      $insert=$pdo->prepare("insert into tbl_user(username,useremail,password,role)values(:name,:email,:pass,:role)");
+      $insert=$pdo->prepare("insert into tbl_customer(username,useremail,password,role)values(:name,:email,:pass,:role)");
 
 
       $insert->bindParam(':name',$username);
@@ -67,7 +67,7 @@ if(isset($_POST['btn_login'])) {
 
   }
 
-$select = $pdo->prepare("select * from tbl_user where useremail='$useremail'");
+$select = $pdo->prepare("select * from tbl_customer where useremail='$useremail'");
 
 $select->execute();
 $row= $select->fetch(PDO::FETCH_ASSOC);
@@ -78,24 +78,30 @@ if ($row) {
 
 if($row['useremail'] == $useremail AND $row['role']=='customer') {
 
-  $select = $pdo->prepare("select * from tbl_user where useremail= :useremail");
+  $select = $pdo->prepare("select * from tbl_customer where useremail= :useremail");
   $select->execute(array(':useremail' => $useremail));
 
   while ($row = $select->fetch()) {
-    $id = $row['userid'];
+    $id = $row['customerid'];
     $hashed_password = $row['password'];
     $useremail = $row['useremail'];
     $username = $row['username'];
     $role = $row['role'];
+    $event_address = $row['event_address'];
+    $phonenum = $row['phonenum'];
+    $payment_type = $row['payment_type'];
 
     $pwdcheck= password_verify($password, $hashed_password);
 
     if($pwdcheck){
 
-      $_SESSION['userid'] = $id;
+      $_SESSION['customerid'] = $id;
       $_SESSION['username'] = $username;
       $_SESSION['useremail'] = $useremail;
       $_SESSION['role'] = $role;
+      $_SESSION['event_address'] = $event_address;
+      $_SESSION['phonenum'] = $phonenum;
+      $_SESSION['payment_type'] = $payment_type;
 
 
 

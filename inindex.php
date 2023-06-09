@@ -1,4 +1,8 @@
+<?php
+include_once 'connectdb.php';
+session_start();
 
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +32,10 @@
    <!-- Template Stylesheet -->
    <link href="bootstrap/css/style.css" rel="stylesheet">
 
-    <title>Homepage</title>
+    <title>Homepage </title>
 </head>
 <body>
+      <!-- <h1><?php echo $_SESSION['username']; ?></h1> -->
 
     <div class="container-xxl bg-white p-0">
 
@@ -71,11 +76,13 @@
 
           <a href="shopping_cart.php" class="cart-btn">cart</a>
 
+          <a href="logout.php">Logout</a>
+
           <form class="d-flex" role="search">
             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
           </form>
-            <a href="reglogin.php">
+            <a href="profilepage.php">
               <i class="fa fa-user"></i>
             </a>
 
