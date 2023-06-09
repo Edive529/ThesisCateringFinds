@@ -6,12 +6,8 @@
       <nav class="navbar">
          <a href="add_product.php">add product</a>
          <a href="view_products.php">view products</a>
-         <?php
-            $count_order_items = $pdo->prepare("SELECT * FROM `tbl_catering_order_details` WHERE userid = ?");
-            $count_order_items->execute([$userid]);
-            $total_order_items = $count_order_items->rowCount();
-         ?>
-         <a href="orders.php">my orders<span><?= $total_order_items; ?></span></a>
+
+         <a href="orders.php">my orders</a>
          <?php
             $count_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
             $count_cart_items->execute([$userid]);
