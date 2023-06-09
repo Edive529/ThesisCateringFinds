@@ -4,7 +4,7 @@
       <a href="#" class="logo">Logo</a>
 
       <nav class="navbar">
-         <a href="add_product.php">add product</a>
+         
          <a href="view_products.php">view products</a>
 
          <a href="orders.php">my orders</a>

@@ -46,7 +46,7 @@
     <!--navbar-->
     <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0 " style="background-color: #ffa7a6; ">
       <div class="container-fluid">
-      <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+      <a href="inindex.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <h2 class="m-0 text-primary">CateringFinds</h2>
             </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,9 @@
             </li>
           </ul>
 
+          <a href="orders.php">my orders</a>
+
+          <a href="shopping_cart.php" class="cart-btn">cart</a>
 
           <form class="d-flex" role="search">
             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
