@@ -1,5 +1,5 @@
 <?php
 
-$connection = mysqli_connect("localhost", "root", "", "formaps");
+$connection = mysqli_connect("localhost", "root", "", "jackskainan");
 
 ?>
