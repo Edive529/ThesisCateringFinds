@@ -2,7 +2,7 @@
 
     class DBconnect {
         private $host = 'localhost';
-        private $dbName = 'formaps';
+        private $dbName = 'jackskainan';
         private $user = 'root';
         private $pass = '';
   

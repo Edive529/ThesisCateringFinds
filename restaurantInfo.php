@@ -83,7 +83,7 @@
 
     <!-- navmid Start -->
 
-    <div class="container" > 
+    <div class="container py-5" > 
           <div class="  position-relative"> 
               <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" >
                   <div class=" ">
@@ -130,45 +130,7 @@
   
 
  
-<!-- Category Start -->
-<div class="container-xxl "   >
-  <div class="container " >
-       
-      <div class="row g-4" >
-      <div class="col-lg-3 col-sm-3wow fadeInUp" data-wow-delay="0.5s">
-              <a class="cat-item rounded p-4" href="">
-                  <img href=""></img>
-                  <h6 class="mb-3">Food</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-          <div class="col-lg-3 col-sm-3wow fadeInUp" data-wow-delay="0.5s">
-              <a class="cat-item rounded p-4" href="">
-                  <img href=""></img>
-                  <h6 class="mb-3">Food</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-          <div class="col-lg-3 col-sm-3wow fadeInUp" data-wow-delay="0.5s">
-              <a class="cat-item rounded p-4" href="">
-                  <img href=""></img>
-                  <h6 class="mb-3">Food</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-          <div class="col-lg-3 col-sm-3wow fadeInUp" data-wow-delay="0.5s">
-              <a class="cat-item rounded p-4" href="">
-                  <img href=""></img>
-                  <h6 class="mb-3">Food</h6>
-                  <p class="mb-0">123  </p>
-              </a>
-          </div>
-          
-           
-           
-      </div>
-  </div>
-</div> 
+<!-- food Category Start -->
  
  
          

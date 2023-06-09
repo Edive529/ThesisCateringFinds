@@ -3,21 +3,21 @@
     
     class locations {
 
-        private $map_id;
+        private $userid;
         private $map_add;
         private $lat;
         private $longi;
         private $conn;
-        private $tableName = "mapsamp";
+        private $tableName = "tbl_user";
 
-        function setMap_id($map_id) { $this->map_id = $map_id; }
-        function getMap_id() { return $this->map_id; }
-        function setMap_add($map_add) { $this->map_add = $map_add; }
-        function getMap_add() { return $this->map_add; }
-        function setLat($lat) { $this->lat = $lat; }
-        function getLat() { return $this->lat; }
-        function setLongi($longi) { $this->longi = $longi; }
-        function getLongi() { return $this->longi; }
+        function setMap_id($userid) { $this->userid = $userid; }
+        function getMap_id() { return $this->userid; }
+        function setMap_add($address) { $this->address = $address; }
+        function getMap_add() { return $this->address; }
+        function setLat($latitude) { $this->latitude = $latitude; }
+        function getLat() { return $this->latitude; }
+        function setLongi($longitude) { $this->longitude = $longitude; }
+        function getLongi() { return $this->longitude; }
 
         public function __construct()
         {
