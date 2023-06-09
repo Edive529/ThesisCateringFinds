@@ -106,8 +106,12 @@ if(isset($_POST['update_cart'])){
             <div class="box">
                <p>your name <span>*</span></p>
                <input type="text" name="user" required maxlength="50" value="<?php echo $_SESSION['username']; ?>" disabled class="input">
+               <input type="hidden" name="user" value="<?php echo $_SESSION['username']; ?>">
+              <input type="submit" value="Submit">
+              <input type="hidden" name="useremail" value="<?php echo $_SESSION['useremail']; ?>">
+              <input type="submit" value="Submit">
                <p>your email <span>*</span></p>
-               <input type="email" name="useremail" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
+               <input type="email" name="" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
                <p>your number <span>*</span></p>
                <input type="number" value="<?php echo $_SESSION['phonenum']; ?>" name="phonenum" required maxlength="10" placeholder="enter your number" class="input" min="0" max="9999999999">
 
@@ -117,8 +121,8 @@ if(isset($_POST['update_cart'])){
                  <option value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
                   <option value="cash on delivery">cash on delivery</option>
                   <option value="credit or debit card">credit or debit card</option>
-                  <option value="net banking">net banking</option>
-                  <option value="UPI or wallets">UPI or RuPay</option>
+                  <option value="GCASH">GCASH</option>
+
                </select>
 
 

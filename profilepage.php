@@ -99,6 +99,10 @@ if(isset($_POST['btnupdate'])){
   $event_address_db = $row['event_address'];
   $payment_type_db = $row['payment_type'];
 
+  $_SESSION['event_address'] = $event_address_db;
+  $_SESSION['phonenum'] = $phonenum_db;
+  $_SESSION['payment_type'] = $payment_type_db;
+
 
 
  ?>
@@ -160,8 +164,8 @@ if(isset($_POST['btnupdate'])){
 
                  <option value="cash on delivery">cash on delivery</option>
                  <option value="credit or debit card">credit or debit card</option>
-                 <option value="net banking">net banking</option>
-                 <option value="UPI or wallets">UPI or RuPay</option>
+                 <option value="GCASH">GCASH</option>
+
               </select>
 
               <p>Event Address <span>*</span></p>
