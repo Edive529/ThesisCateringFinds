@@ -115,7 +115,7 @@ echo '<div id="showData">' . $allData. '</div>';
 
 
             <div class="  wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" href="restaurantInfo.php">
                     <i class="fa fa-3x fa-mail-bulk text-primary"></i>
                     <h6 class="mb-3"><?= $fetch_prodcut['restaurant']; ?></h6>
                     <p class="mb-0"><?= $fetch_prodcut['address']; ?></p>
