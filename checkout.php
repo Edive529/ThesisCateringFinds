@@ -99,7 +99,7 @@ if(isset($_POST['update_cart'])){
 
 <section class="checkout">
 
-   <h1 class="heading">checkout summary <?php echo $_SESSION['event_address']; ?></h1>
+   <h1 class="heading">checkout summary</h1>
 
    <div class="row">
 
@@ -141,7 +141,7 @@ if(isset($_POST['update_cart'])){
 
                     $result .="{".$fetch_product['food'].":".$fetch_product['saleprice']."x".$fetch_cart['qty']."=".$sub_total."} ";
 
-                    
+
 
 
 

@@ -86,7 +86,7 @@ include_once 'headerAdmin.php';
                     '.$row->catering_id.'
                     </td>
                     <td>
-                    '.$row->order_list_id.'
+                    '.$row->order_list.'
                     </td>
                     <td>
                     '.$row->cart_id.'
