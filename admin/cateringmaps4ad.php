@@ -21,7 +21,7 @@ include_once 'navbar.php';
 //         }
 // }
 
-require('locations.php');
+require('../locations.php');
 $samp = new locations;
 $allData = $samp->getLocations();
 $allData = json_encode($allData, true);
@@ -38,15 +38,15 @@ echo '<div id="showData">' . $allData. '</div>';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="bootstrap/js/googlemaps.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/googlemaps.js"></script>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <!-- Favicon -->
-   <link href="img/favicon.ico" rel="icon">
+   <link href="../img/favicon.ico" rel="icon">
 
    <!-- Google Web Fonts -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,14 +58,14 @@ echo '<div id="showData">' . $allData. '</div>';
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
    <!-- Libraries Stylesheet -->
-   <link href="lib/animate/animate.min.css" rel="stylesheet">
-   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+   <link href="../lib/animate/animate.min.css" rel="stylesheet">
+   <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
    <!-- Customized Bootstrap Stylesheet -->
-   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- Template Stylesheet -->
-   <link href="bootstrap/css/style.css" rel="stylesheet">
+   <link href="../bootstrap/css/style.css" rel="stylesheet">
 
     <style type="text/css">
         .container{
@@ -115,7 +115,7 @@ echo '<div id="showData">' . $allData. '</div>';
 
 
             <div class="  wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="restaurantInfo.php">
+                <a class="cat-item rounded p-4" href="">
                     <i class="fa fa-3x fa-mail-bulk text-primary"></i>
                     <h6 class="mb-3"><?= $fetch_prodcut['restaurant']; ?></h6>
                     <p class="mb-0"><?= $fetch_prodcut['address']; ?></p>
@@ -138,13 +138,13 @@ echo '<div id="showData">' . $allData. '</div>';
        <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="bootstrap/js/main.js"></script>
+    <script src="../bootstrap/js/main.js"></script>
 
      </body>
 
@@ -152,6 +152,6 @@ echo '<div id="showData">' . $allData. '</div>';
 </html>
 <?php
 
-include_once 'mainfooter.php';
+include_once '../mainfooter.php';
 
  ?>

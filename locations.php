@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-    
+
     class locations {
 
         private $userid;
@@ -28,15 +28,15 @@
         }
 
         public function getLocations(){
-            $sql = "SELECT * FROM $this->tableName";
+            $sql = "SELECT * FROM $this->tableName where status = 'approved'";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         }
 
-         
- 
+
+
     }
 
 ?>

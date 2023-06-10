@@ -1,12 +1,9 @@
 <?php
 
 include 'connectdb.php';
+session_start();
 
-if(isset($_COOKIE['userid'])){
-   $userid = $_COOKIE['userid'];
-}else{
-   setcookie('userid', create_unique_id(), time() + 60*60*24*30);
-}
+$userid = $_SESSION['customerid'];
 
 if(isset($_GET['get_id'])){
    $get_id = $_GET['get_id'];
@@ -71,10 +68,11 @@ if(isset($_POST['cancel'])){
       </div>
       <div class="col">
          <p class="title">billing address</p>
-         <p class="user"><i class="fas fa-user"></i><?= $fetch_order['user']; ?></p>
+         <p class="user"><i class="fas fa-user"></i><?php echo $_SESSION['username'] ?></p>
          <p class="user"><i class="fas fa-phone"></i><?= $fetch_order['phonenum']; ?></p>
-         <p class="user"><i class="fas fa-envelope"></i><?= $fetch_order['useremail']; ?></p>
+         <p class="user"><i class="fas fa-envelope"></i><?php echo $_SESSION['useremail'] ?></p>
          <p class="user"><i class="fas fa-map-marker-alt"></i><?= $fetch_order['event_address']; ?></p>
+         <p class="user"><i class="fas fa-calendar"></i><?= $fetch_order['date_of_reservation']; ?></p>
          <p class="title">status</p>
          <p class="status" style="color:<?php if($fetch_order['status'] == 'delivered'){echo 'green';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_order['status']; ?></p>
          <?php if($fetch_order['status'] == 'canceled'){ ?>

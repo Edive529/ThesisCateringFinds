@@ -1,3 +1,125 @@
+
+
+<?php
+include_once 'connectdb.php';
+session_start();
+
+
+
+if(isset($_POST['btnsave'])){
+  $username=$_POST['txtname'];
+  $useremail=$_POST['txtemail'];
+  $password=$_POST['txtpassword'];
+  $userrole=$_POST['txtselect_option'];
+
+
+  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+if(isset($_POST['txtemail'])){
+
+    $row=$select=$pdo->prepare("select useremail from tbl_customer where useremail='$useremail' and role ='customer'");
+    $select->execute();
+
+    if($select->rowCount() > 0){
+      echo'<script>alert("Email Already Exists!");</script>';
+    }
+    else {
+
+      $insert=$pdo->prepare("insert into tbl_customer(username,useremail,password,role)values(:name,:email,:pass,:role)");
+
+
+      $insert->bindParam(':name',$username);
+      $insert->bindParam(':email',$useremail);
+      $insert->bindParam(':pass',$hashed_password);
+      $insert->bindParam(':role',$userrole);
+
+
+      if ($insert->execute()) {
+        echo'<script>alert("Registration Successful");</script>';
+
+      }
+    }
+  }
+}
+
+if(isset($_POST['btn_login'])) {
+
+  $useremail = $_POST['txt_email'];
+  $password = $_POST['txt_password'];
+
+  if ($useremail == "" OR $password == "") {
+
+    echo'<script type ="text/javascript">
+    jQuery(function validation(){
+
+      swal({
+      title: "Warning!",
+      text: "Email Or Password field is empty!",
+      icon: "warning",
+      button: "Ok",
+    });
+
+
+
+    });
+
+    </script>';
+
+  }
+
+$select = $pdo->prepare("select * from tbl_customer where useremail='$useremail'");
+
+$select->execute();
+$row= $select->fetch(PDO::FETCH_ASSOC);
+
+
+if ($row) {
+
+
+if($row['useremail'] == $useremail AND $row['role']=='customer') {
+
+  $select = $pdo->prepare("select * from tbl_customer where useremail= :useremail");
+  $select->execute(array(':useremail' => $useremail));
+
+  while ($row = $select->fetch()) {
+    $id = $row['customerid'];
+    $hashed_password = $row['password'];
+    $useremail = $row['useremail'];
+    $username = $row['username'];
+    $role = $row['role'];
+    $event_address = $row['event_address'];
+    $phonenum = $row['phonenum'];
+    $payment_type = $row['payment_type'];
+
+    $pwdcheck= password_verify($password, $hashed_password);
+
+    if($pwdcheck){
+
+      $_SESSION['customerid'] = $id;
+      $_SESSION['username'] = $username;
+      $_SESSION['useremail'] = $useremail;
+      $_SESSION['role'] = $role;
+      $_SESSION['event_address'] = $event_address;
+      $_SESSION['phonenum'] = $phonenum;
+      $_SESSION['payment_type'] = $payment_type;
+
+
+
+
+      header('refresh:1; inindex.php');
+
+
+    }
+
+
+
+}}}}
+
+ ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,34 +129,37 @@
 
     <!-- Template Stylesheet -->
     <link href="bootstrap/css/reglog.css" rel="stylesheet">
- 
+
    <!-- Icon Font Stylesheet -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-     
+
    <style>
-   
+
    </style>
     <title>Signin-Signup</title>
+
+
 </head>
 <body >
     <div class="reglogcontainer">
         <div class="signin-signup">
 
-            <form action="" class="signInForm">
+            <form action="" method="post"class="signInForm">
                 <h2 class="title">Sign-In</h2>
                 <div class="inputField">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username">
+                    <input type="text" placeholder="Username" name="txt_email">
                 </div>
                 <div class="inputField">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="txt_password">
                 </div>
-                <input type="submit" value="Login" class="btnr">
-                
+
+                <button type="submit" class="btnr" name="btn_login">Sign In</button>
+
                 <p class="socialText"> Or sign in with social platform</p>
-                
+
                 <div class="socialMedia">
                     <a href="" class="socialIcon">
                         <i class="fab fa-facebook"></i>
@@ -51,27 +176,33 @@
 
                 </div>
                 <p class="accountText">Don't have an account? <a href="#" id="signUpBtn2">Sign Up</a></p>
-                    
+
             </form>
 
-            <form action="" class="signUpForm">
+            <form role="form" action="" method="post">
                 <h2 class="title">Sign-Up</h2>
                 <div class="inputField">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username">
+                    <input type="text" placeholder="Username" name="txtname" required>
                 </div>
                 <div class="inputField">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" name="txtemail" required>
                 </div>
                 <div class="inputField">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="txtpassword" required>
                 </div>
-                <input type="submit" value="SignUp" class="btnr">
+                <div class="form-group">
+				  <label></label>
+				  <input type="text" class="form-control" name="txtselect_option" value="customer" style="display:none;"  placeholder="Enter name..." required>
+				</div>
+
+
+                <button type="submit" class="btnr" name="btnsave">Sign-Up</button>
 
                 <p class="socialText"> Or sign up with social platform</p>
-                
+
                 <div class="socialMedia">
 
                     <a href="" class="socialIcon">
@@ -88,12 +219,12 @@
                     </a>
 
                 </div>
-                <p class="accountText">Already have an account? <a href="#" id="signInBtn2">Sign In</a></p>    
+                <p class="accountText">Already have an account? <a href="reglogin.php" id="signInBtn2">Sign In</a></p>
             </form>
-            
+
         </div>
 
-        <div class="panelsContainer"> 
+        <div class="panelsContainer">
             <div class="panel left-panel">
                 <div class="content">
                     <h3>Member of CateringFinds?</h3>

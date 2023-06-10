@@ -1,4 +1,8 @@
+<?php
+include_once 'connectdb.php';
+session_start();
 
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +32,10 @@
    <!-- Template Stylesheet -->
    <link href="bootstrap/css/style.css" rel="stylesheet">
 
-    <title>Homepage</title>
+    <title>Homepage </title>
 </head>
 <body>
+      <!-- <h1><?php echo $_SESSION['username']; ?></h1> -->
 
     <div class="container-xxl bg-white p-0">
 
@@ -46,7 +51,7 @@
     <!--navbar-->
     <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0 " style="background-color: #ffa7a6; ">
       <div class="container-fluid">
-      <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+      <a href="inindex.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <h2 class="m-0 text-primary">CateringFinds</h2>
             </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,12 +72,17 @@
             </li>
           </ul>
 
+          <a href="orders.php" style = "padding:30px;">My Orders</a>
+
+          <a href="shopping_cart.php" class="cart-btn" style = "padding:30px;">My Cart</a>
+
+          <a href="logout.php" style = "padding:30px;">Logout</a>
 
           <form class="d-flex" role="search">
             <input class="form-control " type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
           </form>
-            <a href="reglogin.php">
+            <a href="profilepage.php">
               <i class="fa fa-user"></i>
             </a>
 

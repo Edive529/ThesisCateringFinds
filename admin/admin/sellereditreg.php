@@ -37,14 +37,14 @@ if(isset($_POST['btnupdate'])){
     $status_txt = $_POST['txtstatus'];
 
   }
-  $latitude_txt = $_POST['txtlatidude'];
+  $latitude_txt = $_POST['txtlatitude'];
   $longitude_txt = $_POST['txtlongitude'];
 
 
 
 
           $update = $pdo->prepare("update tbl_user set username=:name, useremail=:email,
-          role=:role, status=:status where userid=$id");
+          role=:role, status=:status, latitude=:latitude, longitude=:longitude where userid=$id");
 
           $update->bindParam(':name',$name_txt);
           $update->bindParam(':email',$email_txt);
@@ -113,6 +113,8 @@ $name_db = $row['username'];
 $email_db = $row['useremail'];
 $role_db = $row['role'];
 $status_db = $row['status'];
+$latitude_db = $row['latitude'];
+$longitude_db = $row['longitude'];
 
 
 ?>
@@ -178,7 +180,8 @@ $status_db = $row['status'];
           <div class="form-group">
             <label>Role</label>
             <select class="form-control" name="txtrole">
-              <optiondisabled selected><?php echo $role_db;?></option required>
+              <option hidden value="<?php echo $role_db;?>" selected ><?php echo $role_db;?></option>
+
               <option>Admin</option>
               <option>Seller</option>
             </select>
@@ -191,7 +194,9 @@ $status_db = $row['status'];
         <div class="form-group">
           <label>Status</label>
           <select class="form-control" name="txtstatus">
-            <option disabled selected><?php echo $status_db;?></option required>
+            <option hidden value="<?php echo $status_db;?>?>" selected ><?php echo $status_db;?></option>
+
+
             <option>Not approved</option>
             <option>approved</option>
           </select>
@@ -199,12 +204,12 @@ $status_db = $row['status'];
 
         <div class="form-group">
            <label>Latitude</label>
-           <input type="text" class="form-control" name="txtname" value="<?php echo $latitude_db;?>" placeholder="Enter name..." required>
+           <input type="text" class="form-control" name="txtlatitude" value="<?php echo $latitude_db;?>" placeholder="Enter name..." required>
          </div>
 
          <div class="form-group">
             <label>Longitude</label>
-            <input type="text" class="form-control" name="txtname" value="<?php echo $longitude_db;?>" placeholder="Enter name..." required>
+            <input type="text" class="form-control" name="txtlongitude" value="<?php echo $longitude_db;?>" placeholder="Enter name..." required>
           </div>
 
 

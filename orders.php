@@ -1,12 +1,9 @@
 <?php
 
 include 'connectdb.php';
+session_start();
 
-if(isset($_COOKIE['userid'])){
-   $userid = $_COOKIE['userid'];
-}else{
-   setcookie('userid', create_unique_id(), time() + 60*60*24*30);
-}
+$userid = $_SESSION['customerid'];
 
 ?>
 

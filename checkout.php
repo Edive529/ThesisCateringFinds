@@ -2,11 +2,9 @@
 
 include 'connectdb.php';
 
-if(isset($_COOKIE['userid'])){
-   $userid = $_COOKIE['userid'];
-}else{
-   setcookie('userid', create_unique_id(), time() + 60*60*24*30);
-}
+session_start();
+
+$userid = $_SESSION['customerid'];
 
 if(isset($_POST['place_order'])){
 
@@ -16,10 +14,8 @@ if(isset($_POST['place_order'])){
    $number = filter_var($number, FILTER_SANITIZE_STRING);
    $email = $_POST['useremail'];
    $email = filter_var($email, FILTER_SANITIZE_STRING);
-   $event_address = $_POST['flat'].', '.$_POST['street'].', '.$_POST['city'].', '.$_POST['country'];
+   $event_address = $_POST['event_address'];
    $event_address = filter_var($event_address, FILTER_SANITIZE_STRING);
-   $address_type = $_POST['address_type'];
-   $address_type = filter_var($address_type, FILTER_SANITIZE_STRING);
    $method = $_POST['payment_type'];
    $method = filter_var($method, FILTER_SANITIZE_STRING);
    $date_to_be_delivered = $_POST['date_to_be_delivered'];
@@ -27,7 +23,7 @@ if(isset($_POST['place_order'])){
    $time_to_be_delivered = $_POST['time_to_be_delivered'];
    $time_to_be_delivered = filter_var($time_to_be_delivered, FILTER_SANITIZE_STRING);
 
-   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_cart->execute([$userid]);
 
    if(isset($_GET['get_id'])){
@@ -36,8 +32,8 @@ if(isset($_POST['place_order'])){
       $get_product->execute([$_GET['get_id']]);
       if($get_product->rowCount() > 0){
          while($fetch_p = $get_product->fetch(PDO::FETCH_ASSOC)){
-            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(catering_id, userid, user, phonenum, useremail, event_address, address_type, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $insert_order->execute([create_unique_id(), $userid, $name, $number, $email, $event_address, $address_type, $method, $fetch_p['foodid'], $fetch_p['price'], 1, $date_to_be_delivered, $time_to_be_delivered]);
+            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, user, phonenum, useremail, event_address, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+            $insert_order->execute([$userid, $name, $number, $email, $event_address,  $method, $fetch_p['foodid'], $fetch_p['price'], 1, $date_to_be_delivered, $time_to_be_delivered]);
             header('location:orders.php');
          }
       }else{
@@ -48,13 +44,13 @@ if(isset($_POST['place_order'])){
 
       while($f_cart = $verify_cart->fetch(PDO::FETCH_ASSOC)){
 
-         $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(catering_id, userid, user, phonenum, useremail, event_address, address_type, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-         $insert_order->execute([create_unique_id(), $userid, $name, $number, $email, $event_address, $address_type, $method, $f_cart['foodid'], $f_cart['price'], $f_cart['qty'], $date_to_be_delivered, $time_to_be_delivered]);
+         $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, user, phonenum, useremail, event_address, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+         $insert_order->execute([$userid, $name, $number, $email, $event_address, $method, $f_cart['foodid'], $f_cart['price'], $f_cart['qty'], $date_to_be_delivered, $time_to_be_delivered]);
 
       }
 
       if($insert_order){
-         $delete_cart_id = $pdo->prepare("DELETE FROM `tbl_cart` WHERE userid = ?");
+         $delete_cart_id = $pdo->prepare("DELETE FROM `tbl_cart` WHERE customerid = ?");
          $delete_cart_id->execute([$userid]);
          header('location:orders.php');
       }
@@ -100,7 +96,7 @@ if(isset($_POST['update_cart'])){
 
 <section class="checkout">
 
-   <h1 class="heading">checkout summary</h1>
+   <h1 class="heading">checkout summary <?php echo $_SESSION['event_address']; ?></h1>
 
    <div class="row">
 
@@ -109,35 +105,33 @@ if(isset($_POST['update_cart'])){
          <div class="flex">
             <div class="box">
                <p>your name <span>*</span></p>
-               <input type="text" name="user" required maxlength="50" placeholder="enter your name" class="input">
-               <p>your number <span>*</span></p>
-               <input type="number" name="phonenum" required maxlength="10" placeholder="enter your number" class="input" min="0" max="9999999999">
+               <input type="text" name="user" required maxlength="50" value="<?php echo $_SESSION['username']; ?>" disabled class="input">
+               <input type="hidden" name="user" value="<?php echo $_SESSION['username']; ?>">
+
+              <input type="hidden" name="useremail" value="<?php echo $_SESSION['useremail']; ?>">
+
                <p>your email <span>*</span></p>
-               <input type="email" name="useremail" required maxlength="50" placeholder="enter your email" class="input">
+               <input type="email" name="" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
+               <p>your number <span>*</span></p>
+               <input type="number" value="<?php echo $_SESSION['phonenum']; ?>" name="phonenum" required maxlength="10" placeholder="enter your number" class="input" min="0" max="9999999999">
+
                <p>payment method <span>*</span></p>
-               <select name="payment_type" class="input" required>
+               <select name="payment_type" class="input" value= "<?php echo $_SESSION['payment_type']; ?>" required>
+
+                 <option hidden value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
                   <option value="cash on delivery">cash on delivery</option>
                   <option value="credit or debit card">credit or debit card</option>
-                  <option value="net banking">net banking</option>
-                  <option value="UPI or wallets">UPI or RuPay</option>
+                  <option value="GCASH">GCASH</option>
+
                </select>
-               <p>address type <span>*</span></p>
-               <select name="address_type" class="input" required>
-                  <option value="home">home</option>
-                  <option value="office">office</option>
-               </select>
-               <p>address line 01 <span>*</span></p>
-               <input type="text" name="flat" required maxlength="50" placeholder="e.g. flat & building number" class="input">
+
+
             </div>
             <div class="box">
 
-               <p>address line 02 <span>*</span></p>
-               <input type="text" name="street" required maxlength="50" placeholder="e.g. street name & locality" class="input">
-               <p>city name <span>*</span></p>
-               <input type="text" name="city" required maxlength="50" disabled value="Iligan City" placeholder="enter your city name" class="input">
-               <p>country name <span>*</span></p>
-               <input type="text" name="country" required disabled maxlength="50" value="Philippines" class="input">
-               <p>Delivery date<span>*</span></p>
+              <p>Event Address <span>*</span></p>
+              <input type="textarea" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
+<p>Delivery Date</p>
                <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input">
                <p>Delivery time<span>*</span></p>
                <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
@@ -160,7 +154,7 @@ if(isset($_POST['update_cart'])){
             <div>
                <h3 class="food"><?= $fetch_get['food']; ?></h3>
                <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_get['saleprice']; ?></p>
-               
+
                <input type="number" name="qty" required min="1" value="<?= $fetch_cart['qty']; ?>" max="99" maxlength="2" class="qty">
                <button type="submit" name="update_cart" class="fas fa-edit">
                </button>
@@ -172,7 +166,7 @@ if(isset($_POST['update_cart'])){
          <?php
                }
             }else{
-               $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+               $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
                $select_cart->execute([$userid]);
                if($select_cart->rowCount() > 0){
                   while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){

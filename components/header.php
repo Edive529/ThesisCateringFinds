@@ -1,15 +1,15 @@
 <header class="header">
 
    <section class="flex">
-      <a href="#" class="logo">Logo</a>
+      <a href="inindex.php" class="logo">Logo</a>
 
       <nav class="navbar">
-         <a href="add_product.php">add product</a>
+
          <a href="view_products.php">view products</a>
 
          <a href="orders.php">my orders</a>
          <?php
-            $count_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+            $count_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
             $count_cart_items->execute([$userid]);
             $total_cart_items = $count_cart_items->rowCount();
          ?>

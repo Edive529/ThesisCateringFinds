@@ -29,122 +29,162 @@ include_once 'headerAdmin.php';
 //   </script>';
 //
 // }
+// mao ni=====
+//
+// if(isset($_POST['btnsave'])){
+//
+//   $username = $_POST['txtusername'];
+//   $useremail = $_POST['txtemail'];
+//   $restaurant = $_POST['txtrestaurant'];
+//   $address = $_POST['txtaddress'];
+//   $latitude = $_POST['txtlatitude'];
+//   $longitude = $_POST['txtlongitude'];
+//
+//   $password = $_POST['txtpassword'];
+//
+//   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+//
+// $file_name = $_FILES['file']['name'];
+// $file_type = $_FILES['file']['type'];
+// $file_size = $_FILES['file']['size'];
+// $file_tem_loc = $_FILES['file']['tmp_name'];
+// $file_store = "../upload/".$file_name;
+// $f_extension = explode('.',$file_name);
+// $f_extension = strtolower(end($f_extension));
+//
+// $f_newfile = uniqid().'.'.$f_extension;
+// $file_store = "../upload/".$f_newfile;
+
+// if(isset($_POST['txtemail'])){
+//
+//   $row=$select=$pdo->prepare("select useremail from tbl_user where useremail='$useremail'");
+//   $select->execute();
+//
+//   if($select->rowCount() > 0){
+//     echo'<script type ="text/javascript">
+//     jQuery(function validation(){
+//
+//       swal({
+//       title: "Warning!",
+//       text: "Email Already Exists!",
+//       icon: "warning",
+//       button: "Ok",
+//     });
+//
+//
+//
+//     });
+//
+//     </script>';
+//   }
+// }
+// if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $f_extension == 'jpeg') {
+//
+//   if($file_size>=5000000) {
+//     $error ='<script type ="text/javascript">
+//     jQuery(function validation(){
+//
+//       swal({
+//       title: "Warning!",
+//       text: "Max file should be 5MB!",
+//       icon: "warning",
+//       button: "Ok",
+//     });
+//
+//
+//
+//     });
+//
+//     </script>';
+//     echo $error;
+//
+//   }else{
+//     if (move_uploaded_file($file_tem_loc, $file_store)) {
+//
+//       $upload = $f_newfile;
+//
+//
+//
+//         $insert=$pdo->prepare("insert into tbl_user(username,useremail,restaurant,address,password,latitude,longitude,image)
+//         values(:username,:useremail,:restaurant,:address,:password,:latitude,:longitude,:image)");
+//
+//
+//         $insert->bindParam(':username',$username);
+//         $insert->bindParam(':useremail',$useremail);
+//         $insert->bindParam(':restaurant',$restaurant);
+//
+//         $insert->bindParam(':address',$address);
+//         $insert->bindParam(':password',$hashed_password);
+//         $insert->bindParam(':latitude',$latitude);
+//         $insert->bindParam(':longitude',$longitude);
+//
+//         $insert->bindParam(':image',$upload);
+//
+//
+//
+//
+//         if($insert->execute()){
+//
+//           echo'<script type ="text/javascript">
+//           jQuery(function validation(){
+//
+//             swal({
+//             title: "Good Job!",
+//             text: "Image is successfuly uploaded!",
+//             icon: "success",
+//             button: "Ok",
+//           });
+//
+//
+//
+//           });
+//
+//           </script>';
+//
+//         }else{
+//           echo'<script type ="text/javascript">
+//           jQuery(function validation(){
+//
+//             swal({
+//             title: "Error!",
+//             text: "Upload failed!",
+//             icon: "error",
+//             button: "Ok",
+//           });
+//
+//
+//
+//           });
+//
+//           </script>';
+//
+//         }
+//
+//         }
+//     }
+//   }else{
+//     $error = '<script type ="text/javascript">
+//     jQuery(function validation(){
+//
+//       swal({
+//       title: "Warning!",
+//       text: "Only Jpg, Jpeg, Png and Gif file is allowed!",
+//       icon: "warning",
+//       button: "Ok",
+//     });
+//
+//
+//
+//     });
+//
+//     </script>';
+//     echo $error;
+//   }
+//
+// }
 
 
-if(isset($_POST['btnsave'])){
-  $restaurant=$_POST['txtrestaurant'];
-  $latitude=$_POST['txtlatitude'];
-  $longitude=$_POST['txtlongitude'];
 
-
-  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-  // echo $username .'-'. $useremail .'-'. $password .'-'. $userrole;
-  if(!isset($restaurant) || trim($restaurant) == ''){
-
-    echo '<script type ="text/javascript">
-    jQuery(function validation(){
-
-      swal({
-      title: "ERROR!",
-      text: "Name Field Empty! Try again",
-      icon: "error",
-      button: "Ok",
-    });
-
-
-
-    });
-
-    </script>';
-  }elseif (!isset($latitude) || trim($latitude) == ''){
-    echo '<script type ="text/javascript">
-    jQuery(function validation(){
-
-      swal({
-      title: "ERROR!",
-      text: "Role Field Empty! Try again",
-      icon: "error",
-      button: "Ok",
-    });
-
-
-
-    });
-
-    </script>';
-  }elseif (!isset($longitude) || trim($longitude) == '') {
-    echo '<script type ="text/javascript">
-    jQuery(function validation(){
-
-      swal({
-      title: "ERROR!",
-      text: "Password Field Empty! Try again",
-      icon: "error",
-      button: "Ok",
-    });
-
-
-
-    });
-
-    </script>';
-  }
-
-
-  else if(isset($_POST['txtemail'])){
-
-    $row=$select=$pdo->prepare("select restaurant from tbl_user where restaurant='$restaurant'");
-    $select->execute();
-
-    if($select->rowCount() > 0){
-      echo'<script type ="text/javascript">
-      jQuery(function validation(){
-
-        swal({
-        title: "Warning!",
-        text: "restaurant Already Exists!",
-        icon: "warning",
-        button: "Ok",
-      });
-
-
-
-      });
-
-      </script>';
-    }
-    else {
-
-      $insert=$pdo->prepare("insert into tbl_user(restaurant,latitude,longitude)values(:restaurant,:latitude,:longitude)");
-
-
-      $insert->bindParam(':restaurant',$restaurant);
-      $insert->bindParam(':latitude',$latitude);
-      $insert->bindParam(':longitude',$longitude);
-
-
-      if ($insert->execute()) {
-        echo'<script type ="text/javascript">
-        jQuery(function validation(){
-
-          swal({
-          title: "Good Job!",
-          text: "Registration Successful!",
-          icon: "success",
-          button: "Ok",
-        });
-
-
-
-        });
-
-        </script>';
-
-      }
-    }
-  }
-}
 
  ?>
 
@@ -186,12 +226,30 @@ if(isset($_POST['btnsave'])){
           <div class="modal fade" id="myModal">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header bg-info text-white">
+                <!-- <div class="modal-header bg-info text-white">
                   Register new member
 
-                </div>
-                <form role="form" action="" method="post">
+                </div> -->
+                <form role="form" action="" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
+
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="txtusername" placeholder="Enter name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" name="txtemail" placeholder="Enter name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="txtaddress" placeholder="Enter name" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" class="form-control" name="txtpassword" placeholder="Enter name" required>
+                  </div>
 
                     <div class="form-group">
                       <label>Restaurant</label>
@@ -199,11 +257,17 @@ if(isset($_POST['btnsave'])){
                     </div>
                     <div class="form-group">
                       <label >Latitude</label>
-                      <input type="email" class="form-control" name="txtlatitude" placeholder="Enter email" required>
+                      <input type="text" class="form-control" name="txtlatitude" placeholder="Enter email" required>
                     </div>
                     <div class="form-group">
                       <label >Longitude</label>
-                      <input type="password" class="form-control" name="txtpassword" placeholder="Password" required>
+                      <input type="text" class="form-control" name="txtlongitude" placeholder="Password" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label >Upload menu</label>
+                      <input type="file" class="input-group" name="file" required>
+
                     </div>
 
 
@@ -225,7 +289,7 @@ if(isset($_POST['btnsave'])){
             </div>
 
           </div>
-          <h3 class="card-title"><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-info" role="button">Add new member</a></h3>
+          <!-- <h3 class="card-title"><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-info" role="button">Add new member</a></h3> -->
         </div>
 
           <div class="card-body">
@@ -246,6 +310,7 @@ if(isset($_POST['btnsave'])){
                 <th>Email</th>
                 <th>Status</th>
                 <th>Restaurant</th>
+                <th>Address</th>
                 <th>Menu</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
@@ -272,6 +337,7 @@ if(isset($_POST['btnsave'])){
                 <td>'.$row->useremail.'</td>
                 <td>'.$row->status.'</td>
                 <td>'.$row->restaurant.'</td>
+                <td>'.$row->address.'</td>
                 <td>
                 <img src = "../upload/'.$row->image.'" class = "img-rounded" width = "40px" height = "40px">
                 </td>

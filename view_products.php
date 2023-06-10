@@ -1,13 +1,9 @@
 <?php
 
-include_once 'connectdb.php';
+include 'connectdb.php';
 session_start();
 
-if(isset($_COOKIE['userid'])){
-   $userid = $_COOKIE['userid'];
-}else{
-   setcookie('userid', create_unique_id(), time() + 60*60*24*30);
-}
+$userid = $_SESSION['customerid'];
 
 if(isset($_POST['add_to_cart'])){
 
@@ -17,10 +13,10 @@ if(isset($_POST['add_to_cart'])){
    $qty = $_POST['qty'];
    $qty = filter_var($qty, FILTER_SANITIZE_STRING);
 
-   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ? AND foodid = ?");
+   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
    $verify_cart->execute([$userid, $foodid]);
 
-   $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+   $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $max_cart_items->execute([$userid]);
 
    if($verify_cart->rowCount() > 0){
@@ -33,7 +29,7 @@ if(isset($_POST['add_to_cart'])){
       $select_price->execute([$foodid]);
       $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
 
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(id, userid, foodid, price, qty) VALUES(?,?,?,?,?)");
+      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(id, customerid, foodid, price, qty) VALUES(?,?,?,?,?)");
       $insert_cart->execute([$id, $userid, $foodid, $fetch_price['saleprice'], $qty]);
       $success_msg[] = 'Added to cart!';
    }
@@ -181,33 +177,7 @@ if(isset($_POST['add_to_cart'])){
    ?>
 
    </div>
-   <div class="box-container">
 
-   <?php
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu`");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="POST" class="box">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
-   </form>
-   <?php
-      }
-   }else{
-      echo '<p class="empty">no products found!</p>';
-   }
-   ?>
-
-   </div>
 
    <h1 class="heading">Salad</h1>
 
@@ -215,7 +185,7 @@ if(isset($_POST['add_to_cart'])){
    <div class="box-container">
 
    <?php
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu`");
+      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Salad'");
       $select_products->execute();
       if($select_products->rowCount() > 0){
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
