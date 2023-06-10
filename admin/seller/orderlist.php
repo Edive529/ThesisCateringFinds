@@ -56,7 +56,7 @@ include_once 'header.php';
               <thead>
                 <tr>
                   <th>catering_id</th>
-                  <th>order_list_id</th>
+                  <th>order_list</th>
                   <th>cart_id</th>
                   <th>payment_type</th>
                   <th>user</th>
@@ -86,7 +86,7 @@ include_once 'header.php';
                     '.$row->catering_id.'
                     </td>
                     <td>
-                    '.$row->order_list_id.'
+                    '.$row->order_list.'
                     </td>
                     <td>
                     '.$row->cart_id.'

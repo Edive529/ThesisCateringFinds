@@ -72,7 +72,7 @@ if(isset($_POST['cancel'])){
          <p class="user"><i class="fas fa-phone"></i><?= $fetch_order['phonenum']; ?></p>
          <p class="user"><i class="fas fa-envelope"></i><?php echo $_SESSION['useremail'] ?></p>
          <p class="user"><i class="fas fa-map-marker-alt"></i><?= $fetch_order['event_address']; ?></p>
-         <p class="user"><i class="fas fa-calendar"></i><?= $fetch_order['date_of_reservation']; ?></p>
+         <p class="user"><i class="fas fa-calendar"></i><?= $fetch_order['date_to_be_delivered']; ?></p>
          <p class="title">status</p>
          <p class="status" style="color:<?php if($fetch_order['status'] == 'delivered'){echo 'green';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_order['status']; ?></p>
          <?php if($fetch_order['status'] == 'canceled'){ ?>

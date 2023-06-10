@@ -127,7 +127,7 @@ echo '<div id="showData">' . $allData. '</div>';
        </div>
 
 
-        <div class="col-lg-9 ">
+        <div class="col-lg-9">
             <div id="map"></div>
         </div>
 

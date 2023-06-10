@@ -4,6 +4,8 @@ include 'connectdb.php';
 
 session_start();
 
+
+
 $userid = $_SESSION['customerid'];
 
 if(isset($_POST['place_order'])){
@@ -12,6 +14,8 @@ if(isset($_POST['place_order'])){
    $name = filter_var($name, FILTER_SANITIZE_STRING);
    $number = $_POST['phonenum'];
    $number = filter_var($number, FILTER_SANITIZE_STRING);
+   $order = $_POST['order_list'];
+   $order = filter_var($order, FILTER_SANITIZE_STRING);
    $email = $_POST['useremail'];
    $email = filter_var($email, FILTER_SANITIZE_STRING);
    $event_address = $_POST['event_address'];
@@ -26,40 +30,39 @@ if(isset($_POST['place_order'])){
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_cart->execute([$userid]);
 
-   if(isset($_GET['get_id'])){
 
-      $get_product = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-      $get_product->execute([$_GET['get_id']]);
-      if($get_product->rowCount() > 0){
-         while($fetch_p = $get_product->fetch(PDO::FETCH_ASSOC)){
-            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, user, phonenum, useremail, event_address, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-            $insert_order->execute([$userid, $name, $number, $email, $event_address,  $method, $fetch_p['foodid'], $fetch_p['price'], 1, $date_to_be_delivered, $time_to_be_delivered]);
+
+
+            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?)");
+            $insert_order->execute([$userid, $order, $name, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
             header('location:orders.php');
-         }
-      }else{
-         $warning_msg[] = 'Something went wrong!';
-      }
 
-   }elseif($verify_cart->rowCount() > 0){
+      // else{
+      //    $warning_msg[] = 'Something went wrong!';
+      // }
 
-      while($f_cart = $verify_cart->fetch(PDO::FETCH_ASSOC)){
-
-         $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, user, phonenum, useremail, event_address, payment_type, foodid, saleprice, qty, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-         $insert_order->execute([$userid, $name, $number, $email, $event_address, $method, $f_cart['foodid'], $f_cart['price'], $f_cart['qty'], $date_to_be_delivered, $time_to_be_delivered]);
-
-      }
+   // if($verify_cart->rowCount() > 0){
+   //
+   //    while($f_cart = $verify_cart->fetch(PDO::FETCH_ASSOC)){
+   //
+   //       $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?)");
+   //       $insert_order->execute([$userid, $order, $name, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
+   //
+   //    }
 
       if($insert_order){
          $delete_cart_id = $pdo->prepare("DELETE FROM `tbl_cart` WHERE customerid = ?");
          $delete_cart_id->execute([$userid]);
          header('location:orders.php');
       }
+    }
 
-   }else{
-      $warning_msg[] = 'Your cart is empty!';
-   }
+   // }else{
+   //    $warning_msg[] = 'Your cart is empty!';
+   // }
 
-}
+
+
 
 if(isset($_POST['update_cart'])){
 
@@ -100,6 +103,85 @@ if(isset($_POST['update_cart'])){
 
    <div class="row">
 
+     <div class="summary">
+        <h3 class="title">cart items</h3>
+        <?php
+           $grand_total = 0;
+           if(isset($_GET['get_id'])){
+              $select_get = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
+              $select_get->execute([$_GET['get_id']]);
+              while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
+        ?>
+        <div class="flex">
+           <img src="admin/upload/<?= $fetch_get['image']; ?>" class="image" alt="">
+           <div>
+              <h3 class="food"><?= $fetch_get['food']; ?></h3>
+              <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_get['saleprice']; ?></p>
+
+              <input type="number" name="qty" required min="1" value="<?= $fetch_cart['qty']; ?>" max="99" maxlength="2" class="qty">
+              <button type="submit" name="update_cart" class="fas fa-edit">
+              </button>
+           </div>
+
+
+
+        </div>
+        <?php
+              }
+           }else{
+             $result = " ";
+              $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
+              $select_cart->execute([$userid]);
+              if($select_cart->rowCount() > 0){
+                 while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
+                    $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
+                    $select_products->execute([$fetch_cart['foodid']]);
+                    $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
+                    $sub_total = ($fetch_cart['qty'] * $fetch_product['saleprice']);
+
+                    $result .="{".$fetch_product['food'].":".$fetch_product['saleprice']."x".$fetch_cart['qty']."=".$sub_total."} ";
+
+                    
+
+
+
+                    $grand_total += $sub_total;
+
+
+        ?>
+
+        <div class="flex">
+           <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
+           <div>
+             <h3></h3>
+              <h3 class="food"><?= $fetch_product['food']; ?></h3>
+              <p class="saleprice"><i class="fas fa-peso-sign"></i> <?= $fetch_product['saleprice']; ?> x <?= $fetch_cart['qty']; ?></p>
+           </div>
+        </div>
+
+
+        <?php
+                 }
+              }else{
+                 echo '<p class="empty">your cart is empty</p>';
+              }
+           } $maonani = $result." = ".$grand_total;
+        ?>
+        <div class="grand-total"><span>grand total :</span><p><i class="fas fa-peso-sign"></i> <?= $grand_total; ?></p></div>
+
+
+
+
+
+
+
+
+
+
+     </div>
+
+
+
       <form action="" method="POST">
          <h3>billing details</h3>
          <div class="flex">
@@ -135,65 +217,15 @@ if(isset($_POST['update_cart'])){
                <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input">
                <p>Delivery time<span>*</span></p>
                <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
+               <input hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
+
+
             </div>
          </div>
          <input type="submit" value="place order" name="place_order" class="btn">
       </form>
 
-      <div class="summary">
-         <h3 class="title">cart items</h3>
-         <?php
-            $grand_total = 0;
-            if(isset($_GET['get_id'])){
-               $select_get = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
-               $select_get->execute([$_GET['get_id']]);
-               while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
-         ?>
-         <div class="flex">
-            <img src="admin/upload/<?= $fetch_get['image']; ?>" class="image" alt="">
-            <div>
-               <h3 class="food"><?= $fetch_get['food']; ?></h3>
-               <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_get['saleprice']; ?></p>
 
-               <input type="number" name="qty" required min="1" value="<?= $fetch_cart['qty']; ?>" max="99" maxlength="2" class="qty">
-               <button type="submit" name="update_cart" class="fas fa-edit">
-               </button>
-            </div>
-
-
-
-         </div>
-         <?php
-               }
-            }else{
-               $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
-               $select_cart->execute([$userid]);
-               if($select_cart->rowCount() > 0){
-                  while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-                     $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
-                     $select_products->execute([$fetch_cart['foodid']]);
-                     $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
-                     $sub_total = ($fetch_cart['qty'] * $fetch_product['saleprice']);
-
-                     $grand_total += $sub_total;
-
-         ?>
-         <div class="flex">
-            <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
-            <div>
-               <h3 class="food"><?= $fetch_product['food']; ?></h3>
-               <p class="saleprice"><i class="fas fa-indian-rupee-sign"></i> <?= $fetch_product['saleprice']; ?> x <?= $fetch_cart['qty']; ?></p>
-            </div>
-         </div>
-         <?php
-                  }
-               }else{
-                  echo '<p class="empty">your cart is empty</p>';
-               }
-            }
-         ?>
-         <div class="grand-total"><span>grand total :</span><p><i class="fas fa-peso-sign"></i> <?= $grand_total; ?></p></div>
-      </div>
 
    </div>
 

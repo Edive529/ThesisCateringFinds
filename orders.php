@@ -31,31 +31,32 @@ $userid = $_SESSION['customerid'];
    <div class="box-container">
 
    <?php
-      $select_orders = $pdo->prepare("SELECT * FROM `tbl_catering_order_details` WHERE userid = ? ORDER BY date_of_reservation DESC");
-      $select_orders->execute([$userid]);
-      if($select_orders->rowCount() > 0){
-         while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
-            $select_product = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
-            $select_product->execute([$fetch_order['foodid']]);
-            if($select_product->rowCount() > 0){
-               while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
+
+   $select_products = $pdo->prepare("select * from tbl_catering_order_details where userid = '$userid' order by date_of_reservation desc");
+   $select_products->execute();
+   if($select_products->rowCount() > 0){
+      while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){;
+
+
    ?>
-   <div class="box" <?php if($fetch_order['status'] == 'canceled'){echo 'style="border:.2rem solid red";';}; ?>>
-      <a href="view_order.php?get_id=<?= $fetch_order['catering_id']; ?>">
-         <p class="date"><i class="fa fa-calendar"></i><span><?= $fetch_order['date_of_reservation']; ?></span></p>
-         <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
-         <h3 class="name"><?= $fetch_product['food']; ?></h3>
-         <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_order['saleprice']; ?> x <?= $fetch_order['qty']; ?></p>
-         <p class="status" style="color:<?php if($fetch_order['status'] == 'delivered'){echo 'green';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_order['status']; ?></p>
+   <div class="box" <?php if( $fetch_prodcut['status'] == 'canceled'){echo 'style="border:.2rem solid red";';}; ?>>
+      <a href="view_order.php?get_id=<?= $fetch_prodcut['catering_id'] ?>">
+         <p class="date"><i class="fa fa-calendar"></i><span><?=$fetch_prodcut['date_of_reservation'];  ?></span></p>
+
+         <h3 class="name"><?= $fetch_prodcut['order_list'] ?></h3>
+         <p class="price"><i class="fas fa-peso-sign"></i></p>
+         <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'delivered'){echo 'green';}elseif($fetch_prodcut['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_prodcut['status'] ?></p>
       </a>
    </div>
    <?php
-            }
-         }
-      }
-   }else{
-      echo '<p class="empty">no orders found!</p>';
-   }
+ }
+}
+
+
+
+   // else{
+   //    echo '<p class="empty">no orders found!</p>';
+   // }
    ?>
 
    </div>

@@ -39,11 +39,11 @@ if(isset($_POST['delete_item'])){
 
 if(isset($_POST['empty_cart'])){
 
-   $verify_empty_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE userid = ?");
+   $verify_empty_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_empty_cart->execute([$userid]);
 
    if($verify_empty_cart->rowCount() > 0){
-      $delete_cart_id = $pdo->prepare("DELETE FROM `tbl_cart` WHERE userid = ?");
+      $delete_cart_id = $pdo->prepare("DELETE FROM `tbl_cart` WHERE customerid = ?");
       $delete_cart_id->execute([$userid]);
       $success_msg[] = 'Cart emptied!';
    }else{

@@ -7,7 +7,9 @@ $userid = $_SESSION['customerid'];
 
 if(isset($_POST['add_to_cart'])){
 
-   $id = create_unique_id();
+  
+
+
    $foodid = $_POST['foodid'];
    $foodid = filter_var($foodid, FILTER_SANITIZE_STRING);
    $qty = $_POST['qty'];
@@ -29,8 +31,8 @@ if(isset($_POST['add_to_cart'])){
       $select_price->execute([$foodid]);
       $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
 
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(id, customerid, foodid, price, qty) VALUES(?,?,?,?,?)");
-      $insert_cart->execute([$id, $userid, $foodid, $fetch_price['saleprice'], $qty]);
+      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, foodid, price, qty) VALUES(?,?,?,?)");
+      $insert_cart->execute([$userid, $foodid, $fetch_price['saleprice'], $qty]);
       $success_msg[] = 'Added to cart!';
    }
 
