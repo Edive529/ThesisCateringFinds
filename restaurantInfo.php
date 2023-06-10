@@ -144,7 +144,7 @@
     <div class=" row py-2 m-2 " > 
             <h3>Popular</h3>
             <div class="col col-md-3 wow fadeInUp" style="background-color:#ffffff;" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="restaurantInfo.php">
+                <a class="cat-item rounded p-4" href="shopping_cart.php">
                     <img src="img/car/avd.jpg" alt="" style="width:100%; height:auto;">
                     <h5 class="mb-3">Food Name 1</h5>
                     <hr>
@@ -152,7 +152,7 @@
                 </a>
             </div>
             <div class="col col-md-3 wow fadeInUp" style="background-color:#ffffff;" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="restaurantInfo.php">
+                <a class="cat-item rounded p-4" href="shopping_cart.php">
                     <img src="img/car/avd.jpg" alt="" style="width:100%; height:auto;">
                     <h5 class="mb-3">Food Name 1</h5>
                     <hr>
@@ -160,7 +160,7 @@
                 </a>
             </div>
             <div class="col col-md-3 wow fadeInUp" style="background-color:#ffffff;" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="restaurantInfo.php">
+                <a class="cat-item rounded p-4" href="shopping_cart.php">
                     <img src="img/car/avd.jpg" alt="" style="width:100%; height:auto;">
                     <h5 class="mb-3">Food Name 1</h5>
                     <hr>
@@ -168,7 +168,7 @@
                 </a>
             </div>
             <div class="col col-md-3 wow fadeInUp" style="background-color:#ffffff;" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="restaurantInfo.php">
+                <a class="cat-item rounded p-4" href="shopping_cart.php">
                     <img src="img/car/avd.jpg" alt="" style="width:100%; height:auto;">
                     <h5 class="mb-3">Food Name 1</h5>
                     <hr>
