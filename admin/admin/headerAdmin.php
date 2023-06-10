@@ -232,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="map.php" class="nav-link">
+            <a href="../cateringmaps4ad.php" class="nav-link">
               <i class="nav-icon far fa-address-card"></i>
               <p>
                 Map

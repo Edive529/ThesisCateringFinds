@@ -107,9 +107,9 @@ if(isset($_POST['update_cart'])){
                <p>your name <span>*</span></p>
                <input type="text" name="user" required maxlength="50" value="<?php echo $_SESSION['username']; ?>" disabled class="input">
                <input type="hidden" name="user" value="<?php echo $_SESSION['username']; ?>">
-              <input type="submit" value="Submit">
+
               <input type="hidden" name="useremail" value="<?php echo $_SESSION['useremail']; ?>">
-              <input type="submit" value="Submit">
+
                <p>your email <span>*</span></p>
                <input type="email" name="" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
                <p>your number <span>*</span></p>
@@ -118,7 +118,7 @@ if(isset($_POST['update_cart'])){
                <p>payment method <span>*</span></p>
                <select name="payment_type" class="input" value= "<?php echo $_SESSION['payment_type']; ?>" required>
 
-                 <option value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
+                 <option hidden value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
                   <option value="cash on delivery">cash on delivery</option>
                   <option value="credit or debit card">credit or debit card</option>
                   <option value="GCASH">GCASH</option>

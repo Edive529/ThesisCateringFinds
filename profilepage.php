@@ -159,7 +159,8 @@ if(isset($_POST['btnupdate'])){
               <p>payment method <span>*</span></p>
               <select name="txtpayment_type" class="input" value="<?php echo $payment_type_db ?>" required>
 
-                <option value="<?php echo $payment_type_db ?>" selected ><?php echo $payment_type_db ?></option>
+                <option hidden value="<?php echo $payment_type_db ?>" selected ><?php echo $payment_type_db ?></option>
+                
 
 
                  <option value="cash on delivery">cash on delivery</option>
