@@ -101,7 +101,7 @@ echo '<div id="showData">' . $allData. '</div>';
         <div class=" py-2 m-2"> 
            
             <div class="  wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" href="restaurantInfo.php">
                     <i class="fa fa-3x fa-mail-bulk text-primary"></i>
                     <h6 class="mb-3">Restaurant 1</h6>
                     <p class="mb-0">123 Address</p>
