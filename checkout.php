@@ -149,7 +149,7 @@ if(isset($_POST['update_cart'])){
                     $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
                     $sub_total = ($fetch_cart['qty'] * $fetch_product['saleprice']);
 
-                    $result .=$fetch_product['food'] . ": ₱" . $fetch_product['saleprice'] . "x" . $fetch_cart['qty'] . "= ₱" . $sub_total . "\n";
+                    $result .=$fetch_product['food'] . ": ₱" . $fetch_product['saleprice'] . "x" . $fetch_cart['qty'] . "= ₱" . $sub_total . ",";
 
 
 
@@ -177,7 +177,7 @@ if(isset($_POST['update_cart'])){
               }else{
                  echo '<p class="empty">your cart is empty</p>';
               }
-           } $maonani = $result." = "."₱".$grand_total;
+           } $maonani = $result."Total = "."₱".$grand_total;
            $restaurantname;
 
         ?>

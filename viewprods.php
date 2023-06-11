@@ -164,7 +164,10 @@ session_start();
 
 
    <form action="" method="POST" class="box">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
       <div class="flex">
@@ -174,6 +177,7 @@ session_start();
 
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn">buy now</a>
+
    </form>
 
 

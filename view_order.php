@@ -58,8 +58,15 @@ if(isset($_POST['cancel'])){
       <div class="col">
          <p class="title"><i class="fas fa-calendar"></i><?= $fetch_order['date_of_reservation']; ?></p>
 
+         <?php
+          $commaDelimitedString = $fetch_order['order_list'];
+          $array = explode(",", $commaDelimitedString);
+          $result = implode("<br>", $array);
 
-         <h3 class="name"><?= $fetch_order['order_list']; ?></h3>
+?>
+
+
+         <h3 class="name" style="letter-spacing: 1px; line-height: 2.0; font-size: 25px; text-align: center;"><?= $result ?></h3>
 
       </div>
       <div class="col">
