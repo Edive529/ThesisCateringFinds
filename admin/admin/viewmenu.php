@@ -88,6 +88,7 @@ include_once 'headerAdmin.php';
 
 
 
+
                ?>
 
 
@@ -101,9 +102,10 @@ include_once 'headerAdmin.php';
     </section>
     <!-- /.content -->
   </div>
+
   <!-- /.content-wrapper -->
   <?php
 
-include_once 'footer.php';
+include_once 'footerAdmin.php';
 
  ?>
