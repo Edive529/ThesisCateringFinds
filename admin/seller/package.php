@@ -70,7 +70,8 @@ include_once 'header.php';
               </thead>
               <tbody>
                 <?php
-                  $select=$pdo->prepare("select * from tbl_package order by packageid desc");
+                $userid = $_SESSION['userid'];
+                  $select=$pdo->prepare("select * from tbl_package where userid = $userid order by packageid desc");
 
                   $select->execute();
 

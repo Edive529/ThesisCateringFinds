@@ -101,7 +101,7 @@ session_start();
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find Catering Service Near You</h1>
                               <p class="fs-5 fw-medium text-white ">Ease and Convenience is what we offer you. Press the "Use Map" to start finding the nearest catering server.</p>
-                              <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a>
+                              <a href="cateringMapsin.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a>
                           </div>
                           <div class="col-4 col-lg-4">
                             <img class="img-fluid w-auto h-auto" src="img/car/car1.jpg"alt="">
@@ -286,7 +286,7 @@ session_start();
                 <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="">CateringFinds</a>, All Right Reserved.
+                            &copy; <a class="border-bottom" href="inindex.php">CateringFinds</a>, All Right Reserved.
 
                         </div>
                         <div class="col-md-6 text-center text-md-end">

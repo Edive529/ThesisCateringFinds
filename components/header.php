@@ -5,7 +5,9 @@
 
       <nav class="navbar" >
 
-         <a href="view_products.php">view products</a>
+        <a href="cateringMapsin.php" class="cart-btn">Map</a>
+
+
 
          <a href="orders.php">my orders</a>
          <?php

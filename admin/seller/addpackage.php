@@ -17,6 +17,7 @@ if(isset($_POST['btnaddfood'])){
   $food = $_POST['txtfood'];
   $saleprice = $_POST['txtsaleprice'];
   $description = $_POST['txtdescription'];
+  $userid = $_POST['txtuserid'];
 
 $file_name = $_FILES['file']['name'];
 $file_type = $_FILES['file']['type'];
@@ -62,11 +63,12 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
         }
 
 
-        $insert=$pdo->prepare("insert into tbl_package(package,food,saleprice,description,image)
-        values(:package,:food,:saleprice,:description,:image)");
+        $insert=$pdo->prepare("insert into tbl_package(package,userid,food,saleprice,description,image)
+        values(:package,:userid,:food,:saleprice,:description,:image)");
 
 
         $insert->bindParam(':package',$package);
+        $insert->bindParam(':userid',$userid);
         $insert->bindParam(':food',$chk);
         $insert->bindParam(':saleprice',$saleprice);
 
@@ -227,6 +229,10 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
           <input type="file" class="input-group" name="file" required>
 
         </div>
+
+
+           <input hidden type="text" class="form-control" name="txtuserid" value="<?php echo $_SESSION['userid'] ?>" required>
+
 
 
 

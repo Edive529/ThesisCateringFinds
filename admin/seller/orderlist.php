@@ -75,7 +75,8 @@ include_once 'header.php';
               </thead>
               <tbody>
                 <?php
-                  $select=$pdo->prepare("select * from tbl_catering_order_details order by catering_id desc");
+                $restaurant = $_SESSION['restaurant'];
+                  $select=$pdo->prepare("select * from tbl_catering_order_details where restaurant = '$restaurant'  order by catering_id desc");
 
                   $select->execute();
 

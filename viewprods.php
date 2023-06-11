@@ -3,54 +3,7 @@
 include 'connectdb.php';
 session_start();
 
-$userid = $_SESSION['customerid'];
 
-
-if(isset($_POST['add_to_cart'])){
-
-  $id= isset($_GET['id']) ? $_GET['id'] : '';
-  $select = $pdo->prepare("select * from tbl_user where userid=$id");
-
-  $select->execute();
-  $row=$select->fetch(PDO::FETCH_ASSOC);
-
-  $user_db = $row['restaurant'];
-
-
-
-
-
-
-
-
-   $foodid = $_POST['foodid'];
-   $foodid = filter_var($foodid, FILTER_SANITIZE_STRING);
-   $qty = $_POST['qty'];
-   $qty = filter_var($qty, FILTER_SANITIZE_STRING);
-
-   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
-   $verify_cart->execute([$userid, $foodid]);
-
-   $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
-   $max_cart_items->execute([$userid]);
-
-   if($verify_cart->rowCount() > 0){
-      $warning_msg[] = 'Already added to cart!';
-   }elseif($max_cart_items->rowCount() == 10){
-      $warning_msg[] = 'Cart is full!';
-   }else{
-
-
-      $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-      $select_price->execute([$foodid]);
-      $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
-
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, restaurant, foodid, price, qty) VALUES(?,?,?,?,?)");
-      $insert_cart->execute([$userid, $user_db, $foodid, $fetch_price['saleprice'], $qty]);
-      $success_msg[] = 'Added to cart!';
-   }
-
-}
 
 ?>
 
@@ -110,7 +63,7 @@ if(isset($_POST['add_to_cart'])){
 <body>
 
 
-<?php include 'components/header.php'; ?>
+<?php include 'components/header1.php'; ?>
 
 
 
@@ -137,8 +90,9 @@ if(isset($_POST['add_to_cart'])){
                             $restaurant_db = $row['restaurant'];
                             $phonenum_db = $row['phonenum'];
                             $address_db = $row['address'];
+
                             ?>
-                              <h2 class="display-6 text-black "><?=$restaurant_db;?></h2>
+                              <h2 class="display-6 text-black "><?= $restaurant_db; ?></h2>
 
                               <hr>
 
@@ -146,7 +100,7 @@ if(isset($_POST['add_to_cart'])){
 
                               <p class="fs-4 fw-medium text-black "> Contact Number: <?php echo $phonenum_db; ?></p>
 
-                              <p class="fs-4 fw-medium text-black "> Address: <?php echo $address_db ;?></p>
+                              <p class="fs-4 fw-medium text-black "> Address: <?php echo $address_db ;?> </p>
 
 
                           </div>
@@ -168,6 +122,9 @@ if(isset($_POST['add_to_cart'])){
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#maindish">Main Course</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#pasta">Pasta</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#appetizer">Appetizer</a>
@@ -210,13 +167,13 @@ if(isset($_POST['add_to_cart'])){
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-
       <div class="flex">
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn">buy now</a>
    </form>
 
 
@@ -251,7 +208,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -283,7 +240,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -315,7 +272,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -349,7 +306,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="" class="delete-btn">buy now</a>
    </form>
    <?php
       }
