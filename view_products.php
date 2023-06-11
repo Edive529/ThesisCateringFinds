@@ -359,6 +359,40 @@ if(isset($_POST['add_to_cart'])){
    ?>
 
    </div>
+   <p id="package"></p>
+
+
+   <h1 class="heading py-5" >Package</h1>
+
+
+   <div class="box-container">
+
+   <?php
+   $id= isset($_GET['id']) ? $_GET['id'] : '';
+      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Package' AND userid = $id ");
+      $select_products->execute();
+      if($select_products->rowCount() > 0){
+         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+   ?>
+   <form action="" method="POST" class="box">
+      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+      <div class="flex">
+         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
+         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
+      </div>
+      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+   </form>
+   <?php
+      }
+   }else{
+      echo '<p class="empty">no products found!</p>';
+   }
+   ?>
+
+   </div>
 
 </section>
 

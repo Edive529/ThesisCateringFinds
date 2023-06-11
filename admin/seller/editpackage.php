@@ -13,24 +13,28 @@ include_once 'header.php';
 
 $id= isset($_GET['id']) ? $_GET['id'] : '';
 
-$select = $pdo->prepare("select * from tbl_package where packageid=$id");
+$select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
 
 $select->execute();
 $row=$select->fetch(PDO::FETCH_ASSOC);
 
-$id_db = $row['packageid'];
-$package_db = $row['package'];
+$id_db = $row['foodid'];
+
 $food_db = $row['food'];
+$category_db = $row['category'];
 $saleprice_db = $row['saleprice'];
+$package_description_db = $row['package_description'];
+
 $description_db = $row['description'];
 $image_db = $row['image'];
 
 if(isset($_POST['btnupdate'])){
   $food_txt = $_POST['txtfood'];
-  $package_txt = $_POST['txtpackage'];
+  $category_txt = $_POST['txtselect_option'];
   $saleprice_txt = $_POST['txtsaleprice'];
 
   $description_txt = $_POST['txtdescription'];
+  $package_description_txt = $_POST['txtpackage_description'];
 
 $file_name = $_FILES['file']['name'];
 
@@ -71,14 +75,15 @@ if(!empty($file_name)){
 
         $f_newfile;
         if(!isset($error)){
-          $update = $pdo->prepare("update tbl_package set food=:food, package=:package,
-          saleprice=:saleprice, description=:description, image=:image where packageid=$id");
+          $update = $pdo->prepare("update tbl_foodmenu set food=:food, category=:category,
+          saleprice=:saleprice, description=:description,package_description=:package_description, image=:image where foodid=$id");
 
           $update->bindParam(':food',$food_txt);
-          $update->bindParam(':package',$package_txt);
+          $update->bindParam(':category',$category_txt);
           $update->bindParam(':saleprice',$saleprice_txt);
 
           $update->bindParam(':description',$description_txt);
+          $update->bindParam(':package_description',$package_description_txt);
           $update->bindParam(':image',$f_newfile);
 
           if($update->execute()){
@@ -147,12 +152,13 @@ if(!empty($file_name)){
 
 }else{
 
-  $update = $pdo->prepare("update tbl_package set package=:package, food=:food,
-  saleprice=:saleprice, description=:description, image=:image where packageid=$id");
+  $update = $pdo->prepare("update tbl_foodmenu set food=:food, category=:category,
+  saleprice=:saleprice, description=:description, package_description=:package_description,image=:image where foodid=$id");
 
   $update->bindParam(':food',$food_txt);
-  $update->bindParam(':package',$package_txt);
+  $update->bindParam(':category',$category_txt);
   $update->bindParam(':saleprice',$saleprice_txt);
+  $update->bindParam(':package_description',$package_description_txt);
 
   $update->bindParam(':description',$description_txt);
   $update->bindParam(':image',$image_db);
@@ -202,18 +208,19 @@ if(!empty($file_name)){
 
 }
 
-$select = $pdo->prepare("select * from tbl_package where packageid=$id");
+$select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
 
 $select->execute();
 $row=$select->fetch(PDO::FETCH_ASSOC);
 
-$id_db = $row['packageid'];
-$package_db = $row['package'];
+$id_db = $row['foodid'];
+
 $food_db = $row['food'];
-$package_db = $row['package'];
+$category_db = $row['category'];
 $saleprice_db = $row['saleprice'];
 
 $description_db = $row['description'];
+$package_description_db = $row['package_description'];
 $image_db = $row['image'];
 
 ?>
@@ -267,16 +274,40 @@ $image_db = $row['image'];
 
       <div class="col-md-6">
         <div class="form-group">
-           <label>Package</label>
-           <input type="text" class="form-control" name="txtpackage" value="<?php echo $package_db;?>" placeholder="Enter name..." required>
+           <label>Food</label>
+           <input type="text" class="form-control" name="txtfood" value="<?php echo $food_db;?>" placeholder="Enter name..." required>
          </div>
 
          <div class="form-group">
-           <label >Menu List</label>
-           <textarea class="form-control" name="txtfood"  rows="6" placeholder="Enter..."><?php echo $food_db;?></textarea>
+         <label>Category</label>
+
+         <select class="form-control" name="txtselect_option">
+           <option value="" disabled selected>Select category</option required>
+                        <?php
+                        $select=$pdo->prepare("select * from tbl_category order by catid desc");
+                        $select->execute();
+
+                        while($row=$select->fetch(PDO::FETCH_ASSOC)){
+
+                          extract($row)
+
+                         ?>
+                      <option <?php if($row['category']==$category_db) {?>
+
+                        selected="selected"
+                      <?php } ?>>
+
+
+
+
+                        <?php echo $row['category']; ?></option>
+
+                      <?php
+                      }
+                      ?>
+
+         </select>
          </div>
-
-
 
          <div class="form-group">
            <label >Sale price</label>
@@ -288,8 +319,12 @@ $image_db = $row['image'];
       <div class="col-md-6">
 
         <div class="form-group">
+          <label >Food</label>
+          <textarea class="form-control" name="txtdescription"  rows="1" placeholder="Enter..."><?php echo $description_db;?></textarea>
+        </div>
+        <div class="form-group">
           <label >Description</label>
-          <textarea class="form-control" name="txtdescription"  rows="6" placeholder="Enter..."><?php echo $description_db;?></textarea>
+          <textarea class="form-control" name="txtpackage_description"  rows="3" placeholder="Enter..."><?php echo $package_description_db;?></textarea>
         </div>
 
         <div class="form-group">

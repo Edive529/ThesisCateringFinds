@@ -233,7 +233,7 @@ if(isset($_POST['update_cart'])){
                <p>Delivery time<span>*</span></p>
                <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
                <input hidden type="text"  name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
-               <input type="text"  name="restaurant" value="<?php echo $restaurantname?>" required maxlength="" placeholder="" class="input">
+               <input hidden type="text"  name="restaurant" value="<?php echo $restaurantname?>" required maxlength="" placeholder="" class="input">
                <textarea hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input"><?php echo$maonani?></textarea>
 
 

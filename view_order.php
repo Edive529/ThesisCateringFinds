@@ -51,20 +51,16 @@ if(isset($_POST['cancel'])){
       $select_orders->execute([$get_id]);
       if($select_orders->rowCount() > 0){
          while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
-            $select_product = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-            $select_product->execute([$fetch_order['foodid']]);
-            if($select_product->rowCount() > 0){
-               while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
-                  $sub_total = ($fetch_order['saleprice'] * $fetch_order['qty']);
-                  $grand_total += $sub_total;
+
+
    ?>
    <div class="box">
       <div class="col">
          <p class="title"><i class="fas fa-calendar"></i><?= $fetch_order['date_of_reservation']; ?></p>
-         <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
-         <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_order['saleprice']; ?> x <?= $fetch_order['qty']; ?></p>
-         <h3 class="name"><?= $fetch_product['food']; ?></h3>
-         <p class="grand-total">grand total : <span><i class="fas fa-peso-sign"></i> <?= $grand_total; ?></span></p>
+
+
+         <h3 class="name"><?= $fetch_order['order_list']; ?></h3>
+
       </div>
       <div class="col">
          <p class="title">billing address</p>
@@ -76,7 +72,7 @@ if(isset($_POST['cancel'])){
          <p class="title">status</p>
          <p class="status" style="color:<?php if($fetch_order['status'] == 'delivered'){echo 'green';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_order['status']; ?></p>
          <?php if($fetch_order['status'] == 'canceled'){ ?>
-            <a href="checkout.php?get_id=<?= $fetch_product['foodid']; ?>" class="btn">order again</a>
+
          <?php }else{ ?>
          <form action="" method="POST">
             <input type="submit" value="cancel order" name="cancel" class="delete-btn" onclick="return confirm('cancel this order?');">
@@ -85,12 +81,10 @@ if(isset($_POST['cancel'])){
       </div>
    </div>
    <?php
-            }
-         }else{
-            echo '<p class="empty">product not found!</p>';
+
          }
       }
-   }else{
+   else{
       echo '<p class="empty">no orders found!</p>';
    }
    ?>
