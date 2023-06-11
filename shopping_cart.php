@@ -71,6 +71,8 @@ if(isset($_POST['empty_cart'])){
 
 <?php include 'components/header.php'; ?>
 
+
+
 <section class="products">
 
    <h1 class="heading">shopping cart</h1>

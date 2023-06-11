@@ -1,9 +1,9 @@
-<header class="header">
+<header class="header"  style="background-color:#ffa7a6;">
 
-   <section class="flex">
-      <a href="inindex.php" class="logo">Logo</a>
+   <section class="flex" >
+      <a href="inindex.php" class="logo">CateringFinds</a>
 
-      <nav class="navbar">
+      <nav class="navbar" >
 
          <a href="view_products.php">view products</a>
 
