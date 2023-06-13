@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2023 at 01:09 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: Jun 13, 2023 at 08:04 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,12 +24,69 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `item_rating`
+--
+
+CREATE TABLE `item_rating` (
+  `ratingId` int(11) NOT NULL,
+  `itemId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `ratingNumber` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `comments` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 = Block, 0 = Unblock'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `item_rating`
+--
+
+INSERT INTO `item_rating` (`ratingId`, `itemId`, `userId`, `ratingNumber`, `title`, `comments`, `created`, `modified`, `status`) VALUES
+(14, 12345678, 1, 2, 'its awesome', 'It\'s awesome!!!', '2018-08-19 09:13:01', '2018-08-19 09:13:01', 1),
+(15, 12345678, 2, 5, 'Nice product', 'Really quality product!', '2018-08-19 09:13:37', '2018-08-19 09:13:37', 1),
+(16, 12345678, 3, 1, 'best buy', 'its\'s best but item.', '2018-08-19 09:14:19', '2018-08-19 09:14:19', 1),
+(17, 12345678, 4, 1, 'super awesome ', 'i think its supper products', '2018-08-19 09:18:00', '2018-08-19 09:18:00', 1),
+(22, 12345679, 5, 1, 'adada', 'daDad', '2019-01-20 17:00:58', '2019-01-20 17:00:58', 1),
+(23, 12345678, 5, 5, 'Nice product', 'this is nice!', '2019-01-20 17:01:37', '2019-01-20 17:01:37', 1),
+(24, 12345679, 3, 1, 'really nice', 'Good!', '2019-01-20 21:06:48', '2019-01-20 21:06:48', 1),
+(31, 1, 2, 1, 'hays', 'thesis defended cutiee', '2023-06-13 05:40:22', '2023-06-13 05:40:22', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_users`
+--
+
+CREATE TABLE `item_users` (
+  `userid` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `item_users`
+--
+
+INSERT INTO `item_users` (`userid`, `username`, `password`, `avatar`) VALUES
+(1, 'rose', '123', 'user1.jpg'),
+(2, 'smith', '123', 'user2.jpg'),
+(3, 'adam', '123', 'user3.jpg'),
+(4, 'merry', '123', 'user4.jpg'),
+(5, 'katrina', '123', 'user5.jpg'),
+(6, 'rhodes', '123', 'user6.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_cart`
 --
 
 CREATE TABLE `tbl_cart` (
   `id` varchar(20) NOT NULL,
-  `customerid` varchar(20) NOT NULL,
+  `userid` varchar(20) NOT NULL,
   `foodid` varchar(20) NOT NULL,
   `price` varchar(10) NOT NULL,
   `qty` varchar(2) NOT NULL DEFAULT '1'
@@ -39,14 +96,8 @@ CREATE TABLE `tbl_cart` (
 -- Dumping data for table `tbl_cart`
 --
 
-INSERT INTO `tbl_cart` (`id`, `customerid`, `foodid`, `price`, `qty`) VALUES
-('6DEAeg87jkIm2M7NUZlG', '19', '3', '212', '1'),
-('7iqmFREVTuy3rv6tICCP', 'aq2DSEwsYarVnGXj7RZi', '3', '212', '3'),
-('eNZF4iZNRZ9e4BmNpNzb', 'uLgddsqRM7MX2noH23EN', '1', '58', '1'),
-('LjzJPf1dKyujQF01Sq3t', '19', '2', '23123', '1'),
-('OasJhbMiTPGoOW2mAn0x', 'uLgddsqRM7MX2noH23EN', '3', '212', '1'),
-('qMSV4ohHU0ND5brFgkOQ', 'uLgddsqRM7MX2noH23EN', '2', '23123', '1'),
-('quA8KvFGIPOQJ5Z9rXtU', '25', '3', '212', '1');
+INSERT INTO `tbl_cart` (`id`, `userid`, `foodid`, `price`, `qty`) VALUES
+('7iqmFREVTuy3rv6tICCP', 'aq2DSEwsYarVnGXj7RZi', '3', '212', '3');
 
 -- --------------------------------------------------------
 
@@ -92,6 +143,7 @@ CREATE TABLE `tbl_catering_order_details` (
   `restaurant` varchar(255) NOT NULL,
   `event_address` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'Not yet approved',
+  `address_type` varchar(255) NOT NULL,
   `catering_style` varchar(255) NOT NULL,
   `payment_status` varchar(12) NOT NULL,
   `date_of_reservation` datetime NOT NULL DEFAULT current_timestamp(),
@@ -103,44 +155,15 @@ CREATE TABLE `tbl_catering_order_details` (
 -- Dumping data for table `tbl_catering_order_details`
 --
 
-INSERT INTO `tbl_catering_order_details` (`catering_id`, `order_list_id`, `cart_id`, `payment_type`, `userid`, `user`, `foodid`, `useremail`, `phonenum`, `saleprice`, `qty`, `package`, `restaurant`, `event_address`, `status`, `catering_style`, `payment_status`, `date_of_reservation`, `date_to_be_delivered`, `time_to_be_delivered`) VALUES
-(1, 1, 1, 'gcash', '', 'kyle', 0, '', '', '', '', 'bday', 'jackskainan', 'san_roque', '', 'buffet', 'not done', '2023-04-11 07:21:21', '2023-04-11', '00:00:00'),
-(2, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', '23', 1, '23@gmail.com', '23', '58', '30', '', '', 'dsfdsf, dfdf, dubaaaai, 1231', 'in progres', '', '', '2023-06-08 16:16:13', '2023-07-06', '16:12:00'),
-(3, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', '23', 2, '23@gmail.com', '23', '23123', '44', '', '', 'dsfdsf, dfdf, dubaaaai, 1231', '', '', '', '2023-06-08 16:16:13', '2023-07-06', '16:12:00'),
-(4, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '32@gmail.com', '0997605585', '58', '1', '', '', 'Sanroque, Phase 1, Iligan, Philippines', '', '', '', '2023-06-08 17:10:47', '2023-06-09', '18:10:00'),
-(5, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, 'yogi@gmail.com', '111231', '58', '1', '', '', 'Brgy. San Roque, Phase 1, , ', '', '', '', '2023-06-08 17:19:17', '2023-06-22', '19:19:00'),
-(6, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '32@gmail.com', '032231', '58', '4', '', '', '231, 232, , ', 'canceled', '', '', '2023-06-08 17:21:01', '2023-06-29', '19:21:00'),
-(7, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 2, '32@gmail.com', '032231', '23123', '3', '', '', '231, 232, , ', '', '', '', '2023-06-08 17:21:01', '2023-06-29', '19:21:00'),
-(8, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '23@gmail.com', '23131', '58', '1', '', '', '213, 232, , ', 'Not yet approved', '', '', '2023-06-08 17:22:22', '2023-06-13', '17:22:00'),
-(9, 0, 0, 'credit or debit card', '1', '', 1, '', '0997605585', '58', '1', '', '', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'Not yet approved', '', '', '2023-06-09 18:59:05', '2023-06-14', '18:56:00'),
-(10, 0, 0, 'credit or debit card', '1', '', 3, '', '0997605585', '212', '1', '', '', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'Not yet approved', '', '', '2023-06-09 18:59:05', '2023-06-14', '18:56:00'),
-(11, 0, 0, 'credit or debit card', '1', '', 1, '', '0997605585', '58', '1', '', '', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'Not yet approved', '', '', '2023-06-09 18:59:22', '2023-06-14', '18:56:00'),
-(12, 0, 0, 'credit or debit card', '1', '', 3, '', '0997605585', '212', '1', '', '', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'Not yet approved', '', '', '2023-06-09 18:59:23', '2023-06-14', '18:56:00'),
-(13, 0, 0, 'credit or debit card', '1', '', 3, '', '0997605585', '212', '1', '', '', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'Not yet approved', '', '', '2023-06-09 19:00:28', '2023-05-30', '19:04:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_customer`
---
-
-CREATE TABLE `tbl_customer` (
-  `customerid` int(11) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `useremail` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `phonenum` varchar(11) NOT NULL,
-  `event_address` varchar(255) NOT NULL,
-  `payment_type` varchar(100) NOT NULL,
-  `role` varchar(12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_customer`
---
-
-INSERT INTO `tbl_customer` (`customerid`, `password`, `useremail`, `username`, `phonenum`, `event_address`, `payment_type`, `role`) VALUES
-(1, '$2y$10$mOV3j4STRCB7NslGaKw7XuFID6.OYdnct9Es109tGlTC7D4QaZhzu', 'test@gmail.com', 'test', '09976055855', 'Brgy. San Roque, Iligan City, Lanao del Norte', 'credit or debit card', 'customer');
+INSERT INTO `tbl_catering_order_details` (`catering_id`, `order_list_id`, `cart_id`, `payment_type`, `userid`, `user`, `foodid`, `useremail`, `phonenum`, `saleprice`, `qty`, `package`, `restaurant`, `event_address`, `status`, `address_type`, `catering_style`, `payment_status`, `date_of_reservation`, `date_to_be_delivered`, `time_to_be_delivered`) VALUES
+(1, 1, 1, 'gcash', '', 'kyle', 0, '', '', '', '', 'bday', 'jackskainan', 'san_roque', '', '', 'buffet', 'not done', '2023-04-11 07:21:21', '2023-04-11', '00:00:00'),
+(2, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', '23', 1, '23@gmail.com', '23', '58', '30', '', '', 'dsfdsf, dfdf, dubaaaai, 1231', 'in progres', 'home', '', '', '2023-06-08 16:16:13', '2023-07-06', '16:12:00'),
+(3, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', '23', 2, '23@gmail.com', '23', '23123', '44', '', '', 'dsfdsf, dfdf, dubaaaai, 1231', '', 'home', '', '', '2023-06-08 16:16:13', '2023-07-06', '16:12:00'),
+(4, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '32@gmail.com', '0997605585', '58', '1', '', '', 'Sanroque, Phase 1, Iligan, Philippines', '', 'home', '', '', '2023-06-08 17:10:47', '2023-06-09', '18:10:00'),
+(5, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, 'yogi@gmail.com', '111231', '58', '1', '', '', 'Brgy. San Roque, Phase 1, , ', '', 'office', '', '', '2023-06-08 17:19:17', '2023-06-22', '19:19:00'),
+(6, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '32@gmail.com', '032231', '58', '4', '', '', '231, 232, , ', 'canceled', 'office', '', '', '2023-06-08 17:21:01', '2023-06-29', '19:21:00'),
+(7, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 2, '32@gmail.com', '032231', '23123', '3', '', '', '231, 232, , ', '', 'office', '', '', '2023-06-08 17:21:01', '2023-06-29', '19:21:00'),
+(8, 0, 0, 'cash on delivery', 'aq2DSEwsYarVnGXj7RZi', 'Kyle', 1, '23@gmail.com', '23131', '58', '1', '', '', '213, 232, , ', 'Not yet approved', 'home', '', '', '2023-06-08 17:22:22', '2023-06-13', '17:22:00');
 
 -- --------------------------------------------------------
 
@@ -162,9 +185,9 @@ CREATE TABLE `tbl_foodmenu` (
 --
 
 INSERT INTO `tbl_foodmenu` (`foodid`, `food`, `category`, `saleprice`, `description`, `image`) VALUES
-(1, 'leche flan', 'dessert', 58, '232', '641fd1e91f66c.png'),
-(2, 'uhmm', 'dessert', 23123, '123123', '642fc7e36d18e.png'),
-(3, 'Fried Chicken', 'Main Dish', 212, 'ChickenJoy', '6481b029b3f3e.png');
+(1, 'leche flan', 'dessert', 58, '232', 'leche flan.png'),
+(2, 'uhmm', 'dessert', 23123, '123123', 'kyle.png'),
+(3, 'Fried Chicken', 'Main Dish', 212, 'ChickenJoy', 'chimken.png');
 
 -- --------------------------------------------------------
 
@@ -235,6 +258,18 @@ INSERT INTO `tbl_user` (`userid`, `password`, `useremail`, `username`, `role`, `
 --
 
 --
+-- Indexes for table `item_rating`
+--
+ALTER TABLE `item_rating`
+  ADD PRIMARY KEY (`ratingId`);
+
+--
+-- Indexes for table `item_users`
+--
+ALTER TABLE `item_users`
+  ADD PRIMARY KEY (`userid`);
+
+--
 -- Indexes for table `tbl_cart`
 --
 ALTER TABLE `tbl_cart`
@@ -251,12 +286,6 @@ ALTER TABLE `tbl_category`
 --
 ALTER TABLE `tbl_catering_order_details`
   ADD PRIMARY KEY (`catering_id`);
-
---
--- Indexes for table `tbl_customer`
---
-ALTER TABLE `tbl_customer`
-  ADD PRIMARY KEY (`customerid`);
 
 --
 -- Indexes for table `tbl_foodmenu`
@@ -281,6 +310,18 @@ ALTER TABLE `tbl_user`
 --
 
 --
+-- AUTO_INCREMENT for table `item_rating`
+--
+ALTER TABLE `item_rating`
+  MODIFY `ratingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `item_users`
+--
+ALTER TABLE `item_users`
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
@@ -290,13 +331,7 @@ ALTER TABLE `tbl_category`
 -- AUTO_INCREMENT for table `tbl_catering_order_details`
 --
 ALTER TABLE `tbl_catering_order_details`
-  MODIFY `catering_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `tbl_customer`
---
-ALTER TABLE `tbl_customer`
-  MODIFY `customerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `catering_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_foodmenu`
@@ -314,7 +349,7 @@ ALTER TABLE `tbl_package`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

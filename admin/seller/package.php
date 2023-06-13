@@ -70,7 +70,8 @@ include_once 'header.php';
               </thead>
               <tbody>
                 <?php
-                  $select=$pdo->prepare("select * from tbl_package order by packageid desc");
+                $userid = $_SESSION['userid'];
+                  $select=$pdo->prepare("select * from tbl_foodmenu where userid = $userid AND category = 'Package' order by foodid desc");
 
                   $select->execute();
 
@@ -78,31 +79,31 @@ include_once 'header.php';
 
                     echo'<tr>
                     <td>
-                    '.$row->packageid.'
-                    </td>
-                    <td>
-                    '.$row->package.'
+                    '.$row->foodid.'
                     </td>
                     <td>
                     '.$row->food.'
                     </td>
                     <td>
+                    '.$row->description.'
+                    </td>
+                    <td>
                     '.$row->saleprice.'
                     </td>
                     <td>
-                    '.$row->description.'
+                    '.$row->package_description.'
                     </td>
                     <td>
                     <img src = "../upload/'.$row->image.'" class = "img-rounded" width = "40px" height = "40px">
                     </td>
                     <td>
-                    <a href = "viewmenu.php?id='.$row->packageid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-eye" style = "color:#ffffff" data-toggle="tooltip" title="view"></span></a>
+                    <a href = "viewmenu.php?id='.$row->foodid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-eye" style = "color:#ffffff" data-toggle="tooltip" title="view"></span></a>
                     </td>
                     <td>
-                    <a href = "editpackage.php?id='.$row->packageid.'"  class="btn btn-info" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                    <a href = "editpackage.php?id='.$row->foodid.'"  class="btn btn-info" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                     </td>
                     <td>
-                    <button id='.$row->packageid.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>
+                    <button id='.$row->foodid.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>
                     </td>
 
                         </tr>';

@@ -11,30 +11,24 @@ if ($_SESSION['useremail']=="") {
 
 include_once 'header.php';
 
-$id= isset($_GET['id']) ? $_GET['id'] : '';
+$id = $_SESSION['userid'];
 
-$select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
+$select = $pdo->prepare("select * from tbl_user where userid=$id");
 
 $select->execute();
 $row=$select->fetch(PDO::FETCH_ASSOC);
 
-$id_db = $row['foodid'];
+$user_db = $row['username'];
+$phonenum_db = $row['phonenum'];
+$useremail_db = $row['useremail'];
+$restaurant_db = $row['restaurant'];
+$address_db = $row['address'];
+$banner_db = $row['banner'];
 
-$food_db = $row['food'];
-$category_db = $row['category'];
-$saleprice_db = $row['saleprice'];
-$package_description_db = $row['package_description'];
-
-$description_db = $row['description'];
-$image_db = $row['image'];
 
 if(isset($_POST['btnupdate'])){
-  $food_txt = $_POST['txtfood'];
-  $category_txt = $_POST['txtselect_option'];
-  $saleprice_txt = $_POST['txtsaleprice'];
+  $phonenum_txt = $_POST['txtphonenum'];
 
-  $description_txt = $_POST['txtdescription'];
-  $package_description_txt = $_POST['txtpackage_description'];
 
 $file_name = $_FILES['file']['name'];
 
@@ -75,16 +69,10 @@ if(!empty($file_name)){
 
         $f_newfile;
         if(!isset($error)){
-          $update = $pdo->prepare("update tbl_foodmenu set food=:food, category=:category,
-          saleprice=:saleprice, description=:description,package_description=:package_description, image=:image where foodid=$id");
+          $update = $pdo->prepare("update tbl_user set phonenum=:phonenum, banner=:banner where userid=$id");
 
-          $update->bindParam(':food',$food_txt);
-          $update->bindParam(':category',$category_txt);
-          $update->bindParam(':saleprice',$saleprice_txt);
-
-          $update->bindParam(':description',$description_txt);
-          $update->bindParam(':package_description',$package_description_txt);
-          $update->bindParam(':image',$f_newfile);
+          $update->bindParam(':phonenum',$phonenum_txt);
+          $update->bindParam(':banner',$f_newfile);
 
           if($update->execute()){
 
@@ -152,16 +140,12 @@ if(!empty($file_name)){
 
 }else{
 
-  $update = $pdo->prepare("update tbl_foodmenu set food=:food, category=:category,
-  saleprice=:saleprice, description=:description, package_description=:package_description,image=:image where foodid=$id");
+  $update = $pdo->prepare("update tbl_user set phonenum=:phonenum, banner=:banner where userid=$id");
 
-  $update->bindParam(':food',$food_txt);
-  $update->bindParam(':category',$category_txt);
-  $update->bindParam(':saleprice',$saleprice_txt);
-  $update->bindParam(':package_description',$package_description_txt);
+  $update->bindParam(':phonenum',$phonenum_txt);
 
-  $update->bindParam(':description',$description_txt);
-  $update->bindParam(':image',$image_db);
+
+  $update->bindParam(':banner',$banner_db);
 
   if($update->execute()){
 
@@ -208,20 +192,17 @@ if(!empty($file_name)){
 
 }
 
-$select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
+$select = $pdo->prepare("select * from tbl_user where userid=$id");
 
 $select->execute();
 $row=$select->fetch(PDO::FETCH_ASSOC);
 
-$id_db = $row['foodid'];
-
-$food_db = $row['food'];
-$category_db = $row['category'];
-$saleprice_db = $row['saleprice'];
-
-$description_db = $row['description'];
-$package_description_db = $row['package_description'];
-$image_db = $row['image'];
+$user_db = $row['username'];
+$phonenum_db = $row['phonenum'];
+$useremail_db = $row['useremail'];
+$restaurant_db = $row['restaurant'];
+$address_db = $row['address'];
+$banner_db = $row['banner'];
 
 ?>
 
@@ -232,7 +213,7 @@ $image_db = $row['image'];
      <div class="container-fluid">
        <div class="row mb-2">
          <div class="col-sm-6">
-           <h1 class="m-0">Add menu</h1>
+           <h1 class="m-0">Restaurant Details</h1>
          </div><!-- /.col -->
          <div class="col-sm-6">
            <ol class="breadcrumb float-sm-right">
@@ -254,13 +235,7 @@ $image_db = $row['image'];
      <!-- general form elements -->
 
      <div class="card card-outline card-primary">
-         <div class="card-header with-border">
-         <h3 class="box-title"><a href="package.php" class="btn btn-primary" role="button">Back to Package list</a></h3>
 
-
-
-
-      </div>
 
 
         <div class="card-body">
@@ -274,62 +249,41 @@ $image_db = $row['image'];
 
       <div class="col-md-6">
         <div class="form-group">
-           <label>Food</label>
-           <input type="text" class="form-control" name="txtfood" value="<?php echo $food_db;?>" placeholder="Enter name..." required>
+           <label>Username</label>
+           <input disabled type="text" class="form-control" name="" value="<?php echo $user_db;?>" placeholder="Enter name..." required>
          </div>
+         <div class="form-group">
+            <label>Restaurant</label>
+            <input disabled type="text" class="form-control" name="" value="<?php echo $restaurant_db;?>" placeholder="Enter name..." required>
+          </div>
+
+    
 
          <div class="form-group">
-         <label>Category</label>
-
-         <select class="form-control" name="txtselect_option">
-           <option value="" disabled selected>Select category</option required>
-                        <?php
-                        $select=$pdo->prepare("select * from tbl_category order by catid desc");
-                        $select->execute();
-
-                        while($row=$select->fetch(PDO::FETCH_ASSOC)){
-
-                          extract($row)
-
-                         ?>
-                      <option <?php if($row['category']==$category_db) {?>
-
-                        selected="selected"
-                      <?php } ?>>
+            <label>Phone number</label>
+            <input type="text" class="form-control" name="txtphonenum" value="<?php echo $phonenum_db;?>" placeholder="Enter name..." required>
+          </div>
 
 
 
 
-                        <?php echo $row['category']; ?></option>
-
-                      <?php
-                      }
-                      ?>
-
-         </select>
-         </div>
-
-         <div class="form-group">
-           <label >Sale price</label>
-           <input type="number" min="1" step="1" class="form-control" name="txtsaleprice" value="<?php echo $saleprice_db;?>" placeholder="Enter price..." required>
-         </div>
 
 
       </div>
       <div class="col-md-6">
+        <div class="form-group">
+           <label>Email</label>
+           <input disabled type="text" class="form-control" name="" value="<?php echo $useremail_db;?>" placeholder="Enter name..." required>
+         </div>
+
+         <div class="form-group">
+            <label>Address</label>
+            <input disabled type="text" class="form-control" name="" value="<?php echo $address_db;?>" placeholder="Enter name..." required>
+          </div>
 
         <div class="form-group">
-          <label >Food</label>
-          <textarea class="form-control" name="txtdescription"  rows="1" placeholder="Enter..."><?php echo $description_db;?></textarea>
-        </div>
-        <div class="form-group">
-          <label >Description</label>
-          <textarea class="form-control" name="txtpackage_description"  rows="3" placeholder="Enter..."><?php echo $package_description_db;?></textarea>
-        </div>
-
-        <div class="form-group">
-          <label >Upload image</label>
-          <img src = "../upload/<?php echo $image_db;?>" class = "img-responsive" width = "100px" height = "100px">
+          <label >Upload banner image</label>
+          <img src = "../upload/<?php echo $banner_db;?>" class = "img-responsive" width = "100px" height = "100px">
           <input type="file" class="input-group" name="file">
 
         </div>
@@ -342,7 +296,7 @@ $image_db = $row['image'];
     <div class="box-footer">
 
 
-      <button type="submit" class="btn btn-info" name="btnupdate">Add Menu</button>
+      <button type="submit" class="btn btn-info" name="btnupdate">Update Details</button>
 
     </div>
     </form>

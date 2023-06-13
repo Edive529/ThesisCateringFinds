@@ -20,14 +20,14 @@
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
    <!-- Libraries Stylesheet -->
-   <link href="../lib/animate/animate.min.css" rel="stylesheet">
-   <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+   <link href="lib/animate/animate.min.css" rel="stylesheet">
+   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
    <!-- Customized Bootstrap Stylesheet -->
-   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- Template Stylesheet -->
-   <link href="../bootstrap/css/style.css" rel="stylesheet">
+   <link href="bootstrap/css/style.css" rel="stylesheet">
 
     <title>Homepage</title>
 </head>
@@ -50,10 +50,10 @@
 
     <!--navbar-->
 
-    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top " style="background-color: #3c8dbc;">
+    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top " style="background-color: #ffa7a6;">
       <div class="container-fluid">
 
-      <a href="admin/dashboardAdmin.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-2">
+      <a href="inindex.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-2">
                 <h2 class="m-0 text-primary">CateringFinds</h2>
             </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
             <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
           </form>
             <button class="btn " type="button">
-            <a href="admin/dashboardAdmin.php">
+            <a href="profilepage.php">
               <i class="fa fa-user"></i>
             </a>
             </button>
@@ -97,13 +97,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/wow/wow.min.js"></script>
-    <script src="../lib/easing/easing.min.js"></script>
-    <script src="../lib/waypoints/waypoints.min.js"></script>
-    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="../bootstrap/js/main.js"></script>
+    <script src="bootstrap/js/main.js"></script>
 
 </body>
 </html>

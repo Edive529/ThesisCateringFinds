@@ -43,8 +43,15 @@ $userid = $_SESSION['customerid'];
       <a href="view_order.php?get_id=<?= $fetch_prodcut['catering_id'] ?>">
          <p class="date"><i class="fa fa-calendar"></i><span><?=$fetch_prodcut['date_of_reservation'];  ?></span></p>
 
-         <h3 class="name"><?= $fetch_prodcut['order_list'] ?></h3>
-         <p class="price"><i class="fas fa-peso-sign"></i></p>
+         <?php
+          $commaDelimitedString = $fetch_prodcut['order_list'];
+          $array = explode(",", $commaDelimitedString);
+          $result = implode("<br>", $array);
+
+?>
+
+         <h3 class="name" style="letter-spacing: 1px; line-height: 1.8; font-size: 18px; text-align: center;"><?= $result ?></h3>
+        
          <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'delivered'){echo 'green';}elseif($fetch_prodcut['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_prodcut['status'] ?></p>
       </a>
    </div>

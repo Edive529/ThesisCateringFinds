@@ -16,6 +16,8 @@ if(isset($_POST['btnaddfood'])){
   $category = $_POST['txtselect_option'];
   $saleprice = $_POST['txtsaleprice'];
   $description = $_POST['txtdescription'];
+  $userid = $_POST['txtuserid'];
+  $restaurant = $_POST['txtrestaurant'];
 
 $file_name = $_FILES['file']['name'];
 $file_type = $_FILES['file']['type'];
@@ -54,10 +56,12 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
       $upload = $f_newfile;
       if(!isset($error)){
-        $insert=$pdo->prepare("insert into tbl_foodmenu(food,category,saleprice,description,image)
-        values(:food,:category,:saleprice,:description,:image)");
+        $insert=$pdo->prepare("insert into tbl_foodmenu(food,userid,restaurant,category,saleprice,description,image)
+        values(:food,:userid,:restaurant,:category,:saleprice,:description,:image)");
 
         $insert->bindParam(':food',$food);
+        $insert->bindParam(':userid',$userid);
+        $insert->bindParam(':restaurant',$restaurant);
         $insert->bindParam(':category',$category);
         $insert->bindParam(':saleprice',$saleprice);
 
@@ -218,6 +222,11 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
           <input type="file" class="input-group" name="file" required>
 
         </div>
+
+
+           <input hidden type="text" class="form-control" name="txtuserid" value="<?php echo $_SESSION['userid']; ?>" required>
+           <input hidden type="text" class="form-control" name="txtrestaurant" value="<?php echo $_SESSION['restaurant']; ?>" required>
+
 
 
 

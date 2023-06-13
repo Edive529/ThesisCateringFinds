@@ -42,7 +42,7 @@ include_once 'headerAdmin.php';
      <div class="card card-outline card-primary">
 
        <div class="card-header with-border">
-         <h3 class="box-title"><a href="addmenu.php" class="btn btn-primary" role="button">Add Food</a></h3>
+         <h3 class="box-title"><a href="addorder.php" class="btn btn-primary" role="button">Add Order</a></h3>
       </div>
 
         <div class="card-body overflow-auto" >
@@ -50,17 +50,17 @@ include_once 'headerAdmin.php';
 <!-- form start -->
         <div class="row margin">
 
-          <div class="col-md-8">
+          <div class="col-md-12">
 
             <table id="tablefoodmenu" class = "table table-striped">
               <thead>
                 <tr>
                   <th>catering_id</th>
                   <th>order_list_id</th>
-                  <th>cart_id</th>
+
                   <th>payment_type</th>
                   <th>user</th>
-                  <th>package</th>
+
                   <th>restaurant</th>
                   <th>event_address</th>
                   <th>catering_style</th>
@@ -75,6 +75,7 @@ include_once 'headerAdmin.php';
               </thead>
               <tbody>
                 <?php
+
                   $select=$pdo->prepare("select * from tbl_catering_order_details order by catering_id desc");
 
                   $select->execute();
@@ -89,16 +90,10 @@ include_once 'headerAdmin.php';
                     '.$row->order_list.'
                     </td>
                     <td>
-                    '.$row->cart_id.'
-                    </td>
-                    <td>
                     '.$row->payment_type.'
                     </td>
                     <td>
                     '.$row->user.'
-                    </td>
-                    <td>
-                    '.$row->package.'
                     </td>
                     <td>
                     '.$row->restaurant.'
@@ -119,7 +114,7 @@ include_once 'headerAdmin.php';
                     '.$row->date_to_be_delivered.'
                     </td>
                     <td>
-                    <a href = "edit_catering_order.php?id='.$row->catering_id.'"  class="btn btn-info" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                    <a href = "edit_catering_order.php?id='.$row->catering_id.'"  class="btn btn-success" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                     </td>
                     <td>
                     <button id='.$row->catering_id.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>

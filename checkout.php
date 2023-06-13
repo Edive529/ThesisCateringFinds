@@ -12,6 +12,8 @@ if(isset($_POST['place_order'])){
 
    $name = $_POST['user'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $restaurantname = $_POST['restaurant'];
+   $restaurantname = filter_var($restaurantname, FILTER_SANITIZE_STRING);
    $number = $_POST['phonenum'];
    $number = filter_var($number, FILTER_SANITIZE_STRING);
    $order = $_POST['order_list'];
@@ -33,8 +35,8 @@ if(isset($_POST['place_order'])){
 
 
 
-            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?)");
-            $insert_order->execute([$userid, $order, $name, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
+            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, restaurant, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?)");
+            $insert_order->execute([$userid, $order, $name, $restaurantname, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
             header('location:orders.php');
 
       // else{
@@ -98,8 +100,11 @@ if(isset($_POST['update_cart'])){
 <?php include 'components/header.php'; ?>
 
 <section class="checkout">
+  <?php $id= isset($_GET['id']) ? $_GET['id'] : ''; ?>
 
-   <h1 class="heading">checkout summary</h1>
+   <h1 class="heading">checkout summary<?php echo $id ?></h1>
+
+
 
    <div class="row">
 
@@ -111,10 +116,14 @@ if(isset($_POST['update_cart'])){
               $select_get = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
               $select_get->execute([$_GET['get_id']]);
               while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
+
+                $restaurant = $fetch_get['restaurant'];
         ?>
         <div class="flex">
            <img src="admin/upload/<?= $fetch_get['image']; ?>" class="image" alt="">
            <div>
+
+
               <h3 class="food"><?= $fetch_get['food']; ?></h3>
               <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_get['saleprice']; ?></p>
 
@@ -122,6 +131,7 @@ if(isset($_POST['update_cart'])){
               <button type="submit" name="update_cart" class="fas fa-edit">
               </button>
            </div>
+
 
 
 
@@ -139,13 +149,14 @@ if(isset($_POST['update_cart'])){
                     $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
                     $sub_total = ($fetch_cart['qty'] * $fetch_product['saleprice']);
 
-                    $result .="{".$fetch_product['food'].":".$fetch_product['saleprice']."x".$fetch_cart['qty']."=".$sub_total."} ";
+                    $result .=$fetch_product['food'] . ": ₱" . $fetch_product['saleprice'] . "x" . $fetch_cart['qty'] . "= ₱" . $sub_total . ",";
 
 
 
 
 
                     $grand_total += $sub_total;
+                    $restaurantname = $fetch_product['restaurant'];
 
 
         ?>
@@ -154,6 +165,7 @@ if(isset($_POST['update_cart'])){
            <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
            <div>
              <h3></h3>
+             <h3><?= $fetch_product['restaurant']; ?></h3>
               <h3 class="food"><?= $fetch_product['food']; ?></h3>
               <p class="saleprice"><i class="fas fa-peso-sign"></i> <?= $fetch_product['saleprice']; ?> x <?= $fetch_cart['qty']; ?></p>
            </div>
@@ -165,7 +177,9 @@ if(isset($_POST['update_cart'])){
               }else{
                  echo '<p class="empty">your cart is empty</p>';
               }
-           } $maonani = $result." = ".$grand_total;
+           } $maonani = $result."Total = "."₱".$grand_total;
+           $restaurantname;
+
         ?>
         <div class="grand-total"><span>grand total :</span><p><i class="fas fa-peso-sign"></i> <?= $grand_total; ?></p></div>
 
@@ -212,12 +226,15 @@ if(isset($_POST['update_cart'])){
             <div class="box">
 
               <p>Event Address <span>*</span></p>
-              <input type="textarea" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
+
+              <input type="text" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
 <p>Delivery Date</p>
                <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input">
                <p>Delivery time<span>*</span></p>
                <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
-               <input hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
+               <input hidden type="text"  name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
+               <input hidden type="text"  name="restaurant" value="<?php echo $restaurantname?>" required maxlength="" placeholder="" class="input">
+               <textarea hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input"><?php echo$maonani?></textarea>
 
 
             </div>

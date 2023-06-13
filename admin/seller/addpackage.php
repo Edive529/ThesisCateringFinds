@@ -13,10 +13,14 @@ include_once 'header.php';
 
 if(isset($_POST['btnaddfood'])){
 
-  $package = $_POST['txtpackage'];
-  $food = $_POST['txtfood'];
+
+  $package = $_POST['txtfood'];
   $saleprice = $_POST['txtsaleprice'];
-  $description = $_POST['txtdescription'];
+  $food = $_POST['txtdescription'];
+  $userid = $_POST['txtuserid'];
+  $package_description = $_POST['txtpackage_description'];
+  $restaurant = $_POST['txtrestaurant'];
+  $category = $_POST['txtcategory'];
 
 $file_name = $_FILES['file']['name'];
 $file_type = $_FILES['file']['type'];
@@ -56,21 +60,28 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
       $upload = $f_newfile;
       if(!isset($error)){
         $chk="";
-        foreach ($food as $items){
-          $chk.=$items.",";
+        foreach ($food as $items => $foo){
+          $chk.=$foo;
+          if ($items !== count($food) - 1) {
+            $chk .=', ';
+          }
 
         }
 
 
-        $insert=$pdo->prepare("insert into tbl_package(package,food,saleprice,description,image)
-        values(:package,:food,:saleprice,:description,:image)");
+        $insert=$pdo->prepare("insert into tbl_foodmenu(food,userid,restaurant,category,package_description,saleprice,description,image)
+        values(:food,:userid,:restaurant,:category,:package_description,:saleprice,:description,:image)");
 
 
-        $insert->bindParam(':package',$package);
-        $insert->bindParam(':food',$chk);
+
+        $insert->bindParam(':userid',$userid);
+        $insert->bindParam(':restaurant',$restaurant);
+        $insert->bindParam(':category',$category);
+        $insert->bindParam(':package_description',$package_description);
+        $insert->bindParam(':food',$package);
         $insert->bindParam(':saleprice',$saleprice);
 
-        $insert->bindParam(':description',$description);
+        $insert->bindParam(':description',$chk);
         $insert->bindParam(':image',$upload);
 
 
@@ -188,11 +199,11 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
       <div class="col-md-6">
         <div class="form-group">
            <label>Package</label>
-           <input type="text" class="form-control" name="txtpackage" placeholder="Enter name..." required>
+           <input type="text" class="form-control" name="txtfood" placeholder="Enter name..." required>
          </div>
          <div class="form-group">
            <?php
-           $q=$pdo->prepare("Select Distinct category from tbl_foodmenu order by category");
+           $q=$pdo->prepare("Select Distinct category from tbl_foodmenu where category != 'Package' order by category");
            $q->execute();
            foreach($q as $cat){
 
@@ -201,7 +212,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
               $linkq=$pdo->prepare("Select * from tbl_foodmenu where category='".$cat['category']."'");
               $linkq->execute();
               foreach($linkq as $link){
-                 echo '<input type="checkbox" name= "txtfood[]"  value='.$link['food'].'>'.$link['food'].' ';
+                 echo '<input type="checkbox" name= "txtdescription[]"  value='.$link['food'].'>'.$link['food'].' ';
               }
               echo '</ul>';
            }
@@ -219,14 +230,23 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
         <div class="form-group">
           <label >Description</label>
-          <textarea class="form-control" name="txtdescription" rows="6" placeholder="Enter..."></textarea>
+          <textarea class="form-control" name="txtpackage_description" rows="5" placeholder="Enter..."></textarea>
         </div>
+
+
+           <input hidden type="text" class="form-control" name="txtrestaurant" value="<?php echo $_SESSION['restaurant']; ?>" placeholder="Enter name..." required>
+           <input hidden type="text" class="form-control" name="txtcategory" value="Package" placeholder="Enter name..." required>
+
 
         <div class="form-group">
           <label >Upload image</label>
           <input type="file" class="input-group" name="file" required>
 
         </div>
+
+
+           <input hidden type="text" class="form-control" name="txtuserid" value="<?php echo $_SESSION['userid'] ?>" required>
+
 
 
 

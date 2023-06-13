@@ -23,6 +23,7 @@ if(isset($_POST['btnaddfood'])){
   $username = $_POST['txtusername'];
   $useremail = $_POST['txtemail'];
   $restaurant = $_POST['txtrestaurant'];
+  $phonenum = $_POST['txtphonenum'];
   $address = $_POST['txtaddress'];
   $latitude = $_POST['txtlatitude'];
   $longitude = $_POST['txtlongitude'];
@@ -92,13 +93,14 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
 
 
-        $insert=$pdo->prepare("insert into tbl_user(username,useremail,restaurant,address,password,latitude,longitude,image)
-        values(:username,:useremail,:restaurant,:address,:password,:latitude,:longitude,:image)");
+        $insert=$pdo->prepare("insert into tbl_user(username,useremail,restaurant,phonenum,address,password,latitude,longitude,image)
+        values(:username,:useremail,:restaurant,:phonenum,:address,:password,:latitude,:longitude,:image)");
 
 
         $insert->bindParam(':username',$username);
         $insert->bindParam(':useremail',$useremail);
         $insert->bindParam(':restaurant',$restaurant);
+        $insert->bindParam(':phonenum',$phonenum);
 
         $insert->bindParam(':address',$address);
         $insert->bindParam(':password',$hashed_password);
@@ -231,6 +233,14 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
         </div>
         <div class="input-group mb-3">
           <input type="text" class="form-control"  name="txtrestaurant" placeholder="Restaurant" >
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"  maxlength="11"name="txtphonenum" placeholder="Enter phonenumber" >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

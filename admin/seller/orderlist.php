@@ -41,28 +41,27 @@ include_once 'header.php';
 
      <div class="card card-outline card-primary">
 
-       <div class="card-header with-border">
-         <h3 class="box-title"><a href="addmenu.php" class="btn btn-primary" role="button">Add Food</a></h3>
-      </div>
+  
 
         <div class="card-body overflow-auto" >
       <!-- /.box-header -->
 <!-- form start -->
         <div class="row margin">
 
-          <div class="col-md-8">
+          <div class="col-md-12">
 
             <table id="tablefoodmenu" class = "table table-striped">
               <thead>
                 <tr>
                   <th>catering_id</th>
                   <th>order_list</th>
-                  <th>cart_id</th>
+
                   <th>payment_type</th>
                   <th>user</th>
-                  <th>package</th>
-                  <th>restaurant</th>
+
+
                   <th>event_address</th>
+                  <th>Status</th>
                   <th>catering_style</th>
                   <th>payment_status</th>
                   <th>date_of_reservation</th>
@@ -75,7 +74,8 @@ include_once 'header.php';
               </thead>
               <tbody>
                 <?php
-                  $select=$pdo->prepare("select * from tbl_catering_order_details order by catering_id desc");
+                $restaurant = $_SESSION['restaurant'];
+                  $select=$pdo->prepare("select * from tbl_catering_order_details where restaurant = '$restaurant'  order by catering_id desc");
 
                   $select->execute();
 
@@ -89,22 +89,17 @@ include_once 'header.php';
                     '.$row->order_list.'
                     </td>
                     <td>
-                    '.$row->cart_id.'
-                    </td>
-                    <td>
                     '.$row->payment_type.'
                     </td>
                     <td>
                     '.$row->user.'
                     </td>
-                    <td>
-                    '.$row->package.'
-                    </td>
-                    <td>
-                    '.$row->restaurant.'
-                    </td>
+
                     <td>
                     '.$row->event_address.'
+                    </td>
+                    <td>
+                    '.$row->status.'
                     </td>
                     <td>
                     '.$row->catering_style.'

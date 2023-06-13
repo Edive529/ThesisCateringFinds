@@ -3,54 +3,7 @@
 include 'connectdb.php';
 session_start();
 
-$userid = $_SESSION['customerid'];
 
-
-if(isset($_POST['add_to_cart'])){
-
-  $id= isset($_GET['id']) ? $_GET['id'] : '';
-  $select = $pdo->prepare("select * from tbl_user where userid=$id");
-
-  $select->execute();
-  $row=$select->fetch(PDO::FETCH_ASSOC);
-
-  $user_db = $row['restaurant'];
-
-
-
-
-
-
-
-
-   $foodid = $_POST['foodid'];
-   $foodid = filter_var($foodid, FILTER_SANITIZE_STRING);
-   $qty = $_POST['qty'];
-   $qty = filter_var($qty, FILTER_SANITIZE_STRING);
-
-   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
-   $verify_cart->execute([$userid, $foodid]);
-
-   $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
-   $max_cart_items->execute([$userid]);
-
-   if($verify_cart->rowCount() > 0){
-      $warning_msg[] = 'Already added to cart!';
-   }elseif($max_cart_items->rowCount() == 10){
-      $warning_msg[] = 'Cart is full!';
-   }else{
-
-
-      $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-      $select_price->execute([$foodid]);
-      $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
-
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, restaurant, foodid, price, qty) VALUES(?,?,?,?,?)");
-      $insert_cart->execute([$userid, $user_db, $foodid, $fetch_price['saleprice'], $qty]);
-      $success_msg[] = 'Added to cart!';
-   }
-
-}
 
 ?>
 
@@ -106,85 +59,14 @@ if(isset($_POST['add_to_cart'])){
   background-color: #555; /* Add a dark-grey background on hover */
 }</style>
 
-<style media="screen">
- .box-container {
-    display: flex;
-    flex-wrap: wrap;
- }
-
- .box {
-    flex: 0 0 80px; /* Set a fixed width for the boxes */
-    background-color: #f9f9f9;
-    padding: 5px; /* Decreased padding to make the boxes smaller */
-    border-radius: 8px;
-    margin: 5px; /* Added margin to create space between the boxes */
- }
-
- .box-container .image {
-    width: 40px; /* Decreased image size */
-    height: 40px; /* Decreased image size */
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 5px; /* Decreased margin */
- }
-
- .name {
-    font-size: 14px; /* Decreased font size */
-    margin: 0;
- }
-
- .flex {
-    display: flex;
-    margin-bottom: 5px; /* Decreased margin */
- }
-
- .price {
-    margin-right: 3px; /* Decreased margin */
-    font-size: 12px; /* Decreased font size */
- }
-
- .qty {
-    width: 20px; /* Decreased input width */
-    text-align: center;
-    padding: 3px;
- }
-
- .btn {
-    background-color: #0088cc;
-    color: #fff;
-    text-decoration: none;
-    padding: 3px 6px; /* Decreased padding */
-    border-radius: 4px;
-    font-size: 14px; /* Decreased font size */
- }
-
- .delete-btn {
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px; /* Decreased font size */
- }
-
- a:hover {
-    color: #666565;
- }
-</style>
-
-
 </head>
 <body>
 
-<<<<<<< HEAD
-<!-- header -->
-<?php include 'components/header.php'; ?>
 
-  
-=======
-
-<?php include 'components/header.php'; ?>
+<?php include 'components/header1.php'; ?>
 
 
 
->>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
     <!-- navmid Start -->
 
     <div class="container p-5 py-5" style="background-color:#ffffff;">
@@ -211,12 +93,8 @@ if(isset($_POST['add_to_cart'])){
                             <img class="image img-fluid " style="height:15rem; width:35rem; object-fit:cover; border-radius:50%;" src="admin/upload/<?php echo $banner_db; ?>"alt="">
                         </div>
                           <div class="col col-lg-8 col-md-4 p-4">
-<<<<<<< HEAD
-                              <h2 class="display-6 text-black ">dave's Kainan</h2> 
-=======
 
-                              <h2 class="display-6 text-black "><?=$restaurant_db;?></h2>
->>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
+                              <h2 class="display-6 text-black "><?= $restaurant_db; ?></h2>
 
                               <hr>
 
@@ -224,7 +102,7 @@ if(isset($_POST['add_to_cart'])){
 
                               <p class="fs-4 fw-medium text-black "> Contact Number: <?php echo $phonenum_db; ?></p>
 
-                              <p class="fs-4 fw-medium text-black "> Address: <?php echo $address_db ;?></p>
+                              <p class="fs-4 fw-medium text-black "> Address: <?php echo $address_db ;?> </p>
 
 
                           </div>
@@ -246,6 +124,9 @@ if(isset($_POST['add_to_cart'])){
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#maindish">Main Course</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#pasta">Pasta</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#appetizer">Appetizer</a>
@@ -285,16 +166,20 @@ if(isset($_POST['add_to_cart'])){
 
 
    <form action="" method="POST" class="box">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-
       <div class="flex">
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;" >buy now</a>
+
    </form>
 
 
@@ -328,8 +213,8 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
    <?php
       }
@@ -360,8 +245,8 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
    <?php
       }
@@ -392,8 +277,8 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
    <?php
       }
@@ -426,8 +311,8 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
    <?php
       }
@@ -452,6 +337,72 @@ if(isset($_POST['add_to_cart'])){
       if($select_products->rowCount() > 0){
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
+   <style media="screen">
+    .box-container {
+       display: flex;
+       flex-wrap: wrap;
+    }
+
+    .box {
+       flex: 0 0 80px; /* Set a fixed width for the boxes */
+       background-color: #f9f9f9;
+       padding: 5px; /* Decreased padding to make the boxes smaller */
+       border-radius: 8px;
+       margin: 5px; /* Added margin to create space between the boxes */
+    }
+
+    .box-container .image {
+       width: 40px; /* Decreased image size */
+       height: 40px; /* Decreased image size */
+       object-fit: cover;
+       border-radius: 50%;
+       margin-right: 5px; /* Decreased margin */
+    }
+
+    .name {
+       font-size: 14px; /* Decreased font size */
+       margin: 0;
+    }
+
+    .flex {
+       display: flex;
+       margin-bottom: 5px; /* Decreased margin */
+    }
+
+    .price {
+       margin-right: 3px; /* Decreased margin */
+       font-size: 12px; /* Decreased font size */
+    }
+
+    .qty {
+       width: 20px; /* Decreased input width */
+       text-align: center;
+       padding: 3px;
+    }
+
+    .btn {
+       background-color: #0088cc;
+       color: #fff;
+       text-decoration: none;
+       padding: 3px 6px; /* Decreased padding */
+       border-radius: 4px;
+       font-size: 14px; /* Decreased font size */
+    }
+
+    .delete-btn {
+       color: #fff;
+       text-decoration: none;
+       font-size: 14px; /* Decreased font size */
+    }
+
+    a:hover {
+       color: #666565;
+    }
+ </style>
+
+
+
+
    <form action="" method="POST" class="box">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
@@ -460,8 +411,8 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
-      <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
+      <a href="reglogin.php" name="add_to_cart" value="" class="btn">Add to cart</a>
+      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
    <?php
       }
@@ -472,7 +423,9 @@ if(isset($_POST['add_to_cart'])){
 
    </div>
 
+
 </section>
+
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 

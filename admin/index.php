@@ -102,7 +102,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Admin') {
 
     swal({
     title: "Warning!",
-    text: "Email Or Password field is wrong!",
+    text: "Email Or Password field is wrong2!",
     icon: "warning",
     button: "Ok",
   });
@@ -116,8 +116,28 @@ if($row['useremail'] == $useremail AND $row['role']=='Admin') {
 
 }}if ($row) {
 
+  if ($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['status'] == 'not approved') {
 
-if($row['useremail'] == $useremail AND $row['role']=='Seller') {
+    echo'<script type ="text/javascript">
+    jQuery(function validation(){
+
+      swal({
+      title: "Warning!",
+      text: "Account not yet approved (Wait 1 to 2 weeks)!",
+      icon: "warning",
+      button: "Ok",
+    });
+
+
+
+    });
+
+    </script>';
+
+  }
+
+
+elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['status'] == 'approved') {
 
   $select = $pdo->prepare("select * from tbl_user where useremail= :useremail");
   $select->execute(array(':useremail' => $useremail));
@@ -128,6 +148,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Seller') {
     $useremail = $row['useremail'];
     $username = $row['username'];
     $role = $row['role'];
+    $restaurant = $row['restaurant'];
 
     $pwdcheck= password_verify($password, $hashed_password);
 
@@ -137,6 +158,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Seller') {
       $_SESSION['username'] = $username;
       $_SESSION['useremail'] = $useremail;
       $_SESSION['role'] = $role;
+      $_SESSION['restaurant'] = $restaurant;
 
        echo'<script type ="text/javascript">
       jQuery(function validation(){
@@ -168,7 +190,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Seller') {
 
     swal({
     title: "Warning!",
-    text: "Email Or Password field is wrong!",
+    text: "Email Or Password field is wrong5!",
     icon: "warning",
     button: "Ok",
   });

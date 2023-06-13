@@ -3,7 +3,7 @@ include 'connectdb.php';
 
 session_start();
 
-include_once 'navbar.php';
+include_once 'navbarin.php';
 
 
 
@@ -117,7 +117,7 @@ echo '<div id="showData">' . $allData. '</div>';
 
 
             <div class="  wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="viewprods.php?id='<?php echo $restaurantid;?>'">
+                <a class="cat-item rounded p-4" href="view_products.php?id='<?php echo $restaurantid;?>'">
                     <i class="fa fa-3x fa-mail-bulk text-primary"></i>
                     <h6 class="mb-3"><?= $fetch_prodcut['restaurant']; ?></h6>
                     <p class="mb-0"><?= $fetch_prodcut['address']; ?></p>
@@ -154,6 +154,6 @@ echo '<div id="showData">' . $allData. '</div>';
 </html>
 <?php
 
-include_once 'mainfooter.php';
+include_once 'mainfooterin.php';
 
  ?>
