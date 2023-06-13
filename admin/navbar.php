@@ -53,7 +53,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top " style="background-color: #3c8dbc;">
       <div class="container-fluid">
 
-      <a href="index.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-2">
+      <a href="admin/dashboardAdmin.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-2">
                 <h2 class="m-0 text-primary">CateringFinds</h2>
             </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
             <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
           </form>
             <button class="btn " type="button">
-            <a href="reglogin.php">
+            <a href="admin/dashboardAdmin.php">
               <i class="fa fa-user"></i>
             </a>
             </button>

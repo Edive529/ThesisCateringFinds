@@ -34,7 +34,7 @@ include_once 'headerAdmin.php';
         -------------------------->
         <div class="card card-outline card-success">
           <div class="card-header with-border">
-            <h3 class="box-title"><a href="menu.php" class="btn btn-primary" role="button">Back to Menu list</a></h3>
+            <h3 class="box-title"><a href="sellerregistration.php" class="btn btn-primary" role="button">Back to Seller Registration list</a></h3>
           </div>
 
             <div class="card-body">

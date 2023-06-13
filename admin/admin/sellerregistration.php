@@ -352,7 +352,7 @@ include_once 'headerAdmin.php';
                 <a href = "viewmenu.php?id='.$row->userid.'"  class="btn btn-primary" role = "button" ><span class = "fas fa-eye" style = "color:#ffffff" data-toggle="tooltip" title="view"></span></a>
                 </td>
                 <td>
-                <a href = "sellereditreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                <a href = "sellereditreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                 </td>
                 <td>
                 <button id='.$row->userid.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>

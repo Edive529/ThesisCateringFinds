@@ -106,6 +106,70 @@ if(isset($_POST['add_to_cart'])){
   background-color: #555; /* Add a dark-grey background on hover */
 }</style>
 
+<style media="screen">
+ .box-container {
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+ .box {
+    flex: 0 0 80px; /* Set a fixed width for the boxes */
+    background-color: #f9f9f9;
+    padding: 5px; /* Decreased padding to make the boxes smaller */
+    border-radius: 8px;
+    margin: 5px; /* Added margin to create space between the boxes */
+ }
+
+ .box-container .image {
+    width: 40px; /* Decreased image size */
+    height: 40px; /* Decreased image size */
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px; /* Decreased margin */
+ }
+
+ .name {
+    font-size: 14px; /* Decreased font size */
+    margin: 0;
+ }
+
+ .flex {
+    display: flex;
+    margin-bottom: 5px; /* Decreased margin */
+ }
+
+ .price {
+    margin-right: 3px; /* Decreased margin */
+    font-size: 12px; /* Decreased font size */
+ }
+
+ .qty {
+    width: 20px; /* Decreased input width */
+    text-align: center;
+    padding: 3px;
+ }
+
+ .btn {
+    background-color: #0088cc;
+    color: #fff;
+    text-decoration: none;
+    padding: 3px 6px; /* Decreased padding */
+    border-radius: 4px;
+    font-size: 14px; /* Decreased font size */
+ }
+
+ .delete-btn {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px; /* Decreased font size */
+ }
+
+ a:hover {
+    color: #666565;
+ }
+</style>
+
+
 </head>
 <body>
 
@@ -122,22 +186,25 @@ if(isset($_POST['add_to_cart'])){
 
 
                       <div class="d-flex p-4">
+                        <?php
+                        $id= isset($_GET['id']) ? $_GET['id'] : '';
+                        $select = $pdo->prepare("select * from tbl_user where userid=$id");
 
-                      <div class="col col-lg-8 col-md-4 p-4">
-                            <img class="image img-fluid " src="img/car/avd.jpg"alt="">
+                        $select->execute();
+                        $row=$select->fetch(PDO::FETCH_ASSOC);
+
+                        $restaurant_db = $row['restaurant'];
+                        $phonenum_db = $row['phonenum'];
+                        $address_db = $row['address'];
+                        $banner_db = $row['banner'];
+
+                        ?>
+
+                      <div class="col col-lg-4 col-md-4 p-4">
+                            <img class="image img-fluid " style="height:15rem; width:35rem; object-fit:cover; border-radius:50%;" src="admin/upload/<?php echo $banner_db; ?>"alt="">
                         </div>
                           <div class="col col-lg-8 col-md-4 p-4">
-                            <?php
-                            $id= isset($_GET['id']) ? $_GET['id'] : '';
-                            $select = $pdo->prepare("select * from tbl_user where userid=$id");
 
-                            $select->execute();
-                            $row=$select->fetch(PDO::FETCH_ASSOC);
-
-                            $restaurant_db = $row['restaurant'];
-                            $phonenum_db = $row['phonenum'];
-                            $address_db = $row['address'];
-                            ?>
                               <h2 class="display-6 text-black "><?=$restaurant_db;?></h2>
 
                               <hr>
@@ -216,7 +283,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
 
 
@@ -251,7 +318,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -283,7 +350,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -315,7 +382,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -349,7 +416,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
    <?php
       }
@@ -383,7 +450,7 @@ if(isset($_POST['add_to_cart'])){
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn">
-      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" class="delete-btn">buy now</a>
+      <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>
    <?php
       }

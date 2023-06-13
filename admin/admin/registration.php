@@ -288,7 +288,7 @@ if(isset($_POST['btnsave'])){
 
 
                 <td>
-                <a href = "editreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
+                <a href = "editreg.php?id='.$row->userid.'"  class="btn btn-success" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
                 </td>
                 </tr>';
               }
