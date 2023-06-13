@@ -95,10 +95,10 @@ if(isset($_POST['add_to_cart'])){
 </head>
 <body>
 
+<!-- header -->
 <?php include 'components/header.php'; ?>
 
- 
-
+  
     <!-- navmid Start -->
 
     <div class="container p-5 py-5" style="background-color:#ffffff;"> 
@@ -111,7 +111,7 @@ if(isset($_POST['add_to_cart'])){
                             <img class="image img-fluid " src="img/car/avd.jpg"alt="">
                         </div>
                           <div class="col col-lg-8 col-md-4 p-4">
-                              <h2 class="display-6 text-black ">Jack's Kainan</h2> 
+                              <h2 class="display-6 text-black ">dave's Kainan</h2> 
 
                               <hr>
                               
@@ -323,7 +323,6 @@ if(isset($_POST['add_to_cart'])){
    </div>
 
 </section>
-
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 

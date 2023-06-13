@@ -69,6 +69,7 @@ if(isset($_POST['empty_cart'])){
 </head>
 <body>
 
+<!-- header -->
 <?php include 'components/header.php'; ?>
 
 

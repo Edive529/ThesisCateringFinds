@@ -7,6 +7,10 @@
         private $map_add;
         private $lat;
         private $longi;
+        private $resImage;
+
+
+
         private $conn;
         private $tableName = "tbl_user";
 
