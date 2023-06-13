@@ -173,11 +173,18 @@ if(isset($_POST['add_to_cart'])){
 </head>
 <body>
 
+<<<<<<< HEAD
+<!-- header -->
+<?php include 'components/header.php'; ?>
+
+  
+=======
 
 <?php include 'components/header.php'; ?>
 
 
 
+>>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
     <!-- navmid Start -->
 
     <div class="container p-5 py-5" style="background-color:#ffffff;">
@@ -204,8 +211,12 @@ if(isset($_POST['add_to_cart'])){
                             <img class="image img-fluid " style="height:15rem; width:35rem; object-fit:cover; border-radius:50%;" src="admin/upload/<?php echo $banner_db; ?>"alt="">
                         </div>
                           <div class="col col-lg-8 col-md-4 p-4">
+<<<<<<< HEAD
+                              <h2 class="display-6 text-black ">dave's Kainan</h2> 
+=======
 
                               <h2 class="display-6 text-black "><?=$restaurant_db;?></h2>
+>>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
 
                               <hr>
 
@@ -462,7 +473,6 @@ if(isset($_POST['add_to_cart'])){
    </div>
 
 </section>
-
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 

@@ -5,10 +5,7 @@ function initMap(){
     center: iligan,
   });
   
-var marker = new google.maps.Marker({
-  position: iligan,
-  map: map,
-});
+ 
 
 var showData = JSON.parse(document.getElementById('showData').innerHTML); 
 
