@@ -7,7 +7,7 @@ $userid = $_SESSION['customerid'];
 
 if(isset($_POST['add_to_cart'])){
 
-  
+
 
 
    $foodid = $_POST['foodid'];
@@ -53,7 +53,7 @@ if(isset($_POST['add_to_cart'])){
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-   
+
    <!-- Icon Font Stylesheet -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -69,7 +69,7 @@ if(isset($_POST['add_to_cart'])){
    <!-- Template Stylesheet -->
    <link href="bootstrap/css/style.css" rel="stylesheet">
    <link href="css/style.css" rel="stylesheet">
-    <style> 
+    <style>
 
 .card {
     border-radius: 5px;
@@ -190,12 +190,12 @@ td {
 .vote {
     cursor: pointer
 }</style>
- 
+
     <title>Homepage</title>
 </head>
 <body>
 
-<div class="container bg-white p-0 "> 
+<div class="container bg-white p-0 ">
    <!-- Spinner Start -->
    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -206,7 +206,18 @@ td {
  <!-- header -->
 <?php include 'components/header.php'; ?>
 
+<?php
+$id= isset($_GET['id']) ? $_GET['id'] : '';
+   $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where foodid= $id ");
+   $select_products->execute();
 
+
+      $fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC);
+
+
+
+$_SESSION['restaurant'] =   $fetch_prodcut['restaurant'];
+?>
      <!-- top Start -->
  <div class="container-fluid mb-5">
       <div class="position-relative ">
@@ -218,53 +229,57 @@ td {
 
                       <div class="row justify-content-start ">
 
-                      
+
 
                       <div class="col-4 col-lg-5">
-                            <img class="img-fluid w-auto h-auto" src="img/car/ck.jpg"alt="">
+                        <h1><?php echo $_SESSION['restaurant']; ?></h1>
+
+                            <img class="img-fluid w-auto h-auto" src="admin/upload/<?php echo $fetch_prodcut['image']; ?>"alt="">
                           </div>
                           <div class="col-4 col-lg-6">
-                              <h1 class="display-5 text-black animated slideInDown mb-4">Fried Chicken</h1>
+                              <h1 class="display-5 text-black animated slideInDown mb-4"><?php echo $fetch_prodcut['food']; ?></h1>
                               <hr>
-                              <p class="fs-2 fw-medium text-black ">Price</p>
+                              <p class="fs-2 fw-medium text-black "><?php echo $fetch_prodcut['saleprice']; ?></p>
                             <p>
                             <select class="form-select fs-2 fw-medium text-black " aria-label="Default select example">
                                 <option selected>Party Tray</option>
                                 <option value="1">Plated</option>
-                                <option value="2">Packed</option> 
+                                <option value="2">Packed</option>
                             </select>
                         </p>
                               <p class="fs-2 fw-medium text-black ">Description</p>
                                 <br><br>
-                              <p class="fs-2 fw-medium text-black position-bottom">Good for 100 pax</p>
+                              <p class="fs-2 fw-medium text-black position-bottom"><?php echo $fetch_prodcut['description']; ?></p>
 
                             <div class="form-outline row " style="width: 50%; padding:4px;">
-                            
-                                <input max="4" type="number" id="" placeholder="1" class="col form-control fs-2 fw-medium text-black " /> 
+
+                                <input max="4" type="number" id="" placeholder="1" class="col form-control fs-2 fw-medium text-black " />
                                 <a href="#" class="btn btn-primary col m-1">Add to cart</a>
                             </div>
-                               
+
                           </div>
 
-                        
-                           
+
+
                       </div>
-                      
+
                        </form>
                   </div>
               </div>
           </div>
-           
+
       </div>
-  </div> 
+  </div>
+
   <!--   End -->
 <hr>
 
-    <!--restaurant reviews Start -->  
+    <!--restaurant reviews Start -->
             <div class=" container d-flex p-2 align-items-center">
-                <h2 class=" text-black animated slideInDown mb-4">Fried Chicken Reviews</h2>
+                <h2 class=" text-black animated slideInDown mb-4"><?php echo $fetch_prodcut['food']; ?> Reviews</h2>
             </div>
-         
+
+
             <div class=" footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" style="background-color:#e0e0e0;">
             <div class=" p-5">
                 <div class="row g-5">
@@ -278,33 +293,64 @@ td {
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-inactive"></span></p>
-                            
-                            
+
+
 						</div>
-                         
+
                     </div>
-                    
+
+                    <?php
+
+                    $restaurant = $_SESSION['restaurant'];
+
+                    $select = $pdo->prepare("select * from tbl_user where restaurant='$restaurant'");
+
+                    $select->execute();
+                    $row=$select->fetch(PDO::FETCH_ASSOC);
+
+                    if($row){
+
+
+                      // code...
+
+
+
+                    $restaurant_db = $row['restaurant'];
+                    $address_db = $row['address'];
+                    $banner_db = $row['banner'];
+
+
+
+
+
+
+                     ?>
+
+<h1>asdasd</h1>
                     <div class="col-lg-4 col-md-6 d-flex">
-                        <img src="img/car/avd.jpg" class="img-fluid rounded-circle shadow-strong" style="width:100px; height:100px; " alt="">
-                        <p class="m-2 fs-3 fw-medium text-black ">Jack's Kainan</p>
-                         
+                        <img src="admin/upload/<?php echo $banner_db?>" class="img-fluid rounded-circle shadow-strong" style="width:100px; height:100px; " alt="">
+                        <p class="m-2 fs-3 fw-medium text-black "></p>
+
                     </div>
+                    <?php } ?>
 
                     <div class="col-lg-4 col-md-6">
-                    <p class="fs-3 fw-medium text-black ">Contact Number</p>
+                    <p class="fs-3 fw-medium text-black ">Contact Number:</p>
                     <p class="fs-3 fw-medium text-black ">Address</p>
                         <div class="position-relative mx-auto" style="max-width: 400px;">
-                         
+
                         </div>
                     </div>
+
+
                 </div>
             </div>
-           
+
         </div>
- 
+
   <!--   End -->
 
-  <!--user reviews Start --> 
+  <!--user reviews Start -->
 <div class="container-fluid px-1 py-5 mx-auto">
     <div class="row justify-content-left">
         <div class=" col-12 mb-5">
@@ -323,8 +369,8 @@ td {
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-inactive"></span></p>
-                            
-                            
+
+
 						</div>
                         <p class="text-muted text-left ">10 Sept</p>
 
@@ -332,10 +378,10 @@ td {
                             <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
                             <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
                         </div>
-                        <div class="row text-left"> 
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg"> 
+                        <div class="row text-left">
+                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
+                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
+                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
                         </div>
 					</div>
 				</div>
@@ -356,8 +402,8 @@ td {
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-inactive"></span></p>
-                            
-                            
+
+
 						</div>
                         <p class="text-muted text-left ">10 Sept</p>
 
@@ -365,10 +411,10 @@ td {
                             <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
                             <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
                         </div>
-                        <div class="row text-left"> 
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg"> 
+                        <div class="row text-left">
+                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
+                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
+                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
                         </div>
 					</div>
 				</div>
@@ -389,8 +435,8 @@ td {
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-active"></span>
 							<span class="fa fa-star star-inactive"></span></p>
-                            
-                            
+
+
 						</div>
                         <p class="text-muted text-left ">10 Sept</p>
 
@@ -398,22 +444,22 @@ td {
                             <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
                             <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
                         </div>
-                        <div class="row text-left"> 
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg"> 
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg"> 
+                        <div class="row text-left">
+                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
+                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
+                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
                         </div>
 					</div>
 				</div>
             </div>
 
- 
+
         </div>
     </div>
 </div>
- 
-      
- 
+
+
+
 </div>
 
 
@@ -430,6 +476,6 @@ td {
     <script src="bootstrap/js/main.js"></script>
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-   
+
 </body>
 </html>

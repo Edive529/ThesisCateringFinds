@@ -173,19 +173,12 @@ if(isset($_POST['add_to_cart'])){
 </head>
 <body>
 
-<<<<<<< HEAD
-<!-- header -->
-<?php include 'components/header.php'; ?>
 
-  
-=======
 
 <?php include 'components/header.php'; ?>
 
 
 
->>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
-    <!-- navmid Start -->
 
     <div class="container p-5 py-5" style="background-color:#ffffff;">
           <div class="position-relative d-flex">
@@ -211,12 +204,9 @@ if(isset($_POST['add_to_cart'])){
                             <img class="image img-fluid " style="height:15rem; width:35rem; object-fit:cover; border-radius:50%;" src="admin/upload/<?php echo $banner_db; ?>"alt="">
                         </div>
                           <div class="col col-lg-8 col-md-4 p-4">
-<<<<<<< HEAD
-                              <h2 class="display-6 text-black ">dave's Kainan</h2> 
-=======
 
                               <h2 class="display-6 text-black "><?=$restaurant_db;?></h2>
->>>>>>> 61d770381eadd5c1cd73f41ea97f89411fc0c6f8
+
 
                               <hr>
 
@@ -285,6 +275,7 @@ if(isset($_POST['add_to_cart'])){
 
 
    <form action="" method="POST" class="box">
+     <a href="productrate.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -293,6 +284,7 @@ if(isset($_POST['add_to_cart'])){
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <input type="submit" name="add_to_cart" value="add to cart" class="btn" >
       <a href="checkout.php?get_id=<?= $fetch_prodcut['foodid']; ?>" style="font-weight: 1000;" class="delete-btn">buy now</a>
    </form>

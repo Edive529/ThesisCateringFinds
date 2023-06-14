@@ -32,12 +32,49 @@ if(isset($_POST['place_order'])){
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_cart->execute([$userid]);
 
+   $insert_catering = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, restaurant, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?)");
+   $insert_catering->execute([$userid, $order, $name, $restaurantname, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
+   header('location:orders.php');
 
 
 
-            $insert_order = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, restaurant, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            $insert_order->execute([$userid, $order, $name, $restaurantname, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
-            header('location:orders.php');
+   if(isset($_GET['get_id'])){
+
+      $get_product = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE id = ? LIMIT 1");
+      $get_product->execute([$_GET['get_id']]);
+      if($get_product->rowCount() > 0){
+         while($fetch_p = $get_product->fetch(PDO::FETCH_ASSOC)){
+            $insert_order = $pdo->prepare("INSERT INTO `tbl_orders`(user_id, name, email, restaurant, foodid, price, qty) VALUES(?,?,?,?,?,?,?)");
+            $insert_order->execute([$userid, $name, $email, $restaurantname, $fetch_p['foodid'], $fetch_p['saleprice'], 1]);
+
+
+
+
+
+         }
+
+
+
+
+
+      }else{
+         $warning_msg[] = 'Something went wrong!';
+      }
+
+   }elseif($verify_cart->rowCount() > 0){
+
+      while($f_cart = $verify_cart->fetch(PDO::FETCH_ASSOC)){
+
+        $insert_order = $pdo->prepare("INSERT INTO `tbl_orders`(user_id, name, email, restaurant, foodid, price, qty) VALUES(?,?,?,?,?,?,?)");
+        $insert_order->execute([$userid, $name, $email, $restaurantname, $f_cart['foodid'], $f_cart['price'], $f_cart['qty']]);
+
+      }
+
+
+
+
+
+
 
       // else{
       //    $warning_msg[] = 'Something went wrong!';
@@ -78,6 +115,7 @@ if(isset($_POST['update_cart'])){
 
    $success_msg[] = 'Cart quantity updated!';
 
+}
 }
 
 ?>
