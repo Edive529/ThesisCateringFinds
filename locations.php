@@ -7,7 +7,7 @@
         private $map_add;
         private $lat;
         private $longi;
-        private $resImage;
+        private $image;
 
 
 
@@ -16,6 +16,8 @@
 
         function setMap_id($userid) { $this->userid = $userid; }
         function getMap_id() { return $this->userid; }
+        function setImage($image) { $this->image = $image; }
+        function getImage() { return $this->image; }
         function setMap_add($address) { $this->address = $address; }
         function getMap_add() { return $this->address; }
         function setLat($latitude) { $this->latitude = $latitude; }

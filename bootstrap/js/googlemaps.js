@@ -10,9 +10,15 @@ function initMap(){
 var showData = JSON.parse(document.getElementById('showData').innerHTML); 
 
     Array.prototype.forEach.call(showData, function(data){
-      var cntnt = "<h4>"+
+      var cntnt = "<div style='width:150px;'><img style='height:auto;width:150px; ' src='admin/upload/"+
+      data.image+
+      " '> "+
+      "<h6>"+
        data.restaurant+
-       "</h4>";
+       "</h6>"+
+       "<p>" +
+       data.address+
+       "</p> </div>";
 
       var infowindow = new google.maps.InfoWindow({
         content: cntnt,
@@ -34,28 +40,6 @@ var showData = JSON.parse(document.getElementById('showData').innerHTML);
   
 }
  
- 
-
-$('#recipeCarousel').carousel({
-  interval: 10000
-})
-
-$('.carousel .carousel-food').each(function(){
-    var minPerSlide = 3;
-    var next = $(this).next();
-    if (!next.length) {
-    next = $(this).siblings(':first');
-    }
-    next.children(':first-child').clone().appendTo($(this));
-    
-    for (var i=0;i<minPerSlide;i++) {
-        next=next.next();
-        if (!next.length) {
-        	next = $(this).siblings(':first');
-      	}
-        
-        next.children(':first-child').clone().appendTo($(this));
-      }
-});
+  ;
 
  
