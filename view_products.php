@@ -275,7 +275,7 @@ if(isset($_POST['add_to_cart'])){
 
 
    <form action="" method="POST" class="box">
-     <a href="productrate.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+     <a href="productrate.php?id=<?php echo $fetch_prodcut['foodid'];?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">

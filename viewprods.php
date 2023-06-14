@@ -166,6 +166,7 @@ session_start();
 
 
    <form action="" method="POST" class="box">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
 
 
 
@@ -176,6 +177,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
 
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;" >buy now</a>
@@ -206,6 +208,7 @@ session_start();
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="POST" class="box">
+     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -213,6 +216,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
@@ -238,6 +242,7 @@ session_start();
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="POST" class="box">
+     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -245,6 +250,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
@@ -270,6 +276,7 @@ session_start();
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="POST" class="box">
+     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -277,6 +284,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
@@ -304,6 +312,7 @@ session_start();
          while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
    <form action="" method="POST" class="box">
+     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -311,6 +320,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>
@@ -404,6 +414,7 @@ session_start();
 
 
    <form action="" method="POST" class="box">
+     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
       <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
@@ -411,6 +422,7 @@ session_start();
          <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
          <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
       </div>
+      </a>
       <a href="reglogin.php" name="add_to_cart" value="" class="btn">Add to cart</a>
       <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
    </form>

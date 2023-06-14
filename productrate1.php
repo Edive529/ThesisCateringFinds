@@ -3,40 +3,7 @@
 include 'connectdb.php';
 session_start();
 
-$userid = $_SESSION['customerid'];
 
-if(isset($_POST['add_to_cart'])){
-
-
-
-
-   $foodid = $_POST['foodid'];
-   $foodid = filter_var($foodid, FILTER_SANITIZE_STRING);
-   $qty = $_POST['qty'];
-   $qty = filter_var($qty, FILTER_SANITIZE_STRING);
-
-   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
-   $verify_cart->execute([$userid, $foodid]);
-
-   $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
-   $max_cart_items->execute([$userid]);
-
-   if($verify_cart->rowCount() > 0){
-      $warning_msg[] = 'Already added to cart!';
-   }elseif($max_cart_items->rowCount() == 10){
-      $warning_msg[] = 'Cart is full!';
-   }else{
-
-      $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-      $select_price->execute([$foodid]);
-      $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
-
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, foodid, price, qty) VALUES(?,?,?,?)");
-      $insert_cart->execute([$userid, $foodid, $fetch_price['saleprice'], $qty]);
-      $success_msg[] = 'Added to cart!';
-   }
-
-}
 
 ?>
 <!DOCTYPE html>
@@ -204,7 +171,7 @@ td {
         </div>
 
  <!-- header -->
-<?php include 'components/header.php'; ?>
+<?php include 'components/header1.php'; ?>
 
 <?php
 $id= isset($_GET['id']) ? $_GET['id'] : '';
@@ -232,7 +199,7 @@ $fetch_prodcut['restaurant'];
 
 
                       <div class="col-4 col-lg-5">
-                      
+                        <h1></h1>
 
                             <img class="img-fluid w-auto h-auto" src="admin/upload/<?php echo $fetch_prodcut['image']; ?>"alt="">
                           </div>
@@ -299,8 +266,7 @@ $fetch_prodcut['restaurant'];
 
                     </div>
 
-
-
+                  
 
                     <div class="col-lg-4 col-md-6 d-flex">
                         <img src="admin/upload/" class="img-fluid rounded-circle shadow-strong" style="width:100px; height:100px; " alt="">
