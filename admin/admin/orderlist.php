@@ -41,9 +41,6 @@ include_once 'headerAdmin.php';
 
      <div class="card card-outline card-primary">
 
-       <div class="card-header with-border">
-         <h3 class="box-title"><a href="addorder.php" class="btn btn-primary" role="button">Add Order</a></h3>
-      </div>
 
         <div class="card-body overflow-auto" >
       <!-- /.box-header -->
