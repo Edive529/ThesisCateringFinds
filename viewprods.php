@@ -57,7 +57,13 @@ session_start();
 
 #myBtn:hover {
   background-color: #555; /* Add a dark-grey background on hover */
-}</style>
+}
+.star {
+     color: gold;
+     font-size: 30px;
+   }
+
+</style>
 
 </head>
 <body>
@@ -162,67 +168,212 @@ session_start();
         $select_products->execute();
         if($select_products->rowCount() > 0){
            while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
      ?>
 
 
-   <form action="" method="POST" class="box">
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
       <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
 
 
 
       <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
       <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+  }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+  }
+
+
+       ?>
       <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
+
       </a>
 
-      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;" >buy now</a>
+
 
    </form>
 
 
    <?php
       }
-   }else{
+   }}}else{
       echo '<p class="empty">no products found!</p>';
    }
    ?>
 
    </div>
 
+   <p id="pasta"></p>
+
+   <h1 class="heading py-5" >Pasta</h1>
+
+   <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Pasta' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+  }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+  }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
+
+   <?php
+      }
+   }}}else{
+      echo '<p class="empty">no products found!</p>';
+   }
+   ?>
+
+   </div>
+
+
    <p id="appetizer"></p>
 
    <h1 class="heading py-5" >Appetizer</h1>
 
    <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Appetizer' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+   if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+   }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+   }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
 
    <?php
-   $id= isset($_GET['id']) ? $_GET['id'] : '';
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Appetizer' AND userid = $id ");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="POST" class="box">
-     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      </a>
-      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
-   </form>
-   <?php
       }
-   }else{
+   }}}else{
       echo '<p class="empty">no products found!</p>';
    }
    ?>
@@ -233,30 +384,69 @@ session_start();
    <h1 class="heading py-5" >Soup</h1>
 
    <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Soup' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+   if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+   }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+   }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
 
    <?php
-   $id= isset($_GET['id']) ? $_GET['id'] : '';
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Soup' AND userid = $id ");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="POST" class="box">
-     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      </a>
-      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
-   </form>
-   <?php
       }
-   }else{
+   }}}else{
       echo '<p class="empty">no products found!</p>';
    }
    ?>
@@ -266,31 +456,70 @@ session_start();
 
    <h1 class="heading py-5" >Dessert</h1>
 
-   <div class="box-container ">
+   <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Dessert' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+ if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+  }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+  }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
 
    <?php
-   $id= isset($_GET['id']) ? $_GET['id'] : '';
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Dessert' AND userid = $id ");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="POST" class="box">
-     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      </a>
-      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
-   </form>
-   <?php
       }
-   }else{
+   }}}else{
       echo '<p class="empty">no products found!</p>';
    }
    ?>
@@ -303,30 +532,69 @@ session_start();
 
 
    <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Salad' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+   if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+   }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+   }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
 
    <?php
-   $id= isset($_GET['id']) ? $_GET['id'] : '';
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Salad' AND userid = $id ");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
-   ?>
-   <form action="" method="POST" class="box">
-     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      </a>
-      <a href="reglogin.php" name="" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
-   </form>
-   <?php
       }
-   }else{
+   }}}else{
       echo '<p class="empty">no products found!</p>';
    }
    ?>
@@ -339,14 +607,75 @@ session_start();
 
 
    <div class="box-container">
+     <?php
+     $id= isset($_GET['id']) ? $_GET['id'] : '';
+        $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Package' AND userid = $id ");
+        $select_products->execute();
+        if($select_products->rowCount() > 0){
+           while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+             $foodid = $fetch_prodcut['foodid'];
+
+
+
+
+
+
+
+
+
+
+
+             $select_orders = $pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $foodid;");
+             $select_orders->execute();
+             if($select_orders->rowCount() > 0){
+                while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
+
+                        $value = $fetch_order['test'];
+
+
+
+     ?>
+
+
+   <form action="" method="POST" class="box" style="height:350px; width:280px;">
+      <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
+
+
+
+      <img  src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
+      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
+      <?php
+   if ($value) {
+
+
+      for ($i = 1; $i <= $value; $i++) {
+      echo '<span class="star">★</span>';
+    }
+   }else {
+    echo '<h4 style="padding-top:20px;">not yet rated</h4>';
+   }
+
+
+       ?>
+      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
+
+      </a>
+
+
+
+   </form>
+
 
    <?php
-   $id= isset($_GET['id']) ? $_GET['id'] : '';
-      $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where category = 'Package' AND userid = $id ");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+      }
+   }}}else{
+      echo '<p class="empty">no products found!</p>';
+   }
    ?>
+
+   </div>
+
    <style media="screen">
     .box-container {
        display: flex;
@@ -362,10 +691,10 @@ session_start();
     }
 
     .box-container .image {
-       width: 40px; /* Decreased image size */
+       width: 20px; /* Decreased image size */
        height: 40px; /* Decreased image size */
        object-fit: cover;
-       border-radius: 50%;
+
        margin-right: 5px; /* Decreased margin */
     }
 
@@ -410,30 +739,6 @@ session_start();
     }
  </style>
 
-
-
-
-   <form action="" method="POST" class="box">
-     <a href="productrate1.php?id=<?php echo $fetch_prodcut['foodid'];  ?>">
-      <img src="admin/upload/<?= $fetch_prodcut['image']; ?>" class="image" alt="">
-      <h3 class="name"><?= $fetch_prodcut['food'] ?></h3>
-      <input type="hidden" name="foodid" value="<?= $fetch_prodcut['foodid']; ?>">
-      <div class="flex">
-         <p class="price"><i class="fas fa-peso-sign"></i><?= $fetch_prodcut['saleprice'] ?></p>
-         <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="qty">
-      </div>
-      </a>
-      <a href="reglogin.php" name="add_to_cart" value="" class="btn">Add to cart</a>
-      <a href="reglogin.php" class="delete-btn" style="font-weight: 1000;">buy now</a>
-   </form>
-   <?php
-      }
-   }else{
-      echo '<p class="empty">no products found!</p>';
-   }
-   ?>
-
-   </div>
 
 
 </section>

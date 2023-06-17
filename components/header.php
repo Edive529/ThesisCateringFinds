@@ -4,6 +4,7 @@
       <a href="inindex.php" class="logo">CateringFinds</a>
 
       <nav class="navbar" >
+        <a href="rating.php" >Rate Orders</a>
 
         <a href="cateringMapsin.php" class="cart-btn">Map</a>
 

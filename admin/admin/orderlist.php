@@ -64,8 +64,7 @@ include_once 'headerAdmin.php';
                   <th>payment_status</th>
                   <th>date_of_reservation</th>
                   <th>date_to_be_delivered</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                
                 </tr>
 
 
@@ -110,12 +109,7 @@ include_once 'headerAdmin.php';
                     <td>
                     '.$row->date_to_be_delivered.'
                     </td>
-                    <td>
-                    <a href = "edit_catering_order.php?id='.$row->catering_id.'"  class="btn btn-success" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
-                    </td>
-                    <td>
-                    <button id='.$row->catering_id.'  class="btn btn-danger btndelete"><span class = "fas fa-trash" style = "color:#ffffff" data-toggle="tooltip" title="delete"></span></button>
-                    </td>
+
 
                         </tr>';
 

@@ -72,6 +72,9 @@ session_start();
             </li>
           </ul>
 
+          <a href="rating.php" style = "padding:30px;">Rate Orders</a>
+
+
           <a href="orders.php" style = "padding:30px;">My Orders</a>
 
           <a href="shopping_cart.php" class="cart-btn" style = "padding:30px;">My Cart</a>
@@ -192,57 +195,69 @@ session_start();
         <!-- Contact End -->
 
   <!-- Testimonial Start -->
-        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <h1 class="text-center mb-5">Our User Say!!!</h1>
-                <div class="owl-carousel testimonial-carousel">
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-4">
-                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                        <p>Mag Lorem Ipsum rako goys kay wa ko kabalo unsay ila review</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-4.jpg" style="width: 50px; height: 50px;">
-                            <div class="ps-3">
-                                <h5 class="mb-1">Client Name</h5>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="container">
+          <h1 class="text-center mb-5">Customer Reviews</h1>
+          <div class="owl-carousel testimonial-carousel">
+            <?php
+
+
+
+               $select_products = $pdo->prepare("SELECT * FROM `tbl_orders` order by date desc;");
+               $select_products->execute();
+               if($select_products->rowCount() > 0){
+                  while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+
+
+                    $id = $fetch_prodcut['user_id'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    $select_products1 = $pdo->prepare("SELECT * FROM `tbl_customer` where customerid = $id ;");
+                    $select_products1->execute();
+                    if($select_products1->rowCount() > 0){
+                       while($fetch_prodcut1 = $select_products1->fetch(PDO::FETCH_ASSOC)){
+
+
+
+
+
+
+
+
+             ?>
+              <div class="testimonial-item bg-light rounded p-4">
+                  <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                  <p><?php echo $fetch_prodcut['review'];  ?></p>
+                  <div class="d-flex align-items-center">
+                      <img class="img-fluid flex-shrink-0 rounded" src="admin/upload/<?php echo $fetch_prodcut1['image']; ?>" style="width: 50px; height: 50px;">
+                      <div class="ps-3">
+                          <h5 class="mb-1"><?php echo $fetch_prodcut['name']; ?></h5>
+                          <small><?php echo $fetch_prodcut['date']; ?></small>
+                      </div>
+                  </div>
+              </div>
+            <?php }}}} ?>
+
+          </div>
+      </div>
+  </div>
         <!-- Testimonial End -->
 
 

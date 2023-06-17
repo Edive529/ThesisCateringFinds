@@ -36,128 +36,134 @@ session_start();
    <!-- Template Stylesheet -->
    <link href="bootstrap/css/style.css" rel="stylesheet">
    <link href="css/style.css" rel="stylesheet">
-    <style>
+   <style>
 
 .card {
-    border-radius: 5px;
-    background-color: #fff;
-    padding-left: 60px;
-    padding-right: 60px;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px
+   border-radius: 5px;
+   background-color: #fff;
+   padding-left: 60px;
+   padding-right: 60px;
+   margin-top: 30px;
+   padding-top: 30px;
+   padding-bottom: 30px
 }
 
 .rating-box {
-    width: 130px;
-    height: 130px;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: #FBC02D;
-    color: #fff
+   width: 130px;
+   height: 130px;
+   margin-right: auto;
+   margin-left: auto;
+   background-color: #FBC02D;
+   color: #fff
 }
 
 .rating-label {
-    font-weight: bold
+   font-weight: bold
 }
 
 .rating-bar {
-    width: 300px;
-    padding: 8px;
-    border-radius: 5px
+   width: 300px;
+   padding: 8px;
+   border-radius: 5px
 }
 
 .bar-container {
-    width: 100%;
-    background-color: #f1f1f1;
-    text-align: center;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 5px
+   width: 100%;
+   background-color: #f1f1f1;
+   text-align: center;
+   color: white;
+   border-radius: 20px;
+   cursor: pointer;
+   margin-bottom: 5px
 }
 
 .bar-5 {
-    width: 70%;
-    height: 13px;
-    background-color: #FBC02D;
-    border-radius: 20px
+   width: 70%;
+   height: 13px;
+   background-color: #FBC02D;
+   border-radius: 20px
 }
 
 .bar-4 {
-    width: 30%;
-    height: 13px;
-    background-color: #FBC02D;
-    border-radius: 20px
+   width: 30%;
+   height: 13px;
+   background-color: #FBC02D;
+   border-radius: 20px
 }
 
 .bar-3 {
-    width: 20%;
-    height: 13px;
-    background-color: #FBC02D;
-    border-radius: 20px
+   width: 20%;
+   height: 13px;
+   background-color: #FBC02D;
+   border-radius: 20px
 }
 
 .bar-2 {
-    width: 10%;
-    height: 13px;
-    background-color: #FBC02D;
-    border-radius: 20px
+   width: 10%;
+   height: 13px;
+   background-color: #FBC02D;
+   border-radius: 20px
 }
 
 .bar-1 {
-    width: 0%;
-    height: 13px;
-    background-color: #FBC02D;
-    border-radius: 20px
+   width: 0%;
+   height: 13px;
+   background-color: #FBC02D;
+   border-radius: 20px
 }
 
 td {
-    padding-bottom: 10px
+   padding-bottom: 10px
 }
 
 .star-active {
-    color: #FBC02D;
-    margin-top: 10px;
-    margin-bottom: 10px
+   color: #FBC02D;
+   margin-top: 10px;
+   margin-bottom: 10px
 }
 
 .star-active:hover {
-    color: #F9A825;
-    cursor: pointer
+   color: #F9A825;
+   cursor: pointer
 }
 
 .star-inactive {
-    color: #CFD8DC;
-    margin-top: 10px;
-    margin-bottom: 10px
+   color: #CFD8DC;
+   margin-top: 10px;
+   margin-bottom: 10px
 }
 
 .blue-text {
-    color: #0091EA
+   color: #0091EA
 }
 
 .content {
-    font-size: 18px
+   font-size: 18px
 }
 
 .profile-pic {
-    width: 90px;
-    height: 90px;
-    border-radius: 100%;
-    margin-right: 30px
+   width: 90px;
+   height: 90px;
+   border-radius: 100%;
+   margin-right: 30px
 }
 
 .pic {
-    width: 80px;
-    height: 80px;
-    margin-right: 10px
+   width: 80px;
+   height: 80px;
+   margin-right: 10px
 }
 
 .vote {
-    cursor: pointer
-}</style>
+   cursor: pointer
+}
+.star {
+    color: gold;
+    font-size: 30px;
+  }
 
+
+</style>
     <title>Homepage</title>
 </head>
 <body>
@@ -175,6 +181,15 @@ td {
 
 <?php
 $id= isset($_GET['id']) ? $_GET['id'] : '';
+$select=$pdo->prepare("select ROUND(AVG(rating)) AS test from tbl_orders where foodid = $id;");
+
+$select->execute();
+
+$row=$select->fetch(PDO::FETCH_OBJ);
+
+$value=($row->test);
+
+$id= isset($_GET['id']) ? $_GET['id'] : '';
    $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` where foodid= $id ");
    $select_products->execute();
 
@@ -182,8 +197,17 @@ $id= isset($_GET['id']) ? $_GET['id'] : '';
       $fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC);
 
 
+      $restaurant = $fetch_prodcut['userid'];
 
-$fetch_prodcut['restaurant'];
+
+
+
+      // $restaurant =($fetch_prodcut->userid);
+      // $image =($fetch_prodcut->image);
+      // $food =($fetch_prodcut->food);
+      // $saleprice =($fetch_prodcut->saleprice);
+      // $description =($fetch_prodcut->description);
+      // $package_description =($fetch_prodcut->package_description);
 ?>
      <!-- top Start -->
  <div class="container-fluid mb-5">
@@ -198,37 +222,48 @@ $fetch_prodcut['restaurant'];
 
 
 
-                      <div class="col-4 col-lg-5">
-                        <h1></h1>
+                        <div class="col-4 col-lg-2">
 
-                            <img class="img-fluid w-auto h-auto" src="admin/upload/<?php echo $fetch_prodcut['image']; ?>"alt="">
-                          </div>
-                          <div class="col-4 col-lg-6">
-                              <h1 class="display-5 text-black animated slideInDown mb-4"><?php echo $fetch_prodcut['food']; ?></h1>
-                              <hr>
-                              <p class="fs-2 fw-medium text-black "><?php echo $fetch_prodcut['saleprice']; ?></p>
-                            <p>
-                            <select class="form-select fs-2 fw-medium text-black " aria-label="Default select example">
-                                <option selected>Party Tray</option>
-                                <option value="1">Plated</option>
-                                <option value="2">Packed</option>
-                            </select>
-                        </p>
-                              <p class="fs-2 fw-medium text-black ">Description</p>
-                                <br><br>
-                              <p class="fs-2 fw-medium text-black position-bottom"><?php echo $fetch_prodcut['description']; ?></p>
 
-                            <div class="form-outline row " style="width: 50%; padding:4px;">
+                              <img class="img-fluid w-auto h-auto" style="height: 2px; width: 200px;" src="admin/upload/<?php echo $fetch_prodcut['image']; ?>"alt="">
+                            </div>
+                            <div class="col-4 col-lg-6">
+                                <h1 class="display-5 text-black animated slideInDown mb-4"><?php echo $fetch_prodcut['food']; ?></h1>
+                                <input type="hidden" name="foodid" value="<?=  $fetch_prodcut['foodid']; ?>">
 
-                                <input max="4" type="number" id="" placeholder="1" class="col form-control fs-2 fw-medium text-black " />
-                                <a href="#" class="btn btn-primary col m-1">Add to cart</a>
+                                <p class="fs-2 fw-medium text-black ">Rating: </p><p class=""><span class="text-muted"><?php echo $value; ?></span>
+  																<?php
+  									  // Generate stars based on the rating value
+  									  for ($i = 1; $i <= $value; $i++) {
+  										echo '<span class="star">★</span>';
+  									  }
+  									?>
+
+
+                                <hr>
+                                <p class="fs-2 fw-medium text-black ">Price: Php <?php echo $fetch_prodcut['saleprice']; ?></p>
+
+                                <p class="fs-2 fw-medium text-black ">Description: </p>
+
+                                  <br><br>
+                                <p class="fs-2 fw-medium text-black position-bottom"><?php echo $fetch_prodcut['description'];   ?></p>
+                                <p class="fs-2 fw-medium text-black position-bottom"><?php echo $fetch_prodcut['package_description']; ?></p>
+
+
+
+                              <div class="form-outline row " style="width: 50%; padding:4px;">
+                                  <input type="number" name="qty" required min="1" value="1" max="99" maxlength="2" class="col form-control fs-2 fw-medium text-black " />
+
+
+
+                                  <a href="reglogin.php" class="btn btn-primary col m-1">Add to cart</a>
+                              </div>
+
                             </div>
 
-                          </div>
 
 
-
-                      </div>
+                        </div>
 
                        </form>
                   </div>
@@ -251,33 +286,62 @@ $fetch_prodcut['restaurant'];
             <div class=" p-5">
                 <div class="row g-5">
                     <div class="col-lg-4 col-md-6 align-items-center">
-                        <h3 class="text-black mb-4">5 out of 5</h3>
+
+                      <?php
+
+
+   $select_products1 = $pdo->prepare("SELECT * FROM `tbl_user` where userid= $restaurant");
+   $select_products1->execute();
+
+
+      $fetch_prodcut1 = $select_products1->fetch(PDO::FETCH_OBJ);
+
+      if ($fetch_prodcut1) {
+        $restaurant1 =($fetch_prodcut1->restaurant);
+        $phonenum =($fetch_prodcut1->phonenum);
+        $address =($fetch_prodcut1->address);
+        $banner = ($fetch_prodcut1->banner);
+
+
+
+
+
+
+
+
+ ?>
+                        <h3 class="text-black mb-4"><?php echo $value; ?> out of 5</h3>
 
                         <div class="d-flex">
-							<p class=""><span class="text-muted">4.0</span>
-							<span class="fa fa-star star-active "></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-inactive"></span></p>
+							<p class=""><span class="text-muted"><?php echo $value; ?></span>
+                <?php
+                // Generate stars based on the rating value
+                for ($i = 1; $i <= $value; $i++) {
+                echo '<span class="star">★</span>';
+                }
+              ?>
 
 
 						</div>
 
                     </div>
 
-                  
+
 
                     <div class="col-lg-4 col-md-6 d-flex">
-                        <img src="admin/upload/" class="img-fluid rounded-circle shadow-strong" style="width:100px; height:100px; " alt="">
+
+
+                        <img src="admin/upload/<?php echo $banner; ?>" class="img-fluid rounded-circle shadow-strong" style="width:100px; height:100px; " alt="">
+                        <h2 style="margin-top: 27px; margin-left: 27px;"><?php echo $restaurant1; ?></h2>
                         <p class="m-2 fs-3 fw-medium text-black "></p>
 
                     </div>
 
 
                     <div class="col-lg-4 col-md-6">
-                    <p class="fs-3 fw-medium text-black ">Contact Number:</p>
-                    <p class="fs-3 fw-medium text-black ">Address</p>
+
+                    <p class="fs-3 fw-medium text-black ">Contact Number: <?php echo $phonenum; }?></p>
+                    <p class="fs-3 fw-medium text-black ">Address: <?php echo $address; ?></p>
 
                         <div class="position-relative mx-auto" style="max-width: 400px;">
 
@@ -297,103 +361,87 @@ $fetch_prodcut['restaurant'];
     <div class="row justify-content-left">
         <div class=" col-12 mb-5">
 
-            <div class="card">
-                <div class="d-flex">
-					<div class="">
-						<img class="profile-pic" src="https://i.imgur.com/V3ICjlm.jpg">
-					</div>
-					<div class="d-flex flex-column">
-						<h3 class="">Vikram jit Singh</h3>
-						<div class="d-flex">
-							<p class=""><span class="text-muted">4.0</span>
-							<span class="fa fa-star star-active "></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-inactive"></span></p>
+          <?php
+
+                 $id= isset($_GET['id']) ? $_GET['id'] : '';
+                    $select_products = $pdo->prepare("select * from tbl_orders where foodid = $id;");
+                    $select_products->execute();
+                    if($select_products->rowCount() > 0){
+                       while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
 
 
-						</div>
-                        <p class="text-muted text-left ">10 Sept</p>
-
-                        <div class="row text-left">
-                            <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
-                            <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
-                        </div>
-                        <div class="row text-left">
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
-                        </div>
-					</div>
-				</div>
-            </div>
+                         $name = $fetch_prodcut['name'];
+                         $review = $fetch_prodcut['review'];
+                         $date = $fetch_prodcut['date'];
+                         $star = $fetch_prodcut['rating'];
+                         $userid = $fetch_prodcut['user_id'];
 
 
-            <div class="card">
-                <div class="d-flex">
-					<div class="">
-						<img class="profile-pic" src="https://i.imgur.com/V3ICjlm.jpg">
-					</div>
-					<div class="d-flex flex-column">
-						<h3 class="">Vikram jit Singh</h3>
-						<div class="d-flex">
-							<p class=""><span class="text-muted">4.0</span>
-							<span class="fa fa-star star-active "></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-inactive"></span></p>
 
 
-						</div>
-                        <p class="text-muted text-left ">10 Sept</p>
-
-                        <div class="row text-left">
-                            <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
-                            <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
-                        </div>
-                        <div class="row text-left">
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
-                        </div>
-					</div>
-				</div>
-            </div>
 
 
-            <div class="card">
-                <div class="d-flex">
-					<div class="">
-						<img class="profile-pic" src="https://i.imgur.com/V3ICjlm.jpg">
-					</div>
-					<div class="d-flex flex-column">
-						<h3 class="">Vikram jit Singh</h3>
-						<div class="d-flex">
-							<p class=""><span class="text-muted">4.0</span>
-							<span class="fa fa-star star-active "></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-active"></span>
-							<span class="fa fa-star star-inactive"></span></p>
 
 
-						</div>
-                        <p class="text-muted text-left ">10 Sept</p>
 
-                        <div class="row text-left">
-                            <h4 class="blue-text mt-3">"An awesome activity to experience"</h4>
-                            <p class="content">If you really enjoy spending your vacation 'on water' or would like to try something new and exciting for the first time.</p>
-                        </div>
-                        <div class="row text-left">
-                            <img class="pic" src="https://i.imgur.com/kjcZcfv.jpg">
-                            <img class="pic" src="https://i.imgur.com/SjBwAgs.jpg">
-                            <img class="pic" src="https://i.imgur.com/IgHpsBh.jpg">
-                        </div>
-					</div>
-				</div>
-            </div>
+
+
+
+
+
+
+                         $select_products1 = $pdo->prepare("select * from tbl_customer where customerid = $userid;");
+                         $select_products1->execute();
+                         if($select_products1->rowCount() > 0){
+                            while($fetch_prodcut1 = $select_products1->fetch(PDO::FETCH_ASSOC)){
+
+                            $icon = $fetch_prodcut1['image'];
+
+
+
+
+
+          ?>
+
+
+
+
+
+
+          <div class="card">
+                 <div class="d-flex">
+ 					<div class="">
+ 						<img class="profile-pic" src="admin/upload/<?php echo $icon; ?>">
+ 					</div>
+ 					<div class="d-flex flex-column">
+ 						<h3 class=""><?php echo $name; ?></h3>
+ 						<div class="d-flex">
+ 							<p class=""><span class="text-muted"><?php echo $star; ?></span>
+                 <?php
+                 // Generate stars based on the rating value
+                 for ($i = 1; $i <= $star; $i++) {
+                 echo '<span class="star">★</span>';
+                 }
+               ?>
+
+
+
+ 						</div>
+                         <p class="text-muted text-left "><?php echo $date; ?></p>
+
+                         <div class="row text-left">
+
+                             <p class="content"><?php echo $review ?></p>
+                         </div>
+
+
+
+ 					</div>
+ 				</div>
+             </div>
+           <?php }}}} else {
+             echo '<div class="" style="text-align:center;"><h1 style="color: red;">No Reviews!</h1></div>';  
+           }?>
 
 
         </div>

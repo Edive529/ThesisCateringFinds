@@ -20,6 +20,25 @@ if(isset($_POST['cancel'])){
 
 }
 
+if(isset($_POST['down_pay'])){
+
+   $update_orders = $pdo->prepare("UPDATE `tbl_catering_order_details` SET status = ? WHERE catering_id = ?");
+   $update_orders->execute(['down_payment', $get_id]);
+   header('location:orders.php');
+
+}
+
+if(isset($_POST['full_pay'])){
+
+   $update_orders = $pdo->prepare("UPDATE `tbl_catering_order_details` SET status = ? WHERE catering_id = ?");
+   $update_orders->execute(['Full_payment', $get_id]);
+   header('location:orders.php');
+
+}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +71,10 @@ if(isset($_POST['cancel'])){
       if($select_orders->rowCount() > 0){
          while($fetch_order = $select_orders->fetch(PDO::FETCH_ASSOC)){
 
+          $total2= $fetch_order['grand_total'];
+
+          $total3 = $total2/2;
+
 
    ?>
    <div class="box">
@@ -76,15 +99,28 @@ if(isset($_POST['cancel'])){
          <p class="user"><i class="fas fa-envelope"></i><?php echo $_SESSION['useremail'] ?></p>
          <p class="user"><i class="fas fa-map-marker-alt"></i><?= $fetch_order['event_address']; ?></p>
          <p class="user"><i class="fas fa-calendar"></i><?= $fetch_order['date_to_be_delivered']; ?></p>
+         <p class="user"><i class="fas fa-money-bill"></i><?= $fetch_order['payment_type']; ?></p>
          <p class="title">status</p>
-         <p class="status" style="color:<?php if($fetch_order['status'] == 'delivered'){echo 'green';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_order['status']; ?></p>
-         <?php if($fetch_order['status'] == 'canceled'){ ?>
+         <p class="status" style="color:<?php if($fetch_order['status'] == 'Not yet approved'){echo 'red';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'green';}; ?>"><?= $fetch_order['status']; ?></p>
+         <?php if ($fetch_order['status'] == 'approved') { ?>
 
-         <?php }else{ ?>
-         <form action="" method="POST">
-            <input type="submit" value="cancel order" name="cancel" class="delete-btn" onclick="return confirm('cancel this order?');">
-         </form>
-         <?php } ?>
+           <form action="" method="POST" style="display: flex; justify-content: center;">
+               <input type="submit" value="Down Payment?" name="down_pay" class="btn" style="width:200px; margin-right:20px;" onclick="return confirm('Are you sure you want to Down payment (Php <?php echo $total3;  ?>)?');">
+               <input type="submit" value="Full Payment?" name="full_pay" class="btn" style="width:200px;" onclick="return confirm('Are you sure you want to pay?');">
+           </form>
+
+       <?php } elseif ($fetch_order['status'] == 'down_payment' || $fetch_order['status'] == 'full_payment') { ?>
+
+           <input type="submit" value="In Progress" name="" class="btn" onclick="return confirm('Order is in progress!');">
+
+       <?php } elseif ($fetch_order['status'] == 'Not yet approved') { ?>
+
+           <form action="" method="POST">
+               <input type="submit" value="cancel order" name="cancel" class="delete-btn" onclick="return confirm('cancel this order?');">
+           </form>
+
+       <?php } ?>
+
       </div>
    </div>
    <?php

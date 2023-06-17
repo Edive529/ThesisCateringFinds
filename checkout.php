@@ -12,6 +12,8 @@ if(isset($_POST['place_order'])){
 
    $name = $_POST['user'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $catering_style = $_POST['catering_style'];
+   $catering_style = filter_var($catering_style, FILTER_SANITIZE_STRING);
    $grand_total = $_POST['grand_total'];
    $grand_total = filter_var($grand_total, FILTER_SANITIZE_STRING);
    $restaurantname = $_POST['restaurant'];
@@ -34,8 +36,8 @@ if(isset($_POST['place_order'])){
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_cart->execute([$userid]);
 
-   $insert_catering = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, restaurant, grand_total, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-   $insert_catering->execute([$userid, $order, $name, $restaurantname, $grand_total, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
+   $insert_catering = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, catering_style, restaurant, grand_total, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+   $insert_catering->execute([$userid, $order, $name, $catering_style, $restaurantname, $grand_total, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
    header('location:orders.php');
 
 
@@ -245,7 +247,7 @@ if(isset($_POST['update_cart'])){
                <input type="hidden" name="user" value="<?php echo $_SESSION['username']; ?>">
 
               <input type="hidden" name="useremail" value="<?php echo $_SESSION['useremail']; ?>">
-              <input type="float" name="grand_total" value="<?php echo $grand_total; ?>">
+              <input hidden type="float" name="grand_total" value="<?php echo $grand_total; ?>">
 
                <p>your email <span>*</span></p>
                <input type="email" name="" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
@@ -265,6 +267,13 @@ if(isset($_POST['update_cart'])){
 
             </div>
             <div class="box">
+              <p>Catering Style <span>*</span></p>
+
+              <select name="catering_style" class="input" required>
+                  <option value="Party Tray">Party Tray</option>
+                  <option value="Plated">Plated</option>
+                  <option value="Packed">Packed</option>
+              </select>
 
               <p>Event Address <span>*</span></p>
 

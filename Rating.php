@@ -1,85 +1,105 @@
 <?php
-class Rating{
-	private $host  = 'localhost';
-    private $user  = 'root';
-    private $password   = "";
-    private $database  = 'jackskainan';
-	private $itemUsersTable = 'item_users';
-	private $itemTable = 'tbl_foodmenu';
-    private $itemRatingTable = 'item_rating';
-	private $dbConnect = false;
-    public function __construct(){
-        if(!$this->dbConnect){
-            $conn = new mysqli($this->host, $this->user, $this->password, $this->database);
-            if($conn->connect_error){
-                die("Error failed to connect to MySQL: " . $conn->connect_error);
-            }else{
-                $this->dbConnect = $conn;
-            }
-        }
-    }
-	private function getData($sqlQuery) {
-		$result = mysqli_query($this->dbConnect, $sqlQuery);
-		if(!$result){
-			die('Error in query: '. mysqli_error());
-		}
-		$data= array();
-		while ($row = mysqli_fetch_array($result)) {
-			$data[]=$row;
-		}
-		return $data;
-	}
-	private function getNumRows($sqlQuery) {
-		$result = mysqli_query($this->dbConnect, $sqlQuery);
-		if(!$result){
-			die('Error in query: '. mysqli_error());
-		}
-		$numRows = mysqli_num_rows($result);
-		return $numRows;
-	}
-	public function userLogin($username, $password){
-		$sqlQuery = "
-			SELECT *
-			FROM ".$this->itemUsersTable."
-			WHERE username='".$username."' AND password='".$password."'";
-        return  $this->getData($sqlQuery);
-	}
-	public function getItemList(){
-		$sqlQuery = "
-			SELECT * FROM ".$this->itemTable;
-		return  $this->getData($sqlQuery);
-	}
-	public function getItem($itemId){
-		$sqlQuery = "
-			SELECT * FROM ".$this->itemTable."
-			WHERE foodid='".$itemId."'";
-		return  $this->getData($sqlQuery);
-	}
-	public function getItemRating($itemId){
-		$sqlQuery = "
-			SELECT r.ratingId, r.itemId, r.userId, u.username, u.avatar, r.ratingNumber, r.title, r.comments, r.created, r.modified
-			FROM ".$this->itemRatingTable." as r
-			LEFT JOIN ".$this->itemUsersTable." as u ON (r.userid = u.userid)
-			WHERE r.itemId = '".$itemId."'";
-		return  $this->getData($sqlQuery);
-	}
-	public function getRatingAverage($itemId){
-		$itemRating = $this->getItemRating($itemId);
-		$ratingNumber = 0;
-		$count = 0;
-		foreach($itemRating as $itemRatingDetails){
-			$ratingNumber+= $itemRatingDetails['ratingNumber'];
-			$count += 1;
-		}
-		$average = 0;
-		if($ratingNumber && $count) {
-			$average = $ratingNumber/$count;
-		}
-		return $average;
-	}
-	public function saveRating($POST, $userID){
-		$insertRating = "INSERT INTO ".$this->itemRatingTable." (itemId, userId, ratingNumber, title, comments, created, modified) VALUES ('".$POST['itemId']."', '".$userID."', '".$POST['rating']."', '".$POST['title']."', '".$POST["comment"]."', '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."')";
-		mysqli_query($this->dbConnect, $insertRating);
-	}
-}
+
+include 'connectdb.php';
+session_start();
+
+$userid = $_SESSION['customerid'];
+
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>My Orders</title>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+   <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<?php include 'components/header.php'; ?>
+
+<section class="orders">
+
+   <h1 class="heading">Rate Orders</h1>
+
+   <div class="box-container">
+
+   <?php
+
+   $select_products = $pdo->prepare("select * from tbl_orders where user_id = '$userid' and status = 'Rate me?' order by date desc");
+   $select_products->execute();
+   if($select_products->rowCount() > 0){
+      while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){
+
+        $food = $fetch_prodcut['foodid'];
+
+
+
+   ?>
+   <div class="box" <?php if ($fetch_prodcut['status'] == 'Rate me?') { echo 'style="border:0.2rem solid red;"'; } ?>>
+
+      <a href="view_rating.php?get_id=<?= $fetch_prodcut['id'] ?>">
+         <p class="date"><i class="fa fa-calendar"></i><span><?=$fetch_prodcut['date'];  ?></span></p>
+
+         <?php
+
+         $select_products1 = $pdo->prepare("select food from tbl_foodmenu where foodid = '$food'");
+         $select_products1->execute();
+         if($select_products1->rowCount() > 0){
+            while($fetch_prodcut1 = $select_products1->fetch(PDO::FETCH_ASSOC)){
+
+              $result = $fetch_prodcut1['food'];
+
+
+
+          ?>
+
+
+
+         <h3 class="name" style="letter-spacing: 1px; line-height: 1.8; font-size: 18px; text-align: center;"><?= $result ?></h3>
+
+         <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'Already Rated!'){echo 'green';}elseif($fetch_prodcut['status'] == 'Rate me?'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_prodcut['status'] ?></p>
+      </a>
+   </div>
+   <?php
+ }
+}}}
+
+
+
+   // else{
+   //    echo '<p class="empty">no orders found!</p>';
+   // }
+   ?>
+
+   </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<script src="js/script.js"></script>
+
+<?php include 'components/alert.php'; ?>
+
+</body>
+</html>
