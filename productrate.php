@@ -13,12 +13,13 @@ $userid = $_SESSION['customerid'];
 if(isset($_POST['add_to_cart'])){
 
   $id= isset($_GET['id']) ? $_GET['id'] : '';
-  $select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
+     $select = $pdo->prepare("select * from tbl_foodmenu where foodid=$id");
+     $select->execute();
+     if($select->rowCount() > 0){
+        while($fetch1 = $select->fetch(PDO::FETCH_ASSOC)){
 
-  $select->execute();
-  $row=$select->fetch(PDO::FETCH_ASSOC);
-
-  $user_db = $row['restaurant'];
+          $user_db = $fetch1['restaurant'];
+        }}
 
 
 
@@ -35,24 +36,61 @@ if(isset($_POST['add_to_cart'])){
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
    $verify_cart->execute([$userid, $foodid]);
 
+   $verify_restaurant = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND restaurant = ?");
+   $verify_restaurant->execute([$userid, $user_db]);
+
    $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $max_cart_items->execute([$userid]);
 
-   if($verify_cart->rowCount() > 0){
-      $warning_msg[] = 'Already added to cart!';
-   }elseif($max_cart_items->rowCount() == 10){
-      $warning_msg[] = 'Cart is full!';
-   }else{
 
+   $verify_restaurant = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
+   $verify_restaurant->execute([$userid]);
 
-      $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
-      $select_price->execute([$foodid]);
-      $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
+   if ($verify_restaurant->rowCount() > 0) {
+       // Cart already has items, check if they are from the same restaurant
+       $cart_restaurant = $verify_restaurant->fetch(PDO::FETCH_ASSOC)['restaurant'];
 
-      $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, restaurant, foodid, price, qty) VALUES(?,?,?,?,?)");
-      $insert_cart->execute([$userid, $user_db, $foodid, $fetch_price['saleprice'], $qty]);
-      $success_msg[] = 'Added to cart!';
+       if ($cart_restaurant !== $user_db) {
+           $warning_msg[] = 'You can only choose 1 restaurant per order. Please either proceed to checkout or empty your cart!';
+       } else {
+           // Items in the cart are from the same restaurant, proceed with adding to cart
+
+           if ($verify_cart->rowCount() > 0) {
+               $warning_msg[] = 'Already added to cart!';
+           } elseif ($max_cart_items->rowCount() == 10) {
+               $warning_msg[] = 'Cart is full!';
+           } else {
+               // Code to add item to cart...
+
+               $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
+               $select_price->execute([$foodid]);
+               $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
+
+               $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, restaurant, foodid, price, qty) VALUES(?,?,?,?,?)");
+               $insert_cart->execute([$userid, $user_db, $foodid, $fetch_price['saleprice'], $qty]);
+               $success_msg[] = 'Added to cart!';
+           }
+       }
+   } else {
+       // Cart is empty, can add items from any restaurant
+
+       if ($verify_cart->rowCount() > 0) {
+           $warning_msg[] = 'Already added to cart!';
+       } elseif ($max_cart_items->rowCount() == 10) {
+           $warning_msg[] = 'Cart is full!';
+       } else {
+           // Code to add item to cart...
+
+           $select_price = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ? LIMIT 1");
+           $select_price->execute([$foodid]);
+           $fetch_price = $select_price->fetch(PDO::FETCH_ASSOC);
+
+           $insert_cart = $pdo->prepare("INSERT INTO `tbl_cart`(customerid, restaurant, foodid, price, qty) VALUES(?,?,?,?,?)");
+           $insert_cart->execute([$userid, $user_db, $foodid, $fetch_price['saleprice'], $qty]);
+           $success_msg[] = 'Added to cart!';
+       }
    }
+
 
 }
 ?>

@@ -8,14 +8,16 @@ $userid = $_SESSION['customerid'];
 
 if(isset($_POST['add_to_cart'])){
 
+
+
   $id= isset($_GET['id']) ? $_GET['id'] : '';
-  $select = $pdo->prepare("select * from tbl_user where userid=$id");
+     $select = $pdo->prepare("select * from tbl_user where userid=$id");
+     $select->execute();
+     if($select->rowCount() > 0){
+        while($fetch1 = $select->fetch(PDO::FETCH_ASSOC)){
 
-  $select->execute();
-  $row=$select->fetch(PDO::FETCH_ASSOC);
-
-  $user_db = $row['restaurant'];
-
+          $user_db = $fetch1['restaurant'];
+        }}
 
 
 
@@ -29,6 +31,9 @@ if(isset($_POST['add_to_cart'])){
    $qty = filter_var($qty, FILTER_SANITIZE_STRING);
 
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
+   $verify_cart->execute([$userid, $foodid]);
+
+   $verify_restaurant = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ? AND foodid = ?");
    $verify_cart->execute([$userid, $foodid]);
 
    $max_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");

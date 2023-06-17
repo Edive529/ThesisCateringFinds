@@ -240,7 +240,10 @@ if(isset($_POST['btnupdate'])){
 
             <option hidden value="<?php echo $status_db; ?>" selected ><?php echo $status_db; ?></option>
              <option value="approved">approved</option>
+             <option value="full_payment">full_payment</option>
+             <option value="down_payment">down_payment</option>
              <option disabled value="canceled">canceled</option>
+
 
           </select>
             </div>
@@ -272,7 +275,7 @@ if(isset($_POST['btnupdate'])){
     <div class="box-footer">
 
 
-      <button type="submit" class="btn btn-info" name="btnupdate">Add Menu</button>
+      <button type="submit" class="btn btn-info" name="btnupdate">Update</button>
 
     </div>
     </form>

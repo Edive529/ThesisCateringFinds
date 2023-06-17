@@ -215,12 +215,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a href="category.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
-              <p>
-                Category
-              </p>
-            </a>
+    
           </li>
           <li class="nav-item">
             <a href="menu.php" class="nav-link">

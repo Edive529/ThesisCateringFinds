@@ -17,7 +17,7 @@ include_once'header.php';
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-        
+
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -54,13 +54,13 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers1; ?>" data-width="120" data-height="120"
                      data-fgColor="#3c8dbc">
 
-              <div class="knob-label">New Seller Registry (Approve Now!)</div>
+              <div class="knob-label">New Orders*(Approve now!)</div>
             </div>
             <!-- ./col -->
             <div class="col-6 col-md-3 text-center">
               <?php
 
-              $select = $pdo->prepare("select Count(userid) AS numbers from tbl_user where role='Seller'");
+              $select = $pdo->prepare("select Count(userid) AS numbers from tbl_catering_order_details where restaurant='$restaurant' and status ='down_payment'");
 
               $select->execute();
               $row=$select->fetch(PDO::FETCH_OBJ);
@@ -72,14 +72,14 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers; ?>" data-width="120" data-height="120"
                      data-fgColor="#f56954">
 
-              <div class="knob-label">Total Seller Registrations</div>
+              <div class="knob-label">Total orders(Down payment)</div>
             </div>
             <!-- ./col -->
 
             <div class="col-6 col-md-3 text-center">
               <?php
 
-              $select2 = $pdo->prepare("select Count(id) AS numbers2 from tbl_orders");
+              $select2 = $pdo->prepare("select Count(userid) AS numbers2 from tbl_catering_order_details where restaurant='$restaurant' and status ='full_payment'");
 
               $select2->execute();
               $row2=$select2->fetch(PDO::FETCH_OBJ);
@@ -91,14 +91,14 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers2; ?>" data-width="120" data-height="120"
                      data-fgColor="#00a65a">
 
-              <div class="knob-label">Total Number of Orders</div>
+              <div class="knob-label">Total Number of Orders (Fully paid)</div>
             </div>
             <!-- ./col -->
 
             <div class="col-6 col-md-3 text-center">
               <?php
 
-              $select3 = $pdo->prepare("select Count(customerid) AS numbers3 from tbl_customer");
+              $select3 = $pdo->prepare("select Count(userid) AS numbers3 from tbl_catering_order_details where restaurant='$restaurant' and status ='approved'");
 
               $select3->execute();
               $row3=$select3->fetch(PDO::FETCH_OBJ);
@@ -110,7 +110,7 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers3; ?>" data-width="120" data-height="120"
                      data-fgColor="#00c0ef">
 
-              <div class="knob-label">Total Customer Registration</div>
+              <div class="knob-label">Total Orders (Approved)</div>
             </div>
             <!-- ./col -->
           </div>
@@ -129,7 +129,7 @@ include_once'header.php';
 
 
               <div class="card-header">
-                <h3 class="card-title">Area Chart</h3>
+                <h3 class="card-title">Area Chart for Best Selling Product</h3>
 
                 <div class="card-tools">
 
@@ -288,43 +288,44 @@ include_once'header.php';
     // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
-    var areaChartData = {
-      <?php
+var areaChartData = {
+  <?php
+  $restaurant;
+  $select = $pdo->prepare("SELECT COUNT(id) AS total, restaurant, foodid FROM `tbl_orders` WHERE restaurant = $restaurant GROUP BY foodid;");
+  $select->execute();
+  $labels = array();
+  $data = array();
 
+  while ($row = $select->fetch(PDO::FETCH_OBJ)) {
+    $foodid = $row->foodid;
+    $select1 = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = $foodid;");
+    $select1->execute();
+    $row1 = $select1->fetch(PDO::FETCH_OBJ);
+    $labels[] = $row1->food;
+    $data[] = $row->total;
+  }
 
-      $select = $pdo->prepare("SELECT SUM(grand_total) AS total, restaurant FROM `tbl_catering_order_details` GROUP BY restaurant");
-      $select->execute();
-      $labels = array();
-      $data = array();
+  $chartLabels = implode("', '", $labels);
+  $chartData = implode(", ", $data);
+  ?>
 
-      while ($row = $select->fetch(PDO::FETCH_OBJ)) {
-        $labels[] = $row->restaurant;
-        $data[] = $row->total;
-      }
-
-      $chartLabels = implode("', '", $labels);
-      $chartData = implode(", ", $data);
-
-
-
-
-            ?>
-      labels  : [<?php echo "'" . implode("', '", $labels) . "'"; ?>],
-      datasets: [
-        {
-          label               : 'Grand Total Sales',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [<?php echo $chartData; ?>]
-        },
-
-      ]
+  labels: ['<?php echo implode("', '", $labels); ?>'],
+  datasets: [
+    {
+      label               : 'Grand Total Sales',
+      backgroundColor     : 'rgba(60,141,188,0.9)',
+      borderColor         : 'rgba(60,141,188,0.8)',
+      pointRadius         : false,
+      pointColor          : '#3b8bba',
+      pointStrokeColor    : 'rgba(60,141,188,1)',
+      pointHighlightFill  : '#fff',
+      pointHighlightStroke: 'rgba(60,141,188,1)',
+      data                : [<?php echo $chartData; ?>]
     }
+  ]
+}
+
+
 
     var areaChartOptions = {
       maintainAspectRatio : false,
@@ -353,21 +354,7 @@ include_once'header.php';
       options: areaChartOptions
     })
 
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
-    lineChartData.datasets[0].fill = false;
-
-    lineChartOptions.datasetFill = false
-
-    var lineChart = new Chart(lineChartCanvas, {
-      type: 'line',
-      data: lineChartData,
-      options: lineChartOptions
-    })
+    
 
 
 

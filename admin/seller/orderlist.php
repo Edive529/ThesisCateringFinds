@@ -41,7 +41,7 @@ include_once 'header.php';
 
      <div class="card card-outline card-primary">
 
-  
+
 
         <div class="card-body overflow-auto" >
       <!-- /.box-header -->
@@ -63,7 +63,7 @@ include_once 'header.php';
                   <th>event_address</th>
                   <th>Status</th>
                   <th>catering_style</th>
-                  <th>payment_status</th>
+              
                   <th>date_of_reservation</th>
                   <th>date_to_be_delivered</th>
                   <th>Edit</th>
@@ -104,9 +104,7 @@ include_once 'header.php';
                     <td>
                     '.$row->catering_style.'
                     </td>
-                    <td>
-                    '.$row->payment_status.'
-                    </td>
+
                     <td>
                     '.$row->date_of_reservation.'
                     </td>
