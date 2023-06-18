@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2023 at 05:26 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jun 17, 2023 at 11:07 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -179,28 +179,7 @@ INSERT INTO `tbl_foodmenu` (`foodid`, `food`, `userid`, `restaurant`, `category`
 (26, 'Sweet and sour Fish fillet', 33, 'Pumice Food and Catering Services', 'Main Dish', 500, 'Good for 4-6 pax', '', '648d74d4419c2.jpg'),
 (27, 'pumice fettucine carbonara', 33, 'Pumice Food and Catering Services', 'Pasta', 500, 'Good for 4-6 pax', '', '648d750dd1725.jpg'),
 (28, 'pumice spaghetti balognes w/ meatballs', 33, 'Pumice Food and Catering Services', 'Pasta', 500, 'Good for 4-6 pax', '', '648d75412e413.jpg'),
-(29, 'pumice ceasar salad', 33, 'Pumice Food and Catering Services', 'Salad', 500, 'Good for 4-6 pax', '', '648d75bbf180a.jpg'),
-(30, 'Carbonara', 34, 'Raquels Bakeshop', 'Pasta', 500, 'Good for 4-6 pax', '', ''),
-(31, 'Cake', 34, 'Raquels Bakeshop', 'Dessert', 700, 'Good for 4-6 pax', '', ''),
-(32, 'Fiesta 1', 34, 'Raquels Bakeshop', 'Package', 2500, 'Good for 10-15 pax', 'roast beef, chicken cordon bleu, potato croquetes, Fresh green salad, carbonara, chocolate cake', 'package 3.jpg'),
-(33, 'Fiesta 2', 34, 'Raquels Bakeshop', 'Package', 2500, 'Good for 10-15 pax', 'kare-kare, grilled fish, fresh lumpia, Sotanghon Guisado, ube cake', 'package 3.jpg'),
-(34, 'Fiesta 3', 34, 'Raquels Bakeshop', 'Package', 2600, 'Good for 10-15 pax', 'Lechon Belly, Fried Chicken, Kinilaw, Bam-e, Buko Pandan, Cholocate Creme Cake', 'package 3.jpg'),
-(35, 'Porkchop', 35, 'Hazries Kitchen Catering Services', 'Main Dish', 600, 'Good for 5-6 pax', '', 'PorkChop.jpg'),
-(36, 'Lechon Belly', 35, 'Hazries Kitchen Catering Services', 'Main Dish', 600, 'Good for 5-6 pax', '', 'LechonBelly.jpg'),
-(37, 'Chicken Cordon Bleu', 35, 'Hazries Kitchen Catering Services', 'Main Dish', 650, 'Good for 5-6 pax', '', 'ChickenCordonBleu.jpg'),
-(38, 'Bistek', 35, 'Hazries Kitchen Catering Services', 'Main Dish', 670, 'Good for 5-6 pax', '', 'Bistek.jpg'),
-(39, 'Fiesta A', 35, 'Hazries Kitchen Catering Services', 'Package', 5500, 'Good for 30 pax', 'Lechon Belly,Chicken Cordon Bleau, Beef Rendang, Fish Millet, Fruit Salad ', 'hz.jpg'),
-(40, 'Fiesta B', 35, 'Hazries Kitchen Catering Services', 'Package', 4200, 'Good for 20  pax', 'Lechon Belly, Pork Rib Calderetam, Chicken Cordon Bleu, Fish Millet, Fruit Salad', 'hz.jpg'),
-(41, 'Fiesta C', 35, 'Hazries Kitchen Catering Services', 'Package', 3800, 'Good for 20 pax', 'Lechon Belly,Chicken Cordon Bleau, Beef Rendang, Fish Fillet ', 'hz.jpg'),
-(42, 'Nuggets', 36, 'Appetina Modern Filipino Cuisine', 'Appetizer', 500, 'Good for 3-5 pax', '', 'Nuggets.jpg'),
-(43, 'Menudo', 36, 'Appetina Modern Filipino Cuisine', 'Main Dish', 500, 'Good for 3-5 pax', '', 'Menudo.jpg'),
-(44, 'Fried Chicken', 36, 'Appetina Modern Filipino Cuisine', 'Main Dish', 600, 'Good for 5-6 pax', '', 'FriedChicken.jpg'),
-(45, 'Crabs', 36, 'Appetina Modern Filipino Cuisine', 'Main Dish', 550, 'Good for 5-6 pax', '', 'Crabs.jpg'),
-(46, 'Chicken Curry', 36, 'Appetina Modern Filipino Cuisine', 'Main Dish', 650, 'Good for 5-6 pax', '', 'ChickenCurry.jpg'),
-(47, 'Set A', 37, 'Frostybites Garden Hall', 'Package', 2000, 'Good for 8-10 pax', 'Chicken Ala King, Beef Estofada, Chicken Sotanghon, Four Seasons, Steamed Rice, Soft Drinks, Assorted Fruits, Maja Blanca', 'Pack 1.jpg'),
-(48, 'Set 	B', 37, 'Frostybites Garden Hall', 'Package', 1800, 'Good for 8-10 pax', 'Chicken Teriyaki, Beef Caldereta, Fettuccine Alfredo, Lumpia Shanghai, Steamed Rice, Soft Drinks, Assorted Fruits, Cassava', 'Pack 1.jpg'),
-(49, 'Set C', 37, 'Frostybites Garden Hall', 'Package', 2600, 'Good for 8-10 pax', 'Lemon Chicken, Beef Brisket, Carbonara, Spring Egg Rolls, Steamed Rice, Soft Drinks, Assorted Fruits, Pianono', 'Pack 1.jpg'),
-(50, 'Set D', 37, 'Frostybites Garden Hall', 'Package', 2400, 'Good for 8-10 pax', 'Fried Chicken, Roast Beef, Rice Noodles, Fresh Lumpia, Steamed Rice, Soft Drinks, Assorted Fruits, Brownies', 'Pack 1.jpg');
+(29, 'pumice ceasar salad', 33, 'Pumice Food and Catering Services', 'Salad', 500, 'Good for 4-6 pax', '', '648d75bbf180a.jpg');
 
 -- --------------------------------------------------------
 
@@ -406,7 +385,7 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_foodmenu`
 --
 ALTER TABLE `tbl_foodmenu`
-  MODIFY `foodid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `foodid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `tbl_orders`
