@@ -3,6 +3,9 @@ include 'connectdb.php';
 
 session_start();
 
+if ($_SESSION['useremail']=="" OR $_SESSION['role']!="customer" ) {
+  header('location:index.php');
+}
 include_once 'navbarin.php';
 
 

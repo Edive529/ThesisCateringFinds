@@ -120,7 +120,7 @@ session_start();
                           <div class="col-4 col-lg-6">
                               <h1 class="display-5 text-white animated slideInDown mb-4">Find The Perfect Catering For You</h1>
                               <p class="fs-5 fw-medium text-white  ">Check Out the nearest catering server near you, and order exquisite food and satisfactory service.</p>
-                              <a href="cateringMaps.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a>
+                              <a href="cateringMapsin.php" class="btn btn-outline-success py-md-auto px-md-auto me-auto animated slideInLeft">Use Map</a>
                           </div>
                           <div class="col-4 col-lg-4">
                             <img class="img-fluid  w-auto h-auto" src="img/car/car2.png" alt="">
@@ -289,7 +289,7 @@ session_start();
 
                     <div class="col-lg-4 col-md-6">
                         <h5 class="text-white mb-4">Newsletter</h5>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                        
                         <div class="position-relative mx-auto" style="max-width: 400px;">
                             <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>

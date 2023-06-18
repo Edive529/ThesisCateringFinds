@@ -4,12 +4,17 @@ include 'connectdb.php';
 
 session_start();
 
-
+if ($_SESSION['useremail']=="" OR $_SESSION['role']!="customer" ) {
+  header('location:index.php');
+}
 
 $userid = $_SESSION['customerid'];
 
 if(isset($_POST['place_order'])){
 
+   $card_number= $_POST["card_number"];
+   $cvc= $_POST["cvc"];
+   $card_expiry= $_POST["card_expiry"];
    $name = $_POST['user'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
    $catering_style = $_POST['catering_style'];
@@ -33,12 +38,40 @@ if(isset($_POST['place_order'])){
    $time_to_be_delivered = $_POST['time_to_be_delivered'];
    $time_to_be_delivered = filter_var($time_to_be_delivered, FILTER_SANITIZE_STRING);
 
+   include("./config.php");
+
+
+
+       $stripe = new \Stripe\StripeClient('sk_test_51NIkXMSGeKy7WLs6bxSx9nJI5gytzyDJ7YnYK13AeCCwpuRzrBi4mjjtr6zgcAMt0NziY8tpaPVsjJdJCswsty5700D9443m68');
+
+       $paymentIntent = $stripe->paymentIntents->create([
+         'amount' => str_replace(",", "", $grand_total) * 100,
+         'currency' => 'php',
+         'description' => $order,
+         'payment_method_types' => ['card'],
+         'metadata' => [
+           'name' => $name,
+           'card_number' => $card_number,
+           'cvc' => $cvc,
+           'card_expiry' => $card_expiry,
+           'email' => $email,
+           'payment_type' => $method
+         ],
+       ]);
+
+       if ($paymentIntent) {
+
+
+
+
    $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
    $verify_cart->execute([$userid]);
-
-   $insert_catering = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, catering_style, restaurant, grand_total, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-   $insert_catering->execute([$userid, $order, $name, $catering_style, $restaurantname, $grand_total, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
+   $status = "full_payment";
+   $insert_catering = $pdo->prepare("INSERT INTO `tbl_catering_order_details`(userid, order_list, user, status, catering_style, restaurant, grand_total, phonenum, useremail, event_address, payment_type, date_to_be_delivered, time_to_be_delivered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+   $insert_catering->execute([$userid, $order, $name, $status,$catering_style, $restaurantname, $grand_total, $number, $email, $event_address,  $method, $date_to_be_delivered, $time_to_be_delivered]);
    header('location:orders.php');
+
+    }
 
 
 
@@ -263,28 +296,42 @@ if(isset($_POST['update_cart'])){
                   <option value="GCASH">GCASH</option>
 
                </select>
+               <p>Catering Style <span>*</span></p>
+
+               <select name="catering_style" class="input" required>
+                   <option value="Party Tray">Party Tray</option>
+                   <option value="Plated">Plated</option>
+                   <option value="Packed">Packed</option>
+               </select>
+
+               <p>Event Address <span>*</span></p>
+
+               <input type="text" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
+
 
 
             </div>
             <div class="box">
-              <p>Catering Style <span>*</span></p>
 
-              <select name="catering_style" class="input" required>
-                  <option value="Party Tray">Party Tray</option>
-                  <option value="Plated">Plated</option>
-                  <option value="Packed">Packed</option>
-              </select>
+               <p>Delivery Date</p>
 
-              <p>Event Address <span>*</span></p>
-
-              <input type="text" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
-<p>Delivery Date</p>
-               <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input">
+               <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input" id="delivery-date">
                <p>Delivery time<span>*</span></p>
                <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
                <input hidden type="text"  name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
                <input hidden type="text"  name="restaurant" value="<?php echo $restaurantname?>" required maxlength="" placeholder="" class="input">
                <textarea hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input"><?php echo$maonani?></textarea>
+
+
+           <p>Card number<span>*</span></p>
+           <input value="" name="card_number" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" class="input">
+
+           <p>Expiry Date<span>*</span></p>
+           <input type="text" value="" name="card_expiry" required maxlength="5" placeholder="00/00" class="input">
+
+
+           <p>CVC<span>*</span></p>
+           <input type="text" value="" name="cvc" required maxlength="3" placeholder="enter your cvc" class="input" min="0" max="3">
 
 
             </div>
@@ -300,7 +347,18 @@ if(isset($_POST['update_cart'])){
 
 
 
+<script>
+  // Get today's date
+  var today = new Date();
+  // Set the minimum date to tomorrow
+  today.setDate(today.getDate() + 1);
 
+  // Format the minimum date as "yyyy-mm-dd"
+  var minDate = today.toISOString().split('T')[0];
+
+  // Set the minimum attribute of the date input field
+  document.getElementById("delivery-date").setAttribute("min", minDate);
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 

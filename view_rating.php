@@ -30,6 +30,8 @@ if(isset($_POST['place_order'])){
 
      $sucess_msg[] = 'Rated Successfully!';
 
+     header('location:rating.php');
+
    }else {
      $error_msg[] = 'Rating Failed!';
    }
@@ -125,9 +127,9 @@ if(isset($_POST['place_order'])){
          <input type="hidden" name="status" value="Already Rated!">
 
 
+<?php  ?>
 
-
-            <input type="submit" value="place order" name="place_order" class="btn">
+            <input type="submit" value="Rate Order" name="place_order" class="btn">
          </form>
 
 
@@ -153,12 +155,14 @@ if(isset($_POST['place_order'])){
 
 
 
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+
+
+
 <script src="js/script.js"></script>
+
+
 
 <?php include 'components/alert.php'; ?>
 

@@ -1,3 +1,12 @@
+<?php
+include_once 'connectdb.php';
+
+if ($_SESSION['useremail']=="" OR $_SESSION['role']!="customer" ) {
+  header('location:index.php');
+}
+ ?>
+
+
 <header class="header"  style="background-color:#ffa7a6;">
 
    <section class="flex" >

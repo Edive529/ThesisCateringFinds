@@ -239,10 +239,8 @@ if(isset($_POST['btnupdate'])){
           <select  class="form-control" name="txtstatus" class="input" value= "<?php echo $status_db; ?>" required>
 
             <option hidden value="<?php echo $status_db; ?>" selected ><?php echo $status_db; ?></option>
-             <option value="approved">approved</option>
-             <option value="full_payment">full_payment</option>
-             <option value="down_payment">down_payment</option>
-             <option disabled value="canceled">canceled</option>
+             <option value="Delivered">Delivered</option>
+             <option value="Canceled">Canceled</option>
 
 
           </select>

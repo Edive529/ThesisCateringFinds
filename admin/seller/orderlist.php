@@ -63,7 +63,7 @@ include_once 'header.php';
                   <th>event_address</th>
                   <th>Status</th>
                   <th>catering_style</th>
-              
+
                   <th>date_of_reservation</th>
                   <th>date_to_be_delivered</th>
                   <th>Edit</th>
@@ -201,7 +201,18 @@ include_once 'header.php';
 </script>
 
 
+<script>
+ $(document).ready(function() {
+   $('#tablefoodmenu').DataTable({
 
+     "order":[[0,"desc"]]
+
+
+
+
+   });
+});
+</script>
 
 
 

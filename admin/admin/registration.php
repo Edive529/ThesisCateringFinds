@@ -254,7 +254,7 @@ if(isset($_POST['btnsave'])){
         <div class="col-md-12">
 
 
-          <table class = "table table-striped">
+          <table id="tablefoodmenu" class = "table table-striped">
             <thead>
               <tr>
                 <th>#</th>
@@ -333,6 +333,20 @@ if(isset($_POST['btnsave'])){
     </section>
     <!-- /.content -->
   </div>
+
+
+  <script>
+   $(document).ready(function() {
+     $('#tablefoodmenu').DataTable({
+
+       "order":[[0,"desc"]]
+
+
+
+
+     });
+  });
+  </script>
 
 
   <!-- /.content-wrapper -->

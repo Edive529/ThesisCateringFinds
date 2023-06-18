@@ -42,7 +42,7 @@ include_once'header.php';
               <?php
               $restaurant = $_SESSION['restaurant'];
 
-              $select1 = $pdo->prepare("select Count(userid) AS numbers1 from tbl_catering_order_details where restaurant='$restaurant' and status ='not yet approved'");
+              $select1 = $pdo->prepare("select Count(userid) AS numbers1 from tbl_catering_order_details where restaurant='$restaurant' and status ='Canceled'");
 
               $select1->execute();
               $row1=$select1->fetch(PDO::FETCH_OBJ);
@@ -54,13 +54,13 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers1; ?>" data-width="120" data-height="120"
                      data-fgColor="#3c8dbc">
 
-              <div class="knob-label">New Orders*(Approve now!)</div>
+              <div class="knob-label">Canceled Orders*</div>
             </div>
             <!-- ./col -->
             <div class="col-6 col-md-3 text-center">
               <?php
 
-              $select = $pdo->prepare("select Count(userid) AS numbers from tbl_catering_order_details where restaurant='$restaurant' and status ='down_payment'");
+              $select = $pdo->prepare("select Count(userid) AS numbers from tbl_catering_order_details where restaurant='$restaurant' and status ='delivered'");
 
               $select->execute();
               $row=$select->fetch(PDO::FETCH_OBJ);
@@ -72,7 +72,7 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers; ?>" data-width="120" data-height="120"
                      data-fgColor="#f56954">
 
-              <div class="knob-label">Total orders(Down payment)</div>
+              <div class="knob-label">Delivered Orders*</div>
             </div>
             <!-- ./col -->
 
@@ -98,7 +98,7 @@ include_once'header.php';
             <div class="col-6 col-md-3 text-center">
               <?php
 
-              $select3 = $pdo->prepare("select Count(userid) AS numbers3 from tbl_catering_order_details where restaurant='$restaurant' and status ='approved'");
+              $select3 = $pdo->prepare("select Count(userid) AS numbers3 from tbl_catering_order_details where restaurant='$restaurant'");
 
               $select3->execute();
               $row3=$select3->fetch(PDO::FETCH_OBJ);
@@ -110,7 +110,7 @@ include_once'header.php';
               <input type="text" class="knob" value="<?php echo $numbers3; ?>" data-width="120" data-height="120"
                      data-fgColor="#00c0ef">
 
-              <div class="knob-label">Total Orders (Approved)</div>
+              <div class="knob-label">Total Orders</div>
             </div>
             <!-- ./col -->
           </div>
@@ -163,10 +163,20 @@ include_once'header.php';
                   <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
               </div>
+			 
+
               <!-- /.card-body -->
             </div>
             </div>
+			
             </div>
+			 <?php   $select3 = $pdo->prepare("select SUM(grand_total) AS numbers30 from tbl_catering_order_details where restaurant='$restaurant' and status != 'Canceled'");
+
+              $select3->execute();
+              $row3=$select3->fetch(PDO::FETCH_OBJ);
+
+              $numbers3 =($row3->numbers30); ?>
+			  <h1 style="margin-left: 20px;">  Grand Total Sales: PHP <?php echo $numbers3;?></h1>
 
 
 
@@ -291,14 +301,14 @@ include_once'header.php';
 var areaChartData = {
   <?php
   $restaurant;
-  $select = $pdo->prepare("SELECT COUNT(id) AS total, restaurant, foodid FROM `tbl_orders` WHERE restaurant = $restaurant GROUP BY foodid;");
+  $select = $pdo->prepare("SELECT count(id) AS total, restaurant, foodid FROM `tbl_orders` WHERE restaurant = '$restaurant' GROUP BY foodid ;");
   $select->execute();
   $labels = array();
   $data = array();
 
   while ($row = $select->fetch(PDO::FETCH_OBJ)) {
     $foodid = $row->foodid;
-    $select1 = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = $foodid;");
+    $select1 = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = $foodid ;");
     $select1->execute();
     $row1 = $select1->fetch(PDO::FETCH_OBJ);
     $labels[] = $row1->food;
@@ -309,7 +319,7 @@ var areaChartData = {
   $chartData = implode(", ", $data);
   ?>
 
-  labels: ['<?php echo implode("', '", $labels); ?>'],
+  labels: [<?php echo "'" . implode("', '", $labels) . "'"; ?>],
   datasets: [
     {
       label               : 'Grand Total Sales',
@@ -324,8 +334,6 @@ var areaChartData = {
     }
   ]
 }
-
-
 
     var areaChartOptions = {
       maintainAspectRatio : false,
@@ -354,7 +362,63 @@ var areaChartData = {
       options: areaChartOptions
     })
 
-    
+    //-------------
+    //- LINE CHART -
+    //--------------
+    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+    var lineChartOptions = $.extend(true, {}, areaChartOptions)
+<?php
+$months = array(
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+);
+
+$data = array();
+foreach ($months as $month) {
+  $select = $pdo->prepare("SELECT SUM(grand_total) AS total FROM tbl_catering_order_details WHERE MONTHNAME(date_of_reservation) = ? and status !='Canceled';");
+  $select->execute([$month]);
+  $row = $select->fetch(PDO::FETCH_OBJ);
+  $data[] = $row->total;
+}
+
+$chartData = implode(", ", $data);
+?>
+
+var lineChartData = {
+  labels: <?php echo json_encode($months); ?>,
+  datasets: [
+    {
+      label: 'Digital Goods',
+      fillColor: 'rgba(60,141,188,0.9)',
+      strokeColor: 'rgba(60,141,188,0.8)',
+      pointColor: '#3b8bba',
+      pointStrokeColor: 'rgba(60,141,188,1)',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(60,141,188,1)',
+      data: [<?php echo $chartData; ?>]
+    }
+  ]
+};
+
+    lineChartData.datasets[0].fill = false;
+
+    lineChartOptions.datasetFill = false
+
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'line',
+      data: lineChartData,
+      options: lineChartOptions
+    })
 
 
 
@@ -385,9 +449,10 @@ var areaChartData = {
 </script>
 
 
+
   <!-- Main Footer -->
   <?php
 
-include_once'footer.php';
+include_once 'footer.php';
 
    ?>

@@ -1,3 +1,14 @@
+<?php
+
+if ($_SESSION['useremail']=="" OR $_SESSION['role']!="Admin" ) {
+  header('location:../index.php');
+}
+
+
+
+ ?>
+
+
   <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,7 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Starter</title>
+  <title>CateringFinds</title>
 
   <!-- REQUIRED SCRIPTS -->
 
@@ -24,7 +35,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-
+    <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 
   <script src="../plugins/datatables/datatables-responsive/js/responsive.bootstrap4.js"></script>
@@ -74,90 +86,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Navbar Search -->
 
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
+
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
+
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -172,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link" style="background-color:#3c8dbc;">
-      <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="../upload/icon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-bold" style="color:#343a40;">CateringFinds</span>
     </a>
 
@@ -181,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="../upload/user.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"><?php echo $_SESSION['username'];  ?></a>
@@ -199,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <li class="nav-item">
             <a href="dashboardAdmin.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-chart-area"></i>
               <p>
                 Dashboard
 
@@ -208,15 +139,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="registration.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
-              <p>
+            <i class="nav-icon fas fa-registered"></i>
                 Registration
               </p>
             </a>
           </li>
           <li class="nav-item">
             <a href="sellerregistration.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
+            <i class="nav-icon fas fa-users"></i>
               <p>
                 Seller Registration
               </p>
@@ -225,7 +155,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <li class="nav-item">
             <a href="orderlist.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
+          <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Order List
               </p>
@@ -233,7 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="restaurantlogs.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
+              <i class="nav-icon fas fa-history"></i>
               <p>
                 Restaurant Logs
               </p>
@@ -241,7 +171,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="../cateringmaps4ad.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
+              <i class="nav-icon fas fa-map"></i>
               <p>
                 Map
               </p>
@@ -249,7 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <a href="../logout.php" class="nav-link">
-              <i class="nav-icon far fa-address-card"></i>
+              <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 logout
               </p>

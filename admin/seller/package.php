@@ -190,7 +190,18 @@ include_once 'header.php';
 
 
 
+<script>
+ $(document).ready(function() {
+   $('#tablefoodmenu').DataTable({
 
+     "order":[[0,"desc"]]
+
+
+
+
+   });
+});
+</script>
 
 
   <!-- /.content-wrapper -->

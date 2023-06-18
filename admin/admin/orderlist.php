@@ -61,10 +61,10 @@ include_once 'headerAdmin.php';
                   <th>restaurant</th>
                   <th>event_address</th>
                   <th>catering_style</th>
-                  <th>payment_status</th>
+
                   <th>date_of_reservation</th>
                   <th>date_to_be_delivered</th>
-                
+
                 </tr>
 
 
@@ -100,9 +100,7 @@ include_once 'headerAdmin.php';
                     <td>
                     '.$row->catering_style.'
                     </td>
-                    <td>
-                    '.$row->payment_status.'
-                    </td>
+
                     <td>
                     '.$row->date_of_reservation.'
                     </td>
@@ -196,6 +194,18 @@ include_once 'headerAdmin.php';
 </script>
 
 
+<script>
+ $(document).ready(function() {
+   $('#tablefoodmenu').DataTable({
+
+     "order":[[0,"desc"]]
+
+
+
+
+   });
+});
+</script>
 
 
 

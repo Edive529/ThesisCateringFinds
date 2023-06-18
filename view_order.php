@@ -7,9 +7,6 @@ $userid = $_SESSION['customerid'];
 
 if(isset($_GET['get_id'])){
    $get_id = $_GET['get_id'];
-}else{
-   $get_id = '';
-   header('location:orders.php');
 }
 
 if(isset($_POST['cancel'])){
@@ -28,13 +25,14 @@ if(isset($_POST['down_pay'])){
 
 }
 
-if(isset($_POST['full_pay'])){
 
-   $update_orders = $pdo->prepare("UPDATE `tbl_catering_order_details` SET status = ? WHERE catering_id = ?");
-   $update_orders->execute(['Full_payment', $get_id]);
-   header('location:orders.php');
 
-}
+
+
+
+
+
+
 
 
 
@@ -53,7 +51,20 @@ if(isset($_POST['full_pay'])){
 
    <link rel="stylesheet" href="css/style.css">
 
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
+<style media="screen">
+	.input {
+   width: 100%;
+   background-color: #eee;
+   border-radius: .5rem;
+   padding: 1.4rem;
+   color: black;
+   font-size: 1.8rem;
+   margin: 1rem 0;
+	}
+</style>
 <body>
 
 <?php include 'components/header.php'; ?>
@@ -74,6 +85,14 @@ if(isset($_POST['full_pay'])){
           $total2= $fetch_order['grand_total'];
 
           $total3 = $total2/2;
+
+
+
+
+
+
+
+
 
 
    ?>
@@ -104,10 +123,21 @@ if(isset($_POST['full_pay'])){
          <p class="status" style="color:<?php if($fetch_order['status'] == 'Not yet approved'){echo 'red';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'green';}; ?>"><?= $fetch_order['status']; ?></p>
          <?php if ($fetch_order['status'] == 'approved') { ?>
 
-           <form action="" method="POST" style="display: flex; justify-content: center;">
-               <input type="submit" value="Down Payment?" name="down_pay" class="btn" style="width:200px; margin-right:20px;" onclick="return confirm('Are you sure you want to Down payment (Php <?php echo $total3;  ?>)?');">
-               <input type="submit" value="Full Payment?" name="full_pay" class="btn" style="width:200px;" onclick="return confirm('Are you sure you want to pay?');">
-           </form>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
        <?php } elseif ($fetch_order['status'] == 'down_payment' || $fetch_order['status'] == 'full_payment') { ?>
 
@@ -121,15 +151,14 @@ if(isset($_POST['full_pay'])){
 
        <?php } ?>
 
+
       </div>
    </div>
    <?php
 
          }
       }
-   else{
-      echo '<p class="empty">no orders found!</p>';
-   }
+
    ?>
 
    </div>

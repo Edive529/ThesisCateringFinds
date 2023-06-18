@@ -129,13 +129,12 @@ if(!empty($file_name)){
 }else{
 
   $update = $pdo->prepare("update tbl_customer set phonenum=:pnum, event_address=:evaddress,
-  payment_type=:paytype where customerid='$userid'");
+  payment_type=:paytype, image=:image where customerid='$userid'");
 
-  $update->bindParam(':food',$food_txt);
-  $update->bindParam(':category',$category_txt);
-  $update->bindParam(':saleprice',$saleprice_txt);
+  $update->bindParam(':pnum',$phonenum_txt);
+  $update->bindParam(':evaddress',$event_address_txt);
+  $update->bindParam(':paytype',$payment_type_txt);
 
-  $update->bindParam(':description',$description_txt);
   $update->bindParam(':image',$image_db);
 
   if($update->execute()){
@@ -314,9 +313,9 @@ if(!empty($file_name)){
 
 
 
-                 <option value="cash on delivery">cash on delivery</option>
-                 <option value="credit or debit card">credit or debit card</option>
-                 <option value="GCASH">GCASH</option>
+                 <option value="credit card">credit card</option>
+                 <option value="debit card">debit card</option>
+                 <option value="Visa">visa card</option>
 
               </select>
 

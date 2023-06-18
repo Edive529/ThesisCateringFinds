@@ -447,6 +447,19 @@ include_once 'headerAdmin.php';
 
 </script>
 
+<script>
+ $(document).ready(function() {
+   $('#tablefoodmenu').DataTable({
+
+     "order":[[0,"desc"]]
+
+
+
+
+   });
+});
+</script>
+
 
   <!-- Main Footer -->
   <?php

@@ -73,9 +73,9 @@ $userid = $_SESSION['customerid'];
 
 
 
-   // else{
-   //    echo '<p class="empty">no orders found!</p>';
-   // }
+   else{
+      echo '<p class="empty">no orders to rate!</p>';
+   }
    ?>
 
    </div>
