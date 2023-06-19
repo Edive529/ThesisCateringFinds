@@ -283,9 +283,7 @@ elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['stat
         <div class="row">
           <div class="col-8">
 
-            <p class="mb-1">
-              <a href="#" onclick="swal('To Get Password','Please Contact Admin OR Service Provider','error')">I forgot my password</a>
-            </p>
+          
 
           </div>
           <!-- /.col -->

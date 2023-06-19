@@ -103,8 +103,23 @@ session_start();
                               <h2 class="display-6 text-black "><?= $restaurant_db; ?></h2>
 
                               <hr>
+                              <?php
 
-                              <p class="fs-4 fw-medium text-black "> Ratings: </p>
+
+                              $select = $pdo->prepare("select ROUND(AVG(rating)) as test, restaurant from tbl_orders where restaurant='$restaurant_db'");
+
+                              $select->execute();
+                              $row=$select->fetch(PDO::FETCH_ASSOC);
+
+                              $rating_db = $row['test'];
+
+
+
+                              ?>
+
+                              <p class="fs-4 fw-medium text-black "> Ratings: <?php  for ($i = 1; $i <= $rating_db; $i++) {
+                                echo '<span class="star">★</span>';
+                              } ?> </p>
 
                               <p class="fs-4 fw-medium text-black "> Contact Number: <?php echo $phonenum_db; ?></p>
 
