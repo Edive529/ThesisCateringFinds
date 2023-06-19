@@ -208,7 +208,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 <body class=" container d-flex">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/index2.html"><b>Catering</b>Finds</a>
+    <a href="../index.php"><b>Catering</b>Finds</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
