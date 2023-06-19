@@ -291,9 +291,9 @@ if(isset($_POST['update_cart'])){
                <select name="payment_type" class="input" value= "<?php echo $_SESSION['payment_type']; ?>" required>
 
                  <option hidden value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
-                  <option value="cash on delivery">cash on delivery</option>
-                  <option value="credit or debit card">credit or debit card</option>
-                  <option value="GCASH">GCASH</option>
+                  <option value="credit card">credit card</option>
+                  <option value="debit card">debit card</option>
+
 
                </select>
                <p>Catering Style <span>*</span></p>

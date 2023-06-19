@@ -51,7 +51,7 @@ $row= $select->fetch(PDO::FETCH_ASSOC);
 if ($row) {
 
 
-if($row['useremail'] == $useremail AND $row['role']=='Admin') {
+if($row['useremail'] == $useremail AND $row['role']=='Admin' AND $row['status']=='approved') {
 
   $select = $pdo->prepare("select * from tbl_user where useremail= :useremail");
   $select->execute(array(':useremail' => $useremail));
@@ -102,7 +102,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Admin') {
 
     swal({
     title: "Warning!",
-    text: "Email Or Password field is wrong2!",
+    text: "Not yet Approved!",
     icon: "warning",
     button: "Ok",
   });
@@ -180,6 +180,24 @@ elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['stat
       header('refresh:3; seller/dashboard.php');
 
 
+    }else{
+      echo'<script type ="text/javascript">
+      jQuery(function validation(){
+
+        swal({
+        title: "Warning!",
+        text: "Email Or Password field is wrong!",
+        icon: "warning",
+        button: "Ok",
+      });
+
+
+
+      });
+
+      </script>';
+
+
     }
 
 
@@ -190,7 +208,7 @@ elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['stat
 
     swal({
     title: "Warning!",
-    text: "Email Or Password field is wrong5!",
+    text: "Email Or Password field is wrong!",
     icon: "warning",
     button: "Ok",
   });

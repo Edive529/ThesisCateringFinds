@@ -151,7 +151,7 @@ if(isset($_POST['btnupdate'])){
 
      <div class="card card-outline card-primary">
          <div class="card-header with-border">
-         <h3 class="box-title"><a href="menu.php" class="btn btn-primary" role="button">Back to Menu list</a></h3>
+         <h3 class="box-title"><a href="orderlist.php" class="btn btn-primary" role="button">Back to order list</a></h3>
 
 
 
