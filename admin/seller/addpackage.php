@@ -209,7 +209,8 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
               echo '<h6 href="'.$cat['category'].'">'.$cat['category'].'</h6>';
               echo '<ul class="sub-menu">';
-              $linkq=$pdo->prepare("Select * from tbl_foodmenu where category='".$cat['category']."'");
+              $restaurant = $_SESSION['restaurant'];
+              $linkq=$pdo->prepare("Select * from tbl_foodmenu where category='".$cat['category']."' and restaurant = '$restaurant';");
               $linkq->execute();
               foreach($linkq as $link){
                  echo '<input type="checkbox" name= "txtdescription[]"  value='.$link['food'].'>'.$link['food'].' ';
