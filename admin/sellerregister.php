@@ -130,6 +130,8 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
           </script>';
 
+          header('location:index.php');
+
         }else{
           echo'<script type ="text/javascript">
           jQuery(function validation(){
@@ -193,18 +195,17 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
-  <style>
-    .login-box{
-
-    margin-bottom: 200px;
-
-    }
-  </style>
-
+ 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAif965hDy98LYDXjMrGN9-U3BlqMhZvjc&callback=initMap" async defer></script>
+    <style>
+      #map {
+        height: 450px;
+        width:auto;
+      }
+    </style>
 
 </head>
-<body class="hold-transition login-page">
+<body class=" container d-flex">
 <div class="login-box">
   <div class="login-logo">
     <a href="/index2.html"><b>Catering</b>Finds</a>
@@ -256,21 +257,21 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"  name="txtlatitude" placeholder="Latitude" >
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
+        <input type="text" class="form-control" name="txtlatitude" id="latitude" placeholder="Latitude" readonly>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control"  name="txtlongitude" placeholder="Longitude" >
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="txtlongitude" id="longitude" placeholder="Longitude" readonly>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
           </div>
         </div>
+      </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" name="txtpassword" placeholder="Password" >
           <div class="input-group-append">
@@ -294,7 +295,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-info" name="btnaddfood">Register</button>
+            <button type="submit" class="btn btn-success" name="btnaddfood">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -308,7 +309,62 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
     </div>
     <!-- /.login-card-body -->
   </div>
+ 
+  </div>
+  <div class="col-lg-9">
+    <h1 class="login-logo">Right click desired location to get your coordinates of your restaurant</h1>
+  <div id="map"></div>
+  
+  <div>
+  <button onclick="changeToSatellite()" class="btn btn-info">Satellite</button>
+  <button onclick="changeToRoadmap()" class="btn btn-info">Roadmap</button>
+  </div>
 </div>
 
-</body>
+    <script>
+        var map;
+
+      function initMap() {
+
+
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 8.2280, lng: 124.2452 }, // Iligan
+        zoom: 14, // Initial map zoom level 
+      mapTypeId: 'roadmap', // Default map type
+      });
+
+  
+  // Create a marker and set its initial position outside the map
+  marker = new google.maps.Marker({
+    map: map,
+    position: { lat: -9999, lng: -9999 },
+    draggable: true // Enable marker dragging if desired
+  });
+
+  google.maps.event.addListener(map, "rightclick", function (event) {
+    var latitude = event.latLng.lat();
+    var longitude = event.latLng.lng();
+
+    // Update input fields with the coordinates
+    document.getElementById("latitude").value = latitude;
+    document.getElementById("longitude").value = longitude;
+
+    // Update marker position
+    marker.setPosition(event.latLng);
+  });
+
+  
+}
+function changeToSatellite() {
+      map.setMapTypeId('satellite');
+    }
+    function changeToRoadmap() {
+      map.setMapTypeId('roadmap');
+    }
+
+</script>
+    
+
+ </body>
 </html>

@@ -14,7 +14,7 @@ include_once 'headerAdmin.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">View menu</h1>
+            <h1 class="m-0">View Seller Information</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,7 +50,7 @@ include_once 'headerAdmin.php';
 
                 echo'<div class="row"> <div class = "col-md-6">
 
-                <center><p class="list-group-item list-group-item-success" ><b>food Details</b></p></center>
+                <center><p class="list-group-item list-group-item-success" ><b>Seller Details</b></p></center>
 
                 <ul class="list-group">
                  <li class="list-group-item"><b>ID:  </b><span class="label">'.$row->userid.'</span></li>
@@ -65,7 +65,7 @@ include_once 'headerAdmin.php';
                 </div>
                 <div class = "col-md-6">
 
-                <center><p class="list-group-item list-group-item-success"><b>food image</b></p></center>
+                <center><p class="list-group-item list-group-item-success"><b>Restaurant Image</b></p></center>
 
                 <ul class="list-group">
                 <center><img src = "../upload/'.$row->image.'" class = "img-responsive" width="80%" height="80%"></center>

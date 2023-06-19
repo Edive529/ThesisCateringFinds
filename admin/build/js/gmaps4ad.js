@@ -10,7 +10,7 @@ function initMap(){
 var showData = JSON.parse(document.getElementById('showData').innerHTML); 
 
     Array.prototype.forEach.call(showData, function(data){
-      var cntnt = "<div style='width:150px;'><img style='height:auto;width:150px; ' src='admin/upload/"+
+      var cntnt = "<div style='width:150px;'><img style='height:auto;width:150px; ' src='upload/"+
       data.image+
       " '> "+
       "<h6>"+
@@ -34,20 +34,6 @@ var showData = JSON.parse(document.getElementById('showData').innerHTML);
           }) ;
          
       }) ; 
-
-
-      
-      google.maps.event.addListener(map, "rightclick", function (event) {
-        var latitude = event.latLng.lat();
-        var longitude = event.latLng.lng();
-        console.log("Latitude: " + latitude);
-        console.log("Longitude: " + longitude);
-
-        // You can do whatever you want with the coordinates here
-        // For example, display them in an HTML element on the page
-        document.getElementById("latitude").innerHTML = "Latitude: " + latitude;
-        document.getElementById("longitude").innerHTML = "Longitude: " + longitude;
-      });
 
       console.log(data);
     })  

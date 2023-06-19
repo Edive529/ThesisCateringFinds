@@ -72,11 +72,7 @@
             </li>
             <li class="nav-item">
             </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
-          </form>
+          </ul> 
             <button class="btn " type="button">
             <a href="admin/dashboardAdmin.php">
               <i class="fa fa-user"></i>

@@ -80,11 +80,7 @@ session_start();
           <a href="shopping_cart.php" class="cart-btn" style = "padding:30px;">My Cart</a>
 
           <a href="logout.php" style = "padding:30px;">Logout</a>
-
-          <form class="d-flex" role="search">
-            <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
-          </form>
+ 
             <a href="profilepage.php">
               <i class="fa fa-user"></i>
             </a>
@@ -168,6 +164,7 @@ session_start();
       </div>
   </div>
 </div>
+
 
 
   <!--end of card2-->

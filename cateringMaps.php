@@ -111,18 +111,15 @@ echo '<div id="showData">' . $allData. '</div>';
 
                   $restaurantid = $fetch_prodcut['userid'];
           ?>
-
-
-
-
-
-            <div class="  wow fadeInUp" data-wow-delay="0.1s">
+ 
+            <div class=" " data-wow-delay="0.1s">
                 <a class="cat-item rounded p-4" href="viewprods.php?id='<?php echo $restaurantid;?>'">
                     <i class="fa fa-3x fa-mail-bulk text-primary"></i>
                     <h6 class="mb-3"><?= $fetch_prodcut['restaurant']; ?></h6>
                     <p class="mb-0"><?= $fetch_prodcut['address']; ?></p>
                 </a>
             </div>
+
         <?php }} ?>
 
         </div>

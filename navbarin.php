@@ -73,10 +73,7 @@
             <li class="nav-item">
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control " type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
-          </form>
+           
             <button class="btn " type="button">
             <a href="profilepage.php">
               <i class="fa fa-user"></i>
