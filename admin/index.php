@@ -256,7 +256,7 @@ elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['stat
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/index2.html"><b>Catering</b>Finds</a>
+    <a href="#"><b>Catering</b>Finds</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -283,9 +283,7 @@ elseif($row['useremail'] == $useremail AND $row['role']=='Seller' AND $row['stat
         <div class="row">
           <div class="col-8">
 
-            <p class="mb-1">
-              <a href="#" onclick="swal('To Get Password','Please Contact Admin OR Service Provider','error')">I forgot my password</a>
-            </p>
+
 
           </div>
           <!-- /.col -->
