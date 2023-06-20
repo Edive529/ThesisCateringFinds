@@ -92,6 +92,8 @@ if(isset($_POST['empty_cart'])){
          if($select_products->rowCount() > 0){
             $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
 
+            $foodid1 =$fetch_product['foodid'];
+
    ?>
    <form action="" method="POST" class="box">
       <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
@@ -125,7 +127,7 @@ if(isset($_POST['empty_cart'])){
          <form action="" method="POST">
           <input type="submit" value="empty cart" name="empty_cart" class="delete-btn" onclick="return confirm('empty your cart?');">
          </form>
-         <a href="checkout.php" class="btn">proceed to checkout</a>
+         <a href="checkout.php?id=<?php echo $foodid1;  ?>" class="btn">proceed to checkout</a>
       </div>
    <?php } ?>
 

@@ -38,11 +38,37 @@ if(isset($_POST['place_order'])){
    $time_to_be_delivered = $_POST['time_to_be_delivered'];
    $time_to_be_delivered = filter_var($time_to_be_delivered, FILTER_SANITIZE_STRING);
 
-   include("./config.php");
+   $id1= isset($_GET['id']) ? $_GET['id'] : '';
+      $select_get = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = $id1");
+      $select_get->execute();
+      while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
+
+        $restaurant12 = $fetch_get['restaurant'];
+}
+
+$select = $pdo->prepare("select * from tbl_user where restaurant ='dave`s restaurant'");
+
+$select->execute();
+$row=$select->fetch(PDO::FETCH_ASSOC);
+      $skey_db = $row['skey'];
+      $pkey_db = $row['spkey'];
 
 
 
-       $stripe = new \Stripe\StripeClient('sk_test_51NIkXMSGeKy7WLs6bxSx9nJI5gytzyDJ7YnYK13AeCCwpuRzrBi4mjjtr6zgcAMt0NziY8tpaPVsjJdJCswsty5700D9443m68');
+
+
+   require_once "stripe-php-master/init.php";
+
+   $stripeDetails = array(
+       "secretKey" => $skey_db ,
+       "publishableKey" => $pkey_db
+   );
+
+   \Stripe\Stripe::setApiKey($stripeDetails["secretKey"]);
+
+
+
+       $stripe = new \Stripe\StripeClient($skey_db);
 
        $paymentIntent = $stripe->paymentIntents->create([
          'amount' => str_replace(",", "", $grand_total) * 100,
@@ -177,7 +203,7 @@ if(isset($_POST['update_cart'])){
 <section class="checkout">
   <?php $id= isset($_GET['id']) ? $_GET['id'] : ''; ?>
 
-   <h1 class="heading">checkout summary<?php echo $id ?></h1>
+   <h1 class="heading">checkout summary</h1>
 
 
 

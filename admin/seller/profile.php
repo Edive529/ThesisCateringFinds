@@ -24,10 +24,14 @@ $useremail_db = $row['useremail'];
 $restaurant_db = $row['restaurant'];
 $address_db = $row['address'];
 $banner_db = $row['banner'];
+$skey_db = $row['skey'];
+$pkey_db = $row['pkey'];
 
 
 if(isset($_POST['btnupdate'])){
   $phonenum_txt = $_POST['txtphonenum'];
+  $skey_txt = $_POST['txtskey'];
+  $pkey_txt = $_POST['txtpkey'];
 
 
 $file_name = $_FILES['file']['name'];
@@ -140,9 +144,11 @@ if(!empty($file_name)){
 
 }else{
 
-  $update = $pdo->prepare("update tbl_user set phonenum=:phonenum, banner=:banner where userid=$id");
+  $update = $pdo->prepare("update tbl_user set phonenum=:phonenum,skey=:skey,pkey=:pkey, banner=:banner where userid=$id");
 
   $update->bindParam(':phonenum',$phonenum_txt);
+  $update->bindParam(':skey',$skey_txt);
+  $update->bindParam(':pkey',$pkey_txt);
 
 
   $update->bindParam(':banner',$banner_db);
@@ -154,7 +160,7 @@ if(!empty($file_name)){
 
         swal({
         title: "Good Job!",
-        text: "Service list is Updated",
+        text: "profile Updated",
         icon: "success",
         button: "Ok",
       });
@@ -203,6 +209,9 @@ $useremail_db = $row['useremail'];
 $restaurant_db = $row['restaurant'];
 $address_db = $row['address'];
 $banner_db = $row['banner'];
+$skey_db = $row['skey'];
+$pkey_db = $row['pkey'];
+
 
 ?>
 
@@ -257,12 +266,22 @@ $banner_db = $row['banner'];
             <input disabled type="text" class="form-control" name="" value="<?php echo $restaurant_db;?>" placeholder="Enter name..." required>
           </div>
 
-    
+
 
          <div class="form-group">
             <label>Phone number</label>
             <input type="text" class="form-control" name="txtphonenum" value="<?php echo $phonenum_db;?>" placeholder="Enter name..." required>
           </div>
+
+          <label>Set up stripe payment system, register at <a href="https://dashboard.stripe.com/register?redirect=%2Ftest%2Fpayments">Stripe Registration</a></label> 
+          <div class="form-group">
+             <label>Secret key</label>
+             <input  type="text" class="form-control" name="txtskey" value="<?php echo $skey_db;?>" placeholder="Enter name..." required>
+           </div>
+           <div class="form-group">
+              <label>publisher key</label>
+              <input  type="text" class="form-control" name="txtpkey" value="<?php echo $pkey_db;?>" placeholder="Enter name..." required>
+            </div>
 
 
 
@@ -280,6 +299,7 @@ $banner_db = $row['banner'];
             <label>Address</label>
             <input disabled type="text" class="form-control" name="" value="<?php echo $address_db;?>" placeholder="Enter name..." required>
           </div>
+
 
         <div class="form-group">
           <label >Upload banner image</label>
