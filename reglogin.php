@@ -157,24 +157,7 @@ if($row['useremail'] == $useremail AND $row['role']=='customer') {
                 </div>
 
                 <button type="submit" class="btnr" name="btn_login">Sign In</button>
-
-                <p class="socialText"> Or sign in with social platform</p>
-
-                <div class="socialMedia">
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-
-                </div>
+ 
                 <p class="accountText">Don't have an account? <a href="#" id="signUpBtn2">Sign Up</a></p>
 
             </form>
@@ -200,25 +183,7 @@ if($row['useremail'] == $useremail AND $row['role']=='customer') {
 
 
                 <button type="submit" class="btnr" name="btnsave">Sign-Up</button>
-
-                <p class="socialText"> Or sign up with social platform</p>
-
-                <div class="socialMedia">
-
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="" class="socialIcon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-
-                </div>
+ 
                 <p class="accountText">Already have an account? <a href="reglogin.php" id="signInBtn2">Sign In</a></p>
             </form>
 
@@ -228,8 +193,8 @@ if($row['useremail'] == $useremail AND $row['role']=='customer') {
             <div class="panel left-panel">
                 <div class="content">
                     <h3>Member of CateringFinds?</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur sapiente, ea doloremque unde similique numquam?</p>
-                    <button class="btnr" id="signInBtn">Sign-In</button>
+                   <p>Already a member? click the Sign In button now.</p>
+                   <button class="btnr" id="signInBtn">Sign-In</button>
                 </div>
                 <img src="img/reglog/signin.svg" alt="" class="image">
             </div>
@@ -237,7 +202,7 @@ if($row['useremail'] == $useremail AND $row['role']=='customer') {
             <div class="panel right-panel">
                 <div class="content">
                     <h3>New to CateringFinds?</h3>
-                    <p>Loresm ipsum dolor sit amet consectetur adipisicing elit. Aspernatur sapiente, ea doloremque unde similique numquam?</p>
+                   <p>Don't have an account in CateringFinds? Click the Sign Up button now.</p> 
                     <button class="btnr" id="signUpBtn">Sign-Up</button>
                 </div>
                 <img src="img/reglog/signup.svg" alt="" class="image">
