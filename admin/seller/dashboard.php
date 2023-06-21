@@ -47,7 +47,7 @@ include_once'header.php';
               $select1->execute();
               $row1=$select1->fetch(PDO::FETCH_OBJ);
 
-              $numbers1 =($row1->numbers1);
+               $numbers1 =($row1->numbers1);
 
 
               ?>
@@ -385,7 +385,7 @@ $months = array(
 
 $data = array();
 foreach ($months as $month) {
-  $select = $pdo->prepare("SELECT SUM(grand_total) AS total FROM tbl_catering_order_details WHERE MONTHNAME(date_of_reservation) = ? and status !='Canceled';");
+  $select = $pdo->prepare("SELECT SUM(grand_total) AS total, date_of_reservation FROM tbl_catering_order_details WHERE MONTHNAME(date_of_reservation) = ? and status !='Canceled';");
   $select->execute([$month]);
   $row = $select->fetch(PDO::FETCH_OBJ);
   $data[] = $row->total;
@@ -398,7 +398,7 @@ var lineChartData = {
   labels: <?php echo json_encode($months); ?>,
   datasets: [
     {
-      label: 'Digital Goods',
+      label: 'Grand Total',
       fillColor: 'rgba(60,141,188,0.9)',
       strokeColor: 'rgba(60,141,188,0.8)',
       pointColor: '#3b8bba',

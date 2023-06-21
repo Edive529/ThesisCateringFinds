@@ -46,7 +46,7 @@ if(isset($_POST['place_order'])){
         $restaurant12 = $fetch_get['restaurant'];
 }
 
-$select = $pdo->prepare("select * from tbl_user where restaurant ='dave`s restaurant'");
+$select = $pdo->prepare("select * from tbl_user where restaurant ='$restaurant12'");
 
 $select->execute();
 $row=$select->fetch(PDO::FETCH_ASSOC);
@@ -314,9 +314,9 @@ if(isset($_POST['update_cart'])){
                <input type="number" value="<?php echo $_SESSION['phonenum']; ?>" name="phonenum" required maxlength="10" placeholder="enter your number" class="input" min="0" max="9999999999">
 
                <p>payment method <span>*</span></p>
-               <select name="payment_type" class="input" value= "<?php echo $_SESSION['payment_type']; ?>" required>
+               <select name="payment_type" class="input" value= "" required>
 
-                 <option hidden value="<?php echo $_SESSION['payment_type']; ?>" selected ><?php echo $_SESSION['payment_type']; ?></option>
+                 <option hidden value="credit card" selected >credit card</option>
                   <option value="credit card">credit card</option>
                   <option value="debit card">debit card</option>
 

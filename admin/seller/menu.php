@@ -71,7 +71,7 @@ include_once 'header.php';
               <tbody>
                 <?php
                 $userid = $_SESSION['userid'];
-                  $select=$pdo->prepare("select * from tbl_foodmenu where userid = $userid order by foodid desc");
+                  $select=$pdo->prepare("select * from tbl_foodmenu where userid = $userid and category !='Package' order by foodid desc");
 
                   $select->execute();
 
