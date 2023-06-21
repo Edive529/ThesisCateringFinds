@@ -10,7 +10,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #ffa7a6;
+    background-color: #b8e3ff;
 }
 
 .reglogcontainer{
@@ -30,7 +30,7 @@ body{
     left: -50%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg,  #ffa7a6,  #ff514e);
+    background: linear-gradient(-45deg,  #b8e3ff,  #2a9df4);
     z-index: 6;
     transform: translateX(100%);
     transition: 1s ease-in-out;
@@ -73,7 +73,7 @@ form.signUpForm{
 
 .title{
     font-size: 35px;
-    color: #ffa7a6;
+    color: #b8e3ff;
     margin-bottom: 10px;
 }
 
@@ -82,7 +82,7 @@ form.signUpForm{
     height: 50px ;
     background: #f0f0f0;
     margin: 10px 0;
-    border: 2px solid #ffa7a6;
+    border: 2px solid #2a9df4;
     border-radius: 50px;
     display: flex;
     align-items: center;
@@ -109,7 +109,7 @@ form.signUpForm{
     height: 50px;
     border: none;
     border-radius: 50px;
-    background: #ffa7a6;
+    background: #b8e3ff;
     color: #fff;
     font-weight: 600;
     margin: 10px 0;
@@ -117,7 +117,7 @@ form.signUpForm{
     cursor: pointer;
 }
 .btnr:hover{
-    background:  #fa8a88;
+    background:  #2a9df4;
 }
 .socialText{
     margin: 10px 0;
@@ -143,8 +143,8 @@ a{
     text-decoration: none;
 }
 .socialIcon:hover{
-    color: #ffa7a6 ;
-    border-color: #ffa7a6;
+    color: #b8e3ff ;
+    border-color: #b8e3ff;
 }
 
  .panelsContainer {

@@ -1,4 +1,4 @@
-<header class="header"  style="background-color:#ffa7a6;">
+<header class="header"  style="background-color:#2a9df4;">
 
    <section class="flex" >
      <a  type="button" onclick="goback()" class="back" style="    color: var(--white);

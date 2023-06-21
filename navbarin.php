@@ -50,7 +50,7 @@
 
     <!--navbar-->
 
-    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top " style="background-color: #ffa7a6;">
+    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top " style="background-color: #2a9df4;">
       <div class="container-fluid">
 
       <a href="inindex.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-2">

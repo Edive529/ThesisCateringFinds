@@ -49,7 +49,7 @@ session_start();
 
 
     <!--navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0 " style="background-color: #ffa7a6; ">
+    <nav class="navbar navbar-expand-lg navbar-light shadow sticky-top p-0 " style="background-color: #2a9df4; ">
       <div class="container-fluid">
       <a href="inindex.php" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
                 <h2 class="m-0 text-primary">CateringFinds</h2>
@@ -94,7 +94,7 @@ session_start();
     <div class="container-fluid p-0 ">
       <div class="owl-carousel header-carousel position-relative">
           <div class="owl-carousel-item position-relative">
-              <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:  #ffa7a6;">
+              <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:  #2a9df4;">
                   <div class="container">
                       <div class="row justify-content-start ">
                           <div class="col-4 col-lg-6">
@@ -110,7 +110,7 @@ session_start();
               </div>
           </div>
           <div class="owl-carousel-item position-relative">
-              <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:  #ffa7a6;">
+              <div class=" top-0 start-0 w-100 h-100 d-flex align-items-center" style="background:  #2a9df4;">
                   <div class="container">
                       <div class="row justify-content-start ">
                           <div class="col-4 col-lg-6">
@@ -170,7 +170,7 @@ session_start();
   <!--end of card2-->
 
   <!-- map Start -->
-        <div class="container-xxl py-5" style="background-color: #ffa7a6;">
+        <div class="container-xxl py-5" style="background-color: #2a9df4;">
             <div class="container">
 
                 <div class="row g-4">
