@@ -17,13 +17,15 @@ if ($_SESSION['useremail']=="" OR $_SESSION['role']!="customer" ) {
       <a href="inindex.php" class="logo">CateringFinds</a>
 
       <nav class="navbar" >
+        <a href="cateringMapsin.php" class="cart-btn">Map</a>
         <a href="rating.php" >Rate Orders</a>
 
-        <a href="cateringMapsin.php" class="cart-btn">Map</a>
 
 
 
-         <a href="orders.php">my orders</a>
+
+         <a href="orders.php">Active Orders</a>
+         <a href="orders_history.php">Order History</a>
          <?php
             $count_cart_items = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
             $count_cart_items->execute([$userid]);

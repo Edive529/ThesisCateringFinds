@@ -4,28 +4,37 @@
     class locations {
 
         private $userid;
-        private $restaurant;
-        private $latitude;
-        private $longitude;
+        private $map_add;
+        private $lat;
+        private $longi;
+        private $image;
+
+
+
+        private $conn;
         private $tableName = "tbl_user";
 
         function setMap_id($userid) { $this->userid = $userid; }
         function getMap_id() { return $this->userid; }
-        function setMap_add($restaurant) { $this->restaurant = $restaurant; }
-        function getMap_add() { return $this->restaurant; }
+        function setImage($image) { $this->image = $image; }
+        function getImage() { return $this->image; }
+        function setMap_add($address) { $this->address = $address; }
+        function getMap_add() { return $this->address; }
         function setLat($latitude) { $this->latitude = $latitude; }
-        function getLat() { return $this->lat; }
+        function getLat() { return $this->latitude; }
         function setLongi($longitude) { $this->longitude = $longitude; }
         function getLongi() { return $this->longitude; }
 
         public function __construct()
         {
-            include_once '../connectdb.php';
+            require_once('db/DBconnect.php');
+            $conn = new DBconnect;
+            $this->conn = $conn->connect();
 
         }
 
         public function getLocations(){
-            $sql = "SELECT * FROM $this->tableName";
+            $sql = "SELECT * FROM $this->tableName where status = 'approved'";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

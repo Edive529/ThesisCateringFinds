@@ -306,7 +306,7 @@ $image_db = $row['image'];
 
          <div class="form-group">
            <label >Sale price</label>
-           <input type="number" min="1" step="1" class="form-control" name="txtsaleprice" value="<?php echo $saleprice_db;?>" placeholder="Enter price..." required>
+           <input type="float" min="1" step="1" class="form-control" name="txtsaleprice" value="<?php echo $saleprice_db;?>" placeholder="Enter price..." required>
          </div>
 
 

@@ -13,171 +13,117 @@
 
 
 <?php
-
 include_once 'connectdb.php';
 session_start();
 
-// error_reporting(0);
-if(isset($_POST['btnaddfood'])){
+if (isset($_POST['btnaddfood'])) {
+    $username = $_POST['txtusername'];
+    $useremail = $_POST['txtemail'];
+    $restaurant = $_POST['txtrestaurant'];
+    $phonenum = $_POST['txtphonenum'];
+    $address = $_POST['txtaddress'];
+    $latitude = $_POST['txtlatitude'];
+    $longitude = $_POST['txtlongitude'];
+    $password = $_POST['txtpassword'];
 
-  $username = $_POST['txtusername'];
-  $useremail = $_POST['txtemail'];
-  $restaurant = $_POST['txtrestaurant'];
-  $phonenum = $_POST['txtphonenum'];
-  $address = $_POST['txtaddress'];
-  $latitude = $_POST['txtlatitude'];
-  $longitude = $_POST['txtlongitude'];
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-  $password = $_POST['txtpassword'];
+    $file_name = $_FILES['file']['name'];
+    $file_type = $_FILES['file']['type'];
+    $file_size = $_FILES['file']['size'];
+    $file_tem_loc = $_FILES['file']['tmp_name'];
+    $file_store = "upload/" . $file_name;
+    $f_extension = explode('.', $file_name);
+    $f_extension = strtolower(end($f_extension));
 
-  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $f_newfile = uniqid() . '.' . $f_extension;
+    $file_store = "upload/" . $f_newfile;
 
-$file_name = $_FILES['file']['name'];
-$file_type = $_FILES['file']['type'];
-$file_size = $_FILES['file']['size'];
-$file_tem_loc = $_FILES['file']['tmp_name'];
-$file_store = "upload/".$file_name;
-$f_extension = explode('.',$file_name);
-$f_extension = strtolower(end($f_extension));
+    $file_name2 = $_FILES['file2']['name'];
+    $file_type2 = $_FILES['file2']['type'];
+    $file_size2 = $_FILES['file2']['size'];
+    $file_tem_loc2 = $_FILES['file2']['tmp_name'];
+    $file_store2 = "upload/" . $file_name2;
+    $f_extension2 = explode('.', $file_name2);
+    $f_extension2 = strtolower(end($f_extension2));
 
-$f_newfile = uniqid().'.'.$f_extension;
-$file_store = "upload/".$f_newfile;
+    $f_newfile2 = uniqid() . '.' . $f_extension2;
+    $file_store2 = "upload/" . $f_newfile2;
 
-// if(isset($_POST['txtemail'])){
-//
-//   $row=$select=$pdo->prepare("select useremail from tbl_user where useremail='$useremail'");
-//   $select->execute();
-//
-//   if($select->rowCount() > 0){
-//     echo'<script type ="text/javascript">
-//     jQuery(function validation(){
-//
-//       swal({
-//       title: "Warning!",
-//       text: "Email Already Exists!",
-//       icon: "warning",
-//       button: "Ok",
-//     });
-//
-//
-//
-//     });
-//
-//     </script>';
-//   }
-// }
-if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $f_extension == 'jpeg') {
+    if (($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $f_extension == 'jpeg') && ($f_extension2 == 'jpg' || $f_extension2 == 'png' || $f_extension2 == 'gif' || $f_extension2 == 'jpeg')) {
+        if ($file_size >= 5000000 || $file_size2 >= 5000000) {
+            $error = '<script type ="text/javascript">
+            jQuery(function validation(){
+                swal({
+                    title: "Warning!",
+                    text: "Max file size should be 5MB!",
+                    icon: "warning",
+                    button: "Ok",
+                });
+            });
+            </script>';
+            echo $error;
+        } else {
+            if (move_uploaded_file($file_tem_loc, $file_store) && move_uploaded_file($file_tem_loc2, $file_store2)) {
+                $upload = $f_newfile;
+                $upload2 = $f_newfile2;
 
-  if($file_size>=5000000) {
-    $error ='<script type ="text/javascript">
-    jQuery(function validation(){
+                $insert = $pdo->prepare("INSERT INTO tbl_user (username, useremail, restaurant, phonenum, address, password, latitude, longitude, image, image2)
+                VALUES (:username, :useremail, :restaurant, :phonenum, :address, :password, :latitude, :longitude, :image, :image2)");
 
-      swal({
-      title: "Warning!",
-      text: "Max file should be 5MB!",
-      icon: "warning",
-      button: "Ok",
-    });
+                $insert->bindParam(':username', $username);
+                $insert->bindParam(':useremail', $useremail);
+                $insert->bindParam(':restaurant', $restaurant);
+                $insert->bindParam(':phonenum', $phonenum);
+                $insert->bindParam(':address', $address);
+                $insert->bindParam(':password', $hashed_password);
+                $insert->bindParam(':latitude', $latitude);
+                $insert->bindParam(':longitude', $longitude);
+                $insert->bindParam(':image', $upload);
+                $insert->bindParam(':image2', $upload2);
 
-
-
-    });
-
-    </script>';
-    echo $error;
-
-  }else{
-    if (move_uploaded_file($file_tem_loc, $file_store)) {
-
-      $upload = $f_newfile;
-
-
-
-        $insert=$pdo->prepare("insert into tbl_user(username,useremail,restaurant,phonenum,address,password,latitude,longitude,image)
-        values(:username,:useremail,:restaurant,:phonenum,:address,:password,:latitude,:longitude,:image)");
-
-
-        $insert->bindParam(':username',$username);
-        $insert->bindParam(':useremail',$useremail);
-        $insert->bindParam(':restaurant',$restaurant);
-        $insert->bindParam(':phonenum',$phonenum);
-
-        $insert->bindParam(':address',$address);
-        $insert->bindParam(':password',$hashed_password);
-        $insert->bindParam(':latitude',$latitude);
-        $insert->bindParam(':longitude',$longitude);
-
-        $insert->bindParam(':image',$upload);
-
-
-
-
-        if($insert->execute()){
-
-          echo'<script type ="text/javascript">
-          jQuery(function validation(){
-
-            swal({
-            title: "Good Job!",
-            text: "Image is successfuly uploaded!",
-            icon: "success",
-            button: "Ok",
-          });
-
-
-
-          });
-
-          </script>';
-
-          header('location:index.php');
-
-        }else{
-          echo'<script type ="text/javascript">
-          jQuery(function validation(){
-
-            swal({
-            title: "Error!",
-            text: "Upload failed!",
-            icon: "error",
-            button: "Ok",
-          });
-
-
-
-          });
-
-          </script>';
-
+                if ($insert->execute()) {
+                    echo '<script type="text/javascript">
+                    jQuery(function validation() {
+                        swal({
+                            title: "Good Job!",
+                            text: "Images are successfully uploaded!",
+                            icon: "success",
+                            button: "Ok",
+                        });
+                    });
+                    </script>';
+                    header('location:index.php');
+                } else {
+                    echo '<script type="text/javascript">
+                    jQuery(function validation() {
+                        swal({
+                            title: "Error!",
+                            text: "Upload failed!",
+                            icon: "error",
+                            button: "Ok",
+                        });
+                    });
+                    </script>';
+                }
+            }
         }
-
-        }
+    } else {
+        $error = '<script type ="text/javascript">
+        jQuery(function validation(){
+            swal({
+                title: "Warning!",
+                text: "Only Jpg, Jpeg, Png, and Gif files are allowed!",
+                icon: "warning",
+                button: "Ok",
+            });
+        });
+        </script>';
+        echo $error;
     }
-  }else{
-    $error = '<script type ="text/javascript">
-    jQuery(function validation(){
-
-      swal({
-      title: "Warning!",
-      text: "Only Jpg, Jpeg, Png and Gif file is allowed!",
-      icon: "warning",
-      button: "Ok",
-    });
-
-
-
-    });
-
-    </script>';
-    echo $error;
-  }
-
 }
+?>
 
-
-
-
- ?>
 
 
 <!DOCTYPE html>
@@ -195,7 +141,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
- 
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAif965hDy98LYDXjMrGN9-U3BlqMhZvjc&callback=initMap" async defer></script>
     <style>
       #map {
@@ -285,6 +231,11 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
           <input type="file" class="input-group" name="file" required>
 
         </div>
+        <div class="form-group">
+          <label >Business Permit</label>
+          <input type="file" class="input-group" name="file2" required>
+
+        </div>
         <div class="row">
           <div class="col-8">
 
@@ -309,12 +260,12 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
     </div>
     <!-- /.login-card-body -->
   </div>
- 
+
   </div>
   <div class="col-lg-9">
     <h1 class="login-logo">Right click desired location to get your coordinates of your restaurant</h1>
   <div id="map"></div>
-  
+
   <div>
   <button onclick="changeToSatellite()" class="btn btn-info">Satellite</button>
   <button onclick="changeToRoadmap()" class="btn btn-info">Roadmap</button>
@@ -330,11 +281,11 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
       map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 8.2280, lng: 124.2452 }, // Iligan
-        zoom: 14, // Initial map zoom level 
+        zoom: 14, // Initial map zoom level
       mapTypeId: 'roadmap', // Default map type
       });
 
-  
+
   // Create a marker and set its initial position outside the map
   marker = new google.maps.Marker({
     map: map,
@@ -354,7 +305,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
     marker.setPosition(event.latLng);
   });
 
-  
+
 }
 function changeToSatellite() {
       map.setMapTypeId('satellite');
@@ -364,7 +315,7 @@ function changeToSatellite() {
     }
 
 </script>
-    
+
 
  </body>
 </html>

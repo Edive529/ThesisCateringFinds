@@ -37,20 +37,17 @@ $userid = $_SESSION['customerid'];
 
    <?php
 
-   $select_products = $pdo->prepare("select * from tbl_catering_order_details where userid = '$userid' order by date_of_reservation desc");
+   $select_products = $pdo->prepare("select * from tbl_catering_order_details where userid = '$userid' AND status = 'approved' OR status = 'full_payment' order by date_of_reservation desc");
    $select_products->execute();
    if($select_products->rowCount() > 0){
       while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){;
 
 
    ?>
-   <div class="box" <?php if( $fetch_prodcut['status'] == 'canceled'){echo 'style="border:.2rem solid red";';}elseif ($fetch_prodcut['status'] == 'down_payment' || $fetch_prodcut['status'] == 'full_payment') {
+   <div class="box" <?php if( $fetch_prodcut['status'] == 'approved'){echo 'style="border:.2rem solid orange";';}elseif ($fetch_prodcut['status'] == 'full_payment') {
      echo 'style="border:.2rem solid green";';
 
-   }else{
-     echo 'style="border:.2rem solid orange";';
-
-   }; ?>>
+   } ?>>
       <a href="view_order.php?get_id=<?= $fetch_prodcut['catering_id'] ?>">
          <p class="date"><i class="fa fa-calendar"></i><span><?=$fetch_prodcut['date_of_reservation'];  ?></span></p>
 
@@ -63,7 +60,7 @@ $userid = $_SESSION['customerid'];
 
          <h3 class="name" style="letter-spacing: 1px; line-height: 1.8; font-size: 18px; text-align: center;"><?= $result ?></h3>
 
-         <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'approved'){echo 'green';}elseif($fetch_prodcut['status'] == 'canceled'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_prodcut['status'] ?></p>
+         <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'approved'){echo 'orange';}elseif($fetch_prodcut['status'] == 'canceled'){echo 'red';}else{echo 'green';}; ?>"><?= $fetch_prodcut['status'] ?></p>
       </a>
    </div>
    <?php

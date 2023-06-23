@@ -9,21 +9,89 @@ if(isset($_GET['get_id'])){
    $get_id = $_GET['get_id'];
 }
 
-if(isset($_POST['cancel'])){
+if(isset($_POST['place_order'])){
 
-   $update_orders = $pdo->prepare("UPDATE `tbl_catering_order_details` SET status = ? WHERE catering_id = ?");
-   $update_orders->execute(['canceled', $get_id]);
-   header('location:orders.php');
+  $card_number= $_POST["card_number"];
+  $cvc= $_POST["cvc"];
+  $card_expiry= $_POST["card_expiry"];
 
+
+
+
+
+   $id1= isset($_GET['id']) ? $_GET['id'] : '';
+      $select_get = $pdo->prepare("SELECT * FROM `tbl_catering_order_details` WHERE catering_id = $get_id");
+      $select_get->execute();
+      while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
+
+        $restaurant12 = $fetch_get['restaurant'];
+        $grand_total = $fetch_get['grand_total'];
+        $order = $fetch_get['order_list'];
+        $name = $fetch_get['user'];
+        $email = $fetch_get['useremail'];
+        $method = $fetch_get['payment_type'];
 }
 
-if(isset($_POST['down_pay'])){
+$select = $pdo->prepare("select * from tbl_user where restaurant ='$restaurant12'");
 
-   $update_orders = $pdo->prepare("UPDATE `tbl_catering_order_details` SET status = ? WHERE catering_id = ?");
-   $update_orders->execute(['down_payment', $get_id]);
+$select->execute();
+$row=$select->fetch(PDO::FETCH_ASSOC);
+      $skey_db = $row['skey'];
+      $pkey_db = $row['spkey'];
+
+
+
+
+
+   require_once "stripe-php-master/init.php";
+
+   $stripeDetails = array(
+       "secretKey" => $skey_db ,
+       "publishableKey" => $pkey_db
+   );
+
+   \Stripe\Stripe::setApiKey($stripeDetails["secretKey"]);
+
+
+
+       $stripe = new \Stripe\StripeClient($skey_db);
+
+       $paymentIntent = $stripe->paymentIntents->create([
+         'amount' => str_replace(",", "", $grand_total) * 100,
+         'currency' => 'php',
+         'description' => $order,
+         'payment_method_types' => ['card'],
+         'metadata' => [
+           'name' => $name,
+           'card_number' => $card_number,
+           'cvc' => $cvc,
+           'card_expiry' => $card_expiry,
+           'email' => $email,
+           'payment_type' => $method
+         ],
+       ]);
+
+       if ($paymentIntent) {
+
+
+
+
+   $verify_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
+   $verify_cart->execute([$userid]);
+   $status_txt = "Full_payment";
+   $update = $pdo->prepare("update tbl_catering_order_details set status=:status where catering_id=$get_id");
+
+   $update->bindParam(':status',$status_txt);
+
+   if($update->execute()){
+
    header('location:orders.php');
+ }
 
-}
+    }
+  }
+
+
 
 
 
@@ -123,7 +191,7 @@ if(isset($_POST['down_pay'])){
          <p class="status" style="color:<?php if($fetch_order['status'] == 'Not yet approved'){echo 'red';}elseif($fetch_order['status'] == 'canceled'){echo 'red';}else{echo 'green';}; ?>"><?= $fetch_order['status']; ?></p>
          <?php if ($fetch_order['status'] == 'approved') { ?>
 
-   
+
 
 
 
@@ -153,12 +221,43 @@ if(isset($_POST['down_pay'])){
 
 
       </div>
+      <?php if ($fetch_order['status'] == 'approved') {?>
+
+
+      <form action="" method="POST">
+         <h3>billing details</h3>
+         <div class="flex">
+
+            <div class="box" style="text-align:center;">
+
+
+
+
+
+
+
+           <p>Card number<span>*</span></p>
+           <input style="padding-right:500px;" value="" name="card_number" id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" class="input">
+
+           <p>Expiry Date<span>*</span></p>
+           <input type="text" value="" name="card_expiry" required maxlength="5" placeholder="00/00" class="input">
+
+
+           <p>CVC<span>*</span></p>
+           <input type="text" value="" name="cvc" required maxlength="3" placeholder="enter your cvc" class="input" min="0" max="3">
+
+
+            </div>
+         </div>
+         <input type="submit" value="Full payment" name="place_order" class="btn">
+      </form>
+      <?php}   ?>
+
    </div>
    <?php
 
-         }
+ }}
       }
-
    ?>
 
    </div>

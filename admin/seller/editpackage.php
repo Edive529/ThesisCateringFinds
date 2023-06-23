@@ -170,7 +170,7 @@ if(!empty($file_name)){
 
         swal({
         title: "Good Job!",
-        text: "Service list is Updated",
+        text: "Updated Successfully!",
         icon: "success",
         button: "Ok",
       });
@@ -311,7 +311,7 @@ $image_db = $row['image'];
 
          <div class="form-group">
            <label >Sale price</label>
-           <input type="number" min="1" step="1" class="form-control" name="txtsaleprice" value="<?php echo $saleprice_db;?>" placeholder="Enter price..." required>
+           <input type="float" min="1" step="1" class="form-control" name="txtsaleprice" value="<?php echo $saleprice_db;?>" placeholder="Enter price..." required>
          </div>
 
 
@@ -342,7 +342,7 @@ $image_db = $row['image'];
     <div class="box-footer">
 
 
-      <button type="submit" class="btn btn-info" name="btnupdate">Add Menu</button>
+      <button type="submit" class="btn btn-info" name="btnupdate">Update</button>
 
     </div>
     </form>

@@ -312,6 +312,7 @@ include_once 'headerAdmin.php';
                 <th>Restaurant</th>
                 <th>Address</th>
                 <th>Menu</th>
+                <th>Business Permit</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>View</th>
@@ -340,6 +341,9 @@ include_once 'headerAdmin.php';
                 <td>'.$row->address.'</td>
                 <td>
                 <img src = "../upload/'.$row->image.'" class = "img-rounded" width = "40px" height = "40px">
+                </td>
+                <td>
+                <img src = "../upload/'.$row->image2.'" class = "img-rounded" width = "40px" height = "40px">
                 </td>
                 <td>'.$row->latitude.'</td>
                 <td>'.$row->longitude.'</td>

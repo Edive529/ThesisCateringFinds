@@ -71,6 +71,12 @@ include_once 'headerAdmin.php';
                 <center><img src = "../upload/'.$row->image.'" class = "img-responsive" width="80%" height="80%"></center>
 
                 </ul>
+                <center><p class="list-group-item list-group-item-success"><b>Business Permit</b></p></center>
+
+                <ul class="list-group">
+                <center><img src = "../upload/'.$row->image2.'" class = "img-responsive" width="80%" height="80%"></center>
+
+                </ul>
                 </div>
                 </div>
 

@@ -71,6 +71,7 @@ if($row['useremail'] == $useremail AND $row['role']=='Admin' AND $row['status']=
       $_SESSION['username'] = $username;
       $_SESSION['useremail'] = $useremail;
       $_SESSION['role'] = $role;
+    
 
        echo'<script type ="text/javascript">
       jQuery(function validation(){

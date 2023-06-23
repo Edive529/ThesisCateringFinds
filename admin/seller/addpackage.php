@@ -222,7 +222,7 @@ if ($f_extension == 'jpg' || $f_extension == 'png' || $f_extension == 'gif' || $
 
          <div class="form-group">
            <label >Sale price</label>
-           <input type="number" min="1" step="1" class="form-control" name="txtsaleprice" placeholder="Enter price..." required>
+           <input type="float" min="1" step="1" class="form-control" name="txtsaleprice" placeholder="Enter price..." required>
          </div>
 
 

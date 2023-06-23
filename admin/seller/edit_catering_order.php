@@ -241,6 +241,7 @@ if(isset($_POST['btnupdate'])){
             <option hidden value="<?php echo $status_db; ?>" selected ><?php echo $status_db; ?></option>
              <option value="Delivered">Delivered</option>
              <option value="Canceled">Canceled</option>
+             <option value="approved">approved</option>
 
 
           </select>

@@ -10,6 +10,8 @@ if ($_SESSION['useremail']=="") {
 
 include_once 'header.php';
 
+
+
  ?>
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -74,53 +76,33 @@ include_once 'header.php';
               </thead>
               <tbody>
                 <?php
-                $restaurant = $_SESSION['restaurant'];
-                  $select=$pdo->prepare("select * from tbl_catering_order_details where restaurant = '$restaurant'  order by catering_id desc");
+  $restaurant = $_SESSION['restaurant'];
+  $select = $pdo->prepare("SELECT * FROM tbl_catering_order_details WHERE restaurant = '$restaurant' ORDER BY catering_id DESC");
+  $select->execute();
 
-                  $select->execute();
-
-                  while($row=$select->fetch(PDO::FETCH_OBJ)){
-
-                    echo'<tr>
-                    <td>
-                    '.$row->catering_id.'
-                    </td>
-                    <td>
-                    '.$row->order_list.'
-                    </td>
-                    <td>
-                    '.$row->payment_type.'
-                    </td>
-                    <td>
-                    '.$row->user.'
-                    </td>
-
-                    <td>
-                    '.$row->event_address.'
-                    </td>
-                    <td>
-                    '.$row->status.'
-                    </td>
-                    <td>
-                    '.$row->catering_style.'
-                    </td>
-
-                    <td>
-                    '.$row->date_of_reservation.'
-                    </td>
-                    <td>
-                    '.$row->date_to_be_delivered.'
-                    </td>
-                    <td>
-                    <a href = "edit_catering_order.php?id='.$row->catering_id.'"  class="btn btn-info" role = "button" ><span class = "fas fa-edit" style = "color:#ffffff" data-toggle="tooltip" title="edit"></span></a>
-                    </td>
-                  
-
-                        </tr>';
+  while ($row = $select->fetch(PDO::FETCH_OBJ)) {
+      echo '<tr>
+          <td>'.$row->catering_id.'</td>
+          <td>'.$row->order_list.'</td>
+          <td>'.$row->payment_type.'</td>
+          <td>'.$row->user.'</td>
+          <td>'.$row->event_address.'</td>
+          <td>'.$row->status.'</td>
+          <td>'.$row->catering_style.'</td>
+          <td>'.$row->date_of_reservation.'</td>
+          <td>'.$row->date_to_be_delivered.'</td>
+          <td>
+              <a href="edit_catering_order.php?id='.$row->catering_id.'" class="btn btn-info" role="button">
+                  <span class="fas fa-edit" style="color:#ffffff" data-toggle="tooltip" title="edit"></span>
+              </a>
+          </td>
+    
+      </tr>';
 
 
-                  }
-                   ?>
+  }
+  ?>
+
 
 
 

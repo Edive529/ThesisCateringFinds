@@ -189,7 +189,7 @@ if(isset($_POST['btnsave'])){
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header bg-info text-white">
-                  Register new member
+                  Register new Admin
 
                 </div>
                 <form role="form" action="" method="post">
@@ -241,7 +241,7 @@ if(isset($_POST['btnsave'])){
             </div>
 
           </div>
-          <h3 class="card-title"><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-info" role="button">Add new member</a></h3>
+          <h3 class="card-title"><a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-info" role="button">Add new Admin</a></h3>
         </div>
 
           <div class="card-body">

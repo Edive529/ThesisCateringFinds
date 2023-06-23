@@ -154,94 +154,107 @@ if(isset($_POST['update_cart'])){
 
    <link rel="stylesheet" href="css/style.css">
 
+   <link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
+
+
+
 </head>
 <body>
 
 <?php include 'components/header.php'; ?>
 
+
+
+
 <section class="checkout">
   <?php $id= isset($_GET['id']) ? $_GET['id'] : ''; ?>
 
-   <h1 class="heading">checkout summary</h1>
+   <h1 class="heading">Order History</h1>
 
 
 
    <div class="row">
 
      <div class="summary">
-        <h3 class="title">cart items</h3>
-        <?php
-           $grand_total = 0;
-           if(isset($_GET['get_id'])){
-              $select_get = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
-              $select_get->execute([$_GET['get_id']]);
-              while($fetch_get = $select_get->fetch(PDO::FETCH_ASSOC)){
+       <div class="col-md-12">
 
-                $restaurant = $fetch_get['restaurant'];
-        ?>
-        <div class="flex">
-           <img src="admin/upload/<?= $fetch_get['image']; ?>" class="image" alt="">
-           <div>
+         <table id="tablefoodmenu" class = "table table-striped">
+           <thead>
+             <tr>
+               <th>catering_id</th>
+               <th>order_list_id</th>
 
+               <th>payment_type</th>
+               <th>user</th>
 
-              <h3 class="food"><?= $fetch_get['food']; ?></h3>
-              <p class="price"><i class="fas fa-peso-sign"></i> <?= $fetch_get['saleprice']; ?></p>
+               <th>restaurant</th>
+               <th>event_address</th>
+               <th>catering_style</th>
 
-              <input type="number" name="qty" required min="1" value="<?= $fetch_cart['qty']; ?>" max="99" maxlength="2" class="qty">
-              <button type="submit" name="update_cart" class="fas fa-edit">
-              </button>
-           </div>
+               <th>date_of_reservation</th>
+               <th>date_to_be_delivered</th>
+
+             </tr>
 
 
+           </thead>
+           <tbody>
+             <?php
+
+               $select=$pdo->prepare("select * from tbl_catering_order_details order by catering_id desc");
+
+               $select->execute();
+
+               while($row=$select->fetch(PDO::FETCH_OBJ)){
+
+                 echo'<tr>
+                 <td>
+                 '.$row->catering_id.'
+                 </td>
+                 <td>
+                 '.$row->order_list.'
+                 </td>
+                 <td>
+                 '.$row->payment_type.'
+                 </td>
+                 <td>
+                 '.$row->user.'
+                 </td>
+                 <td>
+                 '.$row->restaurant.'
+                 </td>
+                 <td>
+                 '.$row->event_address.'
+                 </td>
+                 <td>
+                 '.$row->catering_style.'
+                 </td>
+
+                 <td>
+                 '.$row->date_of_reservation.'
+                 </td>
+                 <td>
+                 '.$row->date_to_be_delivered.'
+                 </td>
 
 
-        </div>
-        <?php
-              }
-           }else{
-             $result = " ";
-              $select_cart = $pdo->prepare("SELECT * FROM `tbl_cart` WHERE customerid = ?");
-              $select_cart->execute([$userid]);
-              if($select_cart->rowCount() > 0){
-                 while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-                    $select_products = $pdo->prepare("SELECT * FROM `tbl_foodmenu` WHERE foodid = ?");
-                    $select_products->execute([$fetch_cart['foodid']]);
-                    $fetch_product = $select_products->fetch(PDO::FETCH_ASSOC);
-                    $sub_total = ($fetch_cart['qty'] * $fetch_product['saleprice']);
+                     </tr>';
 
-                    $result .=$fetch_product['food'] . ": ₱" . $fetch_product['saleprice'] . "x" . $fetch_cart['qty'] . "= ₱" . $sub_total . ",";
+
+               }
+                ?>
+
+
+
+             </tbody>
 
 
 
 
+         </table>
 
-                    $grand_total += $sub_total;
-                    $restaurantname = $fetch_product['restaurant'];
-
-
-        ?>
-
-        <div class="flex">
-           <img src="admin/upload/<?= $fetch_product['image']; ?>" class="image" alt="">
-           <div>
-             <h3></h3>
-             <h3><?= $fetch_product['restaurant']; ?></h3>
-              <h3 class="food"><?= $fetch_product['food']; ?></h3>
-              <p class="saleprice"><i class="fas fa-peso-sign"></i> <?= $fetch_product['saleprice']; ?> x <?= $fetch_cart['qty']; ?></p>
-           </div>
-        </div>
-
-
-        <?php
-                 }
-              }else{
-                 echo '<p class="empty">your cart is empty</p>';
-              }
-           } $maonani = $result."Total = "."₱".$grand_total;
-           $restaurantname;
-
-        ?>
-        <div class="grand-total"><span>grand total :</span><p><i class="fas fa-peso-sign"></i> <?= $grand_total; ?></p></div>
+       </div>
 
 
 
@@ -256,66 +269,6 @@ if(isset($_POST['update_cart'])){
 
 
 
-      <form action="" method="POST">
-         <h3>billing details</h3>
-         <div class="flex">
-            <div class="box">
-               <p>your name <span>*</span></p>
-               <input type="text" name="user" required maxlength="50" value="<?php echo $_SESSION['username']; ?>" disabled class="input">
-               <input type="hidden" name="user" value="<?php echo $_SESSION['username']; ?>">
-
-              <input type="hidden" name="useremail" value="<?php echo $_SESSION['useremail']; ?>">
-              <input hidden type="float" name="grand_total" value="<?php echo $grand_total; ?>">
-
-               <p>your email <span>*</span></p>
-               <input type="email" name="" required maxlength="50" value="<?php echo $_SESSION['useremail']; ?>" disabled class="input">
-               <p>your number <span>*</span></p>
-               <input type="number" value="<?php echo $_SESSION['phonenum']; ?>" name="phonenum" required maxlength="10" placeholder="enter your number" class="input" min="0" max="9999999999">
-
-               <p>payment method <span>*</span></p>
-               <select name="payment_type" class="input" value= "" required>
-
-                 <option hidden value="credit card" selected >credit card</option>
-                  <option value="credit card">credit card</option>
-                  <option value="debit card">debit card</option>
-
-
-               </select>
-
-
-
-
-            </div>
-            <div class="box">
-              <p>Catering Style <span>*</span></p>
-
-              <select name="catering_style" class="input" required>
-                  <option value="Party Tray">Party Tray</option>
-                  <option value="Plated">Plated</option>
-                  <option value="Packed">Packed</option>
-              </select>
-
-              <p>Event Address <span>*</span></p>
-
-              <input type="text" name="event_address" value="<?php echo $_SESSION['event_address']; ?>"  rows="4" cols="50" placeholder="e.g. flat & building number" class="input">
-
-               <p>Delivery Date</p>
-
-               <input type="date" name="date_to_be_delivered" required maxlength="" placeholder="date to be delivered" class="input" id="delivery-date">
-               <p>Delivery time<span>*</span></p>
-               <input type="time" name="time_to_be_delivered" required maxlength="" placeholder="time to be delivered" class="input">
-               <input hidden type="text"  name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input">
-               <input hidden type="text"  name="restaurant" value="<?php echo $restaurantname?>" required maxlength="" placeholder="" class="input">
-               <textarea hidden type="text" name="order_list" value="<?php echo $maonani?>" required maxlength="" placeholder="" class="input"><?php echo$maonani?></textarea>
-
-
-
-
-
-            </div>
-         </div>
-         <input type="submit" value="place order" name="place_order" class="btn">
-      </form>
 
 
 
@@ -323,8 +276,12 @@ if(isset($_POST['update_cart'])){
 
 </section>
 
+  <script src="admin/plugins/jquery/jquery.min.js"></script>
+<script src="admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<script src="admin/plugins/datatables/jquery.dataTables.min.js"></script>
 
-
+<script src="admin/plugins/datatables/datatables-responsive/js/responsive.bootstrap4.js"></script>
 <script>
   // Get today's date
   var today = new Date();
@@ -342,7 +299,21 @@ if(isset($_POST['update_cart'])){
 
 <script src="js/script.js"></script>
 
-<?php include 'components/alert.php'; ?>
 
+
+<?php include 'components/alert.php'; ?>
+   <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+<script>
+ $(document).ready(function() {
+   $('#tablefoodmenu').DataTable({
+
+     "order":[[0,"desc"]]
+
+
+
+
+   });
+});
+</script>
 </body>
 </html>

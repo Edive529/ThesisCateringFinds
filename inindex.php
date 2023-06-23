@@ -75,14 +75,24 @@ session_start();
           <a href="rating.php" style = "padding:30px;">Rate Orders</a>
 
 
-          <a href="orders.php" style = "padding:30px;">My Orders</a>
+          <a href="orders.php" style = "padding:30px;">Active Orders</a>
+
+          <a href="orders_history.php" style = "padding:30px;">Order History</a>
 
           <a href="shopping_cart.php" class="cart-btn" style = "padding:30px;">My Cart</a>
 
           <a href="logout.php" style = "padding:30px;">Logout</a>
- 
+          <form class="d-flex" role="search">
+
+
+           <input type="text" class="form-control" placeholder="Search here..." name="keyword" required="required" value="<?php echo isset($_POST['keyword']) ? $_POST['keyword'] : '' ?>"/>
+           <span class="input-group-btn">
+           <button class="btn btn-primary" name="search"><span class="fas fa-search"></span></button>
+         </span>
+          </form>
+
             <a href="profilepage.php">
-              <i class="fa fa-user"></i>
+              <i style="padding-left:10px;" class="fa fa-user"></i>
             </a>
 
         </div>
@@ -286,7 +296,7 @@ session_start();
 
                     <div class="col-lg-4 col-md-6">
                         <h5 class="text-white mb-4">Newsletter</h5>
-                        
+
                         <div class="position-relative mx-auto" style="max-width: 400px;">
                             <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>

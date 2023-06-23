@@ -37,6 +37,7 @@ session_start();
 </head>
 <body>
 
+
     <div class="container-xxl bg-white p-0">
 
    <!-- Spinner Start -->
@@ -73,9 +74,37 @@ session_start();
           </ul>
 
           <a href="reglogin.php" style = "padding:30px;">Log in</a>
- 
+           <form class="d-flex" role="search">
+
+
+           	<input type="text" class="form-control" placeholder="Search here..." name="keyword" required="required" value="<?php echo isset($_POST['keyword']) ? $_POST['keyword'] : '' ?>"/>
+            <span class="input-group-btn">
+						<button class="btn btn-primary" name="search"><span class="fas fa-search"></span></button>
+					</span>
+           </form>
+           <?php
+       if(ISSET($_POST['search'])){
+         $keyword = $_POST['keyword'];
+     ?>
+
+       <?php
+         $query = mysqli_query($conn, "SELECT * FROM `blog` WHERE `title` LIKE '%$keyword%' ORDER BY `title`") or die(mysqli_error());
+         while($fetch = mysqli_fetch_array($query)){
+       ?>
+       <div style="word-wrap:break-word;">
+         <a href="get_blog.php?id=<?php echo $fetch['blog_id']?>"><h4><?php echo $fetch['title']?></h4></a>
+         <p><?php echo substr($fetch['content'], 0, 100)?>...</p>
+       </div>
+       <hr style="border-bottom:1px solid #ccc;"/>
+       <?php
+         }
+       ?>
+     </div>
+     <?php
+       }
+     ?>
             <a href="reglogin.php">
-              <i class="fa fa-user"></i>
+              <i style="padding-left:10px;" class="fa fa-user"></i>
             </a>
 
         </div>
