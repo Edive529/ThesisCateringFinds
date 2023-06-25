@@ -37,7 +37,7 @@ $userid = $_SESSION['customerid'];
 
    <?php
 
-   $select_products = $pdo->prepare("select * from tbl_catering_order_details where userid = '$userid' AND status = 'approved' OR status = 'full_payment' order by date_of_reservation desc");
+   $select_products = $pdo->prepare("select * from tbl_catering_order_details where userid = '$userid' AND status = 'approved' OR status = 'full_payment' OR status = 'Not approved' order by date_of_reservation desc");
    $select_products->execute();
    if($select_products->rowCount() > 0){
       while($fetch_prodcut = $select_products->fetch(PDO::FETCH_ASSOC)){;
