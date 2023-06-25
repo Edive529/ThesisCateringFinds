@@ -85,14 +85,15 @@ session_start();
           <form class="d-flex" role="search">
 
 
-           <input type="text" class="form-control" placeholder="Search here..." name="keyword" required="required" value="<?php echo isset($_POST['keyword']) ? $_POST['keyword'] : '' ?>"/>
-           <span class="input-group-btn">
-           <button class="btn btn-primary" name="search"><span class="fas fa-search"></span></button>
+            <span class="input-group-btn">
+
+              <a href="index_Searchin.php" style="padding:30px;">Search <span class="fas fa-search"></span></a>
+
          </span>
           </form>
 
             <a href="profilepage.php">
-              <i style="padding-left:10px;" class="fa fa-user"></i>
+              <i style="padding:30px;" class="fa fa-user"></i>
             </a>
 
         </div>

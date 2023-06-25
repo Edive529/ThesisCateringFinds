@@ -18,6 +18,17 @@
          <a href="reglogin.php" class="cart-btn">cart</a>
 
 
+
+
+
+          <span class="input-group-btn">
+
+            <a href="index_Search.php" >Search <span class="fas fa-search" style="color:#2a9df4;"></span></a>
+
+       </span>
+
+
+
       </nav>
 
       <div id="menu-btn" class="fas fa-bars"></div>

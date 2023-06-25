@@ -32,6 +32,7 @@ if ($_SESSION['useremail']=="" OR $_SESSION['role']!="customer" ) {
             $total_cart_items = $count_cart_items->rowCount();
          ?>
          <a href="shopping_cart.php" class="cart-btn">cart<span><?= $total_cart_items; ?></span></a>
+           <a href="index_Searchin.php" >Search <span class="fas fa-search" style="color:#2a9df4;"></span></a>
       </nav>
 
       <div id="menu-btn" class="fas fa-bars"></div>

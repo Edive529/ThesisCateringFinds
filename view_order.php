@@ -167,6 +167,7 @@ $row=$select->fetch(PDO::FETCH_ASSOC);
    <div class="box">
       <div class="col">
          <p class="title"><i class="fas fa-calendar"></i><?= $fetch_order['date_of_reservation']; ?></p>
+         <p class="title"><i class="fas fa-utensils"></i><?= $fetch_order['restaurant']; ?></p>
 
          <?php
           $commaDelimitedString = $fetch_order['order_list'];
@@ -176,7 +177,7 @@ $row=$select->fetch(PDO::FETCH_ASSOC);
 ?>
 
 
-         <h3 class="name" style="letter-spacing: 1px; line-height: 2.0; font-size: 25px; text-align: center;"><?= $result ?></h3>
+         <h3 class="name" style="letter-spacing: 1px; line-height: 2.0; font-size: 25px; text-align: left; color:#666;margin-left:75px;margin-top:55px;"><?= $result ?></h3>
 
       </div>
       <div class="col">

@@ -96,7 +96,7 @@ if(isset($_POST['place_order'])){
 
 
           <h1><?php echo $fetch_order1['restaurant']; ?></h1>
-         <h3 class="name" style="letter-spacing: 1px; line-height: 2.0; font-size: 25px; text-align: center;"><?php echo $food1; ?></h3>
+         <h3 class="name" style="letter-spacing: 1px; line-height: 2.0; font-size: 25px; text-align: center; color:#666;"><?php echo $food1; ?></h3>
 
          <img style="width:150px;  display: block; margin: auto; border-radius:10%;" src="admin/upload/<?php echo $fetch_order1['image'];; ?>"alt="">
 

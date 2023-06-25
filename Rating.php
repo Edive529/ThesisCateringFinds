@@ -62,7 +62,7 @@ $userid = $_SESSION['customerid'];
 
 
 
-         <h3 class="name" style="letter-spacing: 1px; line-height: 1.8; font-size: 18px; text-align: center;"><?= $result ?></h3>
+         <h3 class="name" style="letter-spacing: 1px; line-height: 1.8; font-size: 18px; text-align: center; color:#666;"><?= $result ?></h3>
 
          <p class="status" style="color:<?php if($fetch_prodcut['status'] == 'Already Rated!'){echo 'green';}elseif($fetch_prodcut['status'] == 'Rate me?'){echo 'red';}else{echo 'orange';}; ?>"><?= $fetch_prodcut['status'] ?></p>
       </a>
